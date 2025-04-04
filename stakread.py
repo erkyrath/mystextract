@@ -294,6 +294,7 @@ def parse_card(block, bid):
             numruns = getshort(block, pos+4) & 0x7FFF
             partstr = block[ pos+6+2*numruns : pos+4+pcsize ]
         partstr = partstr.decode('mac_roman')
+        partstr = partstr.replace('\r', '\n')
         card.partcontents.append( (partid, partstr) )
         pos += (4+pcsize)
 
