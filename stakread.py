@@ -1,5 +1,18 @@
 #!/usr/bin/env python3
 
+"""stakread.py: Minimal HyperCard stack parser
+
+This extracts the card and HyperTalk data from a HyperCard stack.
+It is *not* complete; I am only interested in the HyperText text, so
+that's all I did.
+
+The HyperCard format is described here:
+  https://hypercard.org/hypercard_file_format_pierre/
+  https://github.com/PierreLorenzi/HyperCardPreview/blob/master/StackFormat.md
+
+This script is in the public domain.
+"""
+
 import sys
 import struct
 
@@ -179,7 +192,9 @@ def decode_script(script):
     script = endnulls(script)
     if not len(script):
         return None
-    script = script.decode('mac_roman').replace('\r', '\n')
+    script = script.decode('mac_roman')
+    script = script.replace('\r', '\n')
+    script = script.replace('\0', '\\0')
     return script
 
 def print_script(script, outfl, indent=0):
