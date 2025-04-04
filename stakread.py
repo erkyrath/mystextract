@@ -297,6 +297,10 @@ def parse_card(block, bid):
         card.partcontents.append( (partid, partstr) )
         pos += (4+pcsize)
 
+    if pos & 1:
+        # Undocumented alignment byte?
+        pos += 1
+        
     cardname, pos = getstring(block, pos)
     card.name = cardname
     script = block[ pos : ]
