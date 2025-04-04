@@ -13,9 +13,16 @@ class Stack:
         self.script = script
         self.list = None
         self.cards = []
+        self.cardmap = {}
 
     def __repr__(self):
         return '<Stack: %d cards>' % (len(self.cards),)
+
+    def finalize(self):
+        for card in self.cards:
+            self.cardmap[card.id] = card
+            
+        self.consistency()
 
     def consistency(self):
         if not self.list:
@@ -128,7 +135,8 @@ def parse(filename):
             #print('%s %d:' % (btype, bid,))
             pass
         pos += bsize
-        
+
+    stack.finalize()
     return stack
 
 def parse_stak(block, bid):
@@ -197,6 +205,5 @@ def parse_card(block, bid):
         
 for filename in sys.argv[ 1 : ]:
     stack = parse(filename)
-    stack.consistency()
     
     
