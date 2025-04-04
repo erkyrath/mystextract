@@ -8,10 +8,11 @@ if len(sys.argv) <= 1:
     sys.exit()
 
 class Stack:
-    def __init__(self, format, createversion, modversion, script=None):
+    def __init__(self, format, createversion, modversion, cardrect, script=None):
         self.format = format
         self.createversion = createversion
         self.modversion = modversion
+        self.cardrect = cardrect
         self.script = script
         self.list = None
         self.cards = []
@@ -174,9 +175,10 @@ def parse_stak(block, bid):
     userlevel = getshort(block, 0x48)
     createversion = getversion(block, 0x60)
     modversion = getversion(block, 0x6C)
+    cardrect = getrectangle(block, 0x78)
     script = block[ 0x600 : ]
     script = decode_script(script)
-    stack = Stack(format, createversion, modversion, script)
+    stack = Stack(format, createversion, modversion, cardrect, script)
     return stack
 
 def parse_list(block, bid):
