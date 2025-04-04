@@ -8,8 +8,10 @@ if len(sys.argv) <= 1:
     sys.exit()
 
 class Stack:
-    def __init__(self, format, script=None):
+    def __init__(self, format, createversion, modversion, script=None):
         self.format = format
+        self.createversion = createversion
+        self.modversion = modversion
         self.script = script
         self.list = None
         self.cards = []
@@ -90,6 +92,16 @@ def getstring(dat, pos):
     val = dat[ pos : ix ].decode('mac_roman')
     return val, ix+1
 
+def getversion(dat, pos):
+    statemap = { 0x20:'dev', 0x40:'alpha', 0x60:'beta', 0x80:'final' }
+    major = dat[pos]
+    minor = (dat[pos+1] >> 4) & 0x0F
+    patch = (dat[pos+1]) & 0x0F
+    state = dat[pos+2]
+    state = statemap.get(state, hex(state))
+    release = dat[pos+3]
+    return '%d.%d.%d-%s-%d' % (major, minor, patch, state, release,)
+
 def endnulls(script):
     pos = 0
     while pos < len(script) and script[pos] == 0:
@@ -140,10 +152,14 @@ def parse(filename):
     return stack
 
 def parse_stak(block, bid):
-    format = getint(block, 16)
+    format = getint(block, 0x10)
+    passwdhash = getint(block, 0x44)
+    userlevel = getshort(block, 0x48)
+    createversion = getversion(block, 0x60)
+    modversion = getversion(block, 0x6C)
     script = block[ 0x600 : ]
     script = decode_script(script)
-    stack = Stack(format, script)
+    stack = Stack(format, createversion, modversion, script)
     return stack
 
 def parse_list(block, bid):
