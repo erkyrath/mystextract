@@ -32,14 +32,18 @@ class Stack:
         self.script = script
         self.list = None
         self.cards = []
+        self.backgrounds = []
         self.cardmap = {}
+        self.backgroundmap = {}
 
     def __repr__(self):
-        return '<Stack: %d cards>' % (len(self.cards),)
+        return '<Stack: %d cards, %d backgrounds>' % (len(self.cards), len(self.backgrounds),)
 
     def finalize(self):
         for card in self.cards:
             self.cardmap[card.id] = card
+        for bkgd in self.backgrounds:
+            self.backgroundmap[bkgd.id] = bkgd
             
         self.consistency()
 
@@ -51,6 +55,8 @@ class Stack:
             print('ERROR: wrong number of cards')
         if self.list.numcards != len(self.cards):
             print('ERROR: wrong number of cards')
+        if self.numbackgrounds != len(self.backgrounds):
+            print('ERROR: wrong number of backgrounds')
         for card in self.cards:
             card.consistency()
 
@@ -64,6 +70,9 @@ class Stack:
 
         for card in self.cards:
             card.dump(outfl)
+        
+        for bkgd in self.backgrounds:
+            bkgd.dump(outfl)
         
 class BlockList:
     def __init__(self, numpages, pagesize, numcards, cardrefsize):
@@ -96,6 +105,36 @@ class Card:
     
     def dump(self, outfl):
         outfl.write('  * Card %d "%s"\n' % (self.id, self.name,))
+        
+        if self.script:
+            outfl.write('\n')
+            print_script(self.script, outfl, indent=4)
+            outfl.write('\n')
+            
+        for part in self.parts:
+            part.dump(self.id, outfl)
+
+class Background:
+    def __init__(self, id, numparts, numpartconts):
+        self.id = id
+        self.numparts = numparts
+        self.numpartconts = numpartconts
+        self.parts = []
+        self.partcontents = []
+        self.name = None
+        self.script = None
+
+    def __repr__(self):
+        return '<Background %d "%s">' % (self.id, self.name,)
+
+    def consistency(self):
+        if self.numparts != len(self.parts):
+            print('ERROR: wrong number of parts')
+        if self.numpartconts != len(self.partcontents):
+            print('ERROR: wrong number of part contents')
+    
+    def dump(self, outfl):
+        outfl.write('  * Background %d "%s"\n' % (self.id, self.name,))
         
         if self.script:
             outfl.write('\n')
