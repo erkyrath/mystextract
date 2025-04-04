@@ -148,7 +148,7 @@ def getshort(dat, pos):
 
 def getstring(dat, pos):
     ix = pos
-    while dat[ix]:
+    while ix < len(dat) and dat[ix]:
         ix += 1
     val = dat[ pos : ix ].decode('mac_roman')
     return val, ix+1
