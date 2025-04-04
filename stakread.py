@@ -54,10 +54,11 @@ class Card:
         self.numpartconts = numpartconts
         self.parts = []
         self.partcontents = []
+        self.name = None
         self.script = None
 
     def __repr__(self):
-        return '<Card %d>' % (self.id,)
+        return '<Card %d "%s">' % (self.id, self.name,)
 
     def consistency(self):
         if self.numparts != len(self.parts):
@@ -244,6 +245,8 @@ def parse_card(block, bid):
         card.partcontents.append( (partid, partstr) )
         pos += (4+pcsize)
 
+    cardname, pos = getstring(block, pos)
+    card.name = cardname
     script = block[ pos : ]
     script = decode_script(script)
     card.script = script
