@@ -1,0 +1,290 @@
+f  APPL/MYST    793865     43392 Dec 22  1993  Myst
+d          0 items               Jan 11  1994 Desktop Folder
+f  APPL/Auto    137403         0 Jan 11  1994 Making of Myst
+f  APPL/Auto    137409         0 Jul 27  1993 Making of Myst (Big)
+d          6 items               Jan 11  1994 Myst Files
+d         24 items               Jan 11  1994 Myst Graphics
+f  ttro/ttxt       286       735 Jul 24  1993 Myst Read Me
+f  INIT/Œnd6    619707    221474 Apr 29  1993 QuickTimeª
+f  INIT/sad      77046         0 Jun 25  1993 Sound Manager
+d          0 items               Jan 11  1994 Trash
+
+:Desktop Folder:
+
+:Myst Files:
+f  MYag/MYST      4501    264736 Dec  7  1993 Channelwood Age
+f  MYag/MYST      4501     24768 Dec  7  1993 Dunny Age
+f  MYag/MYST     43611    151072 Dec  7  1993 Mechanical Age
+f  MYag/MYST    842360    368672 Dec  7  1993 Myst
+f  MYag/MYST    171105    153600 Dec  7  1993 Selenitic Age
+f  MYag/MYST     89279    197248 Dec  7  1993 Stoneship Age
+
+:Myst Graphics:
+f  MYag/MYST   5115466     19840 Dec  8  1993 ALLRes
+d         75 items               Dec  7  1993 Channelwood
+f  MYag/MYST  11665790      4960 Dec  7  1993 CHRes1
+f  MYag/MYST  13941079      4960 Dec  7  1993 CHRes2
+f  MYag/MYST  11981356      4960 Dec  7  1993 CHRes3
+f  MYag/MYST    542995      4960 Dec  7  1993 INRes1
+f  MooV/TVOD    132004  73515566 Jan 11  1994 MakingMyst.MooV
+d         23 items               Dec  7  1993 Mechanical
+f  MYag/MYST  10150679      4960 Dec  7  1993 MERes1
+f  MYag/MYST   7085341      4960 Dec  7  1993 MERes2
+f  MYag/MYST  12163048      4960 Dec  7  1993 MYRes1
+f  MYag/MYST  14276192      4960 Dec  7  1993 MYRes2
+f  MYag/MYST  11867237      4960 Dec  7  1993 MYRes3
+f  MYag/MYST   8006988      4960 Dec  7  1993 MYRes4
+d         73 items               Dec 16  1993 Myst
+d         51 items               Dec  7  1993 Selenitic
+f  MYag/MYST  11930042      4960 Dec  7  1993 SERes1
+f  MYag/MYST   4601689      4960 Dec  7  1993 SERes2
+d         31 items               Dec  7  1993 Stoneship
+f  MYag/MYST  11420969      4960 Dec  7  1993 STRes1
+f  MYag/MYST  10899852      4960 Dec  7  1993 STRes2
+f  MYag/MYST         0      5696 Jul 24  1993 Template
+
+:Trash:
+
+:Myst Graphics:Channelwood:
+f  MYqt/MYST      4829    816304 Mar 21  1993 Bridge.MooV
+f  MYqt/MYST      2997     19598 Apr 27  1993 BridgeSwitch.MooV
+f  MYqt/MYST      2169      6838 Apr 27  1993 BW 10-N Windmill.MooV
+f  MYqt/MYST      2373      9524 Apr 27  1993 BW 11-N Windmill.MooV
+f  MYqt/MYST      2217      8675 Apr 27  1993 BW 14-N Windmill.MooV
+f  MYqt/MYST      2651      4982 Apr 27  1993 BW 17-N Windmill.MooV
+f  MYqt/MYST      1095     10566 Mar 21  1993 BW 19-N Windmill.MooV
+f  MYqt/MYST      1075     10811 Mar 21  1993 BW 20-N Windmill.MooV
+f  MYqt/MYST      1095     26424 Mar 21  1993 BW 22-N Windmill.MooV
+f  MYqt/MYST      1095     25032 Mar 21  1993 BW 24-N Windmill.MooV
+f  MYqt/MYST      1095     22848 Mar 21  1993 BW 28-N Windmill.MooV
+f  MYqt/MYST      1095     26288 Mar 21  1993 BW 29-N Windmill.MooV
+f  MYqt/MYST      1095     23056 Mar 21  1993 BW 30-N Windmill.MooV
+f  MYqt/MYST      1095     19252 Mar 21  1993 BW 31-N Windmill.MooV
+f  MYqt/MYST      1075      9501 Mar 21  1993 BW 32-N Windmill.MooV
+f  MYqt/MYST      1075      8774 Mar 21  1993 BW 34-N Windmill.MooV
+f  MYqt/MYST      1095     25576 Mar 18  1993 BW 35-N Windmill.MooV
+f  MYqt/MYST      1095     20356 Mar 21  1993 BW 36-N Windmill.MooV
+f  MYqt/MYST      1095     20140 Mar 21  1993 BW 38-N Windmill.MooV
+f  MYqt/MYST      1075     23690 Mar 21  1993 BW 39-N Windmill.MooV
+f  MYqt/MYST      1095     19824 Mar 21  1993 BW 40-N Windmill.MooV
+f  MYqt/MYST      1095      8139 Mar 21  1993 BW 45-N Windmill.MooV
+f  MYqt/MYST      1095     18688 Mar 21  1993 BW 47-N Windmill.MooV
+f  MYqt/MYST      1107      4956 Mar 21  1993 BW 8-N Windmill.MooV
+f  MYqt/MYST      1079     14624 Mar 18  1993 Elevator 1 switch.MooV
+f  MYqt/MYST      4741    391808 Mar 28  1993 Elevator1.MooV
+f  MYqt/MYST      1079     32220 Mar 17  1993 Elevator2-Switch.MooV
+f  MYqt/MYST      4947    383792 Mar 28  1993 Elevator2.MooV
+f  MYqt/MYST      1079     15236 Mar 17  1993 Elevator3 switch.MooV
+f  MYqt/MYST      4689    404400 Mar 28  1993 Elevator3.MooV
+f  MYqt/MYST      1001    277812 Apr 29  1993 EV Drip.Mov
+f  MYqt/MYST      5066   1321938 Apr  5  1993 Holo-ALaugh.MooV
+f  MYqt/MYST      9828   2004797 Apr  5  1993 Holo-AMouth.MooV
+f  MYqt/MYST      4422   1083900 Apr  5  1993 Holo-ASirrus.MooV
+f  MYqt/MYST     11912   2183820 May 24  1993 Holo-SMessage.MooV
+f  MYqt/MYST      1001    286342 Jun  1  1993 L1 Slosh Mov
+f  MYqt/MYST      1001    278183 Jun  1  1993 L1 Slosh/Run Mov
+f  MYqt/MYST      1001    278183 Jun  1  1993 L1 Slosh/Run/Motor Mov
+f  MYqt/MYST      1001    278183 Jun  1  1993 L1 Slosh/Run/MotorQ Mov
+f  MYqt/MYST      1001    278183 Apr 29  1993 L2 Wind Mov
+f  MYqt/MYST      1001    278183 Apr 29  1993 L2 Wind/Ropes Mov
+f  MYqt/MYST      1001    287084 Apr 29  1993 L3 Wind Mov
+f  MYqt/MYST      5270   1199872 Apr  5  1993 Mon-ALaugh.MooV
+f  MYqt/MYST      6658   1650454 Apr  5  1993 Mon-AMouth.MooV
+f  MYqt/MYST      4990   1095572 Apr  5  1993 Mon-ASirrus.MooV
+f  MYqt/MYST     10648   1536573 May 24  1993 Mon-SMessage.MooV
+f  MYqt/MYST      1097   1370112 Apr 29  1993 MU ChannelAchenar.Mov
+f  MYqt/MYST      1069   1049284 Apr 29  1993 MU ChannelSirrus.Mov
+f  MYqt/MYST      1105   1446147 Apr 29  1993 MU ChannelTemple.Mov
+f  MYqt/MYST      1407    211936 Mar 11  1993 MystLib.MooV
+f  MYqt/MYST      3235     19615 Mar 22  1993 PH 1-N (lookup) AxleSpin.MooV
+f  MYqt/MYST      3235     32864 Mar 22  1993 PH 1-N AxleSpin.MooV
+f  MYqt/MYST       999      3704 Apr 12  1993 PH 1-N Lookup Water.MooV
+f  MYqt/MYST      3235     90438 Mar 22  1993 PH 2-N AxleSpin.MooV
+f  MYqt/MYST      1095     26548 Mar 17  1993 PH 4-N Windmill.MooV
+f  MYqt/MYST      1095     34756 Mar 17  1993 PH 5-N (Lookup).MooV
+f  MYqt/MYST      1001    278183 Apr 29  1993 PH Pouring Mov
+f  MYqt/MYST      1001    278183 Apr 29  1993 PH Pouring/Running Mov
+f  MYqt/MYST      2011    260104 May 25  1993 PipeBridge.MooV
+f  MYqt/MYST      1095     20460 Mar 21  1993 Sirrus Desk Windmill.MooV
+f  MYqt/MYST      1095     22916 Mar 21  1993 Sirrus Windmill.MooV
+f  MYqt/MYST      1095     25680 Mar 17  1993 SwitchClose-Input.MooV
+f  MYqt/MYST      1095     26290 Mar 17  1993 SwitchClose-LftOut.MooV
+f  MYqt/MYST      1095     27476 Mar 17  1993 SwitchClose-RtOut.MooV
+f  MYqt/MYST      4452    185006 May 13  1993 Temple Alter.MooV
+f  MYqt/MYST      3163     56314 Mar 22  1993 V 19-N StairsDoor.MooV
+f  MYqt/MYST      1095     19656 Mar 17  1993 V 19-N Switch.MooV
+f  MYqt/MYST      1095     11490 Mar 21  1993 V 43-E Windmill.MooV
+f  MYqt/MYST      1095      2780 Mar 21  1993 V 44-E Windmill.MooV
+f  MYqt/MYST      1095     15908 Mar 18  1993 V 8-N Windmill.MooV
+f  MYqt/MYST      1095     20740 Mar 17  1993 VH 12-N Windmill.MooV
+f  MYqt/MYST      1095     10296 Mar 17  1993 VH 8-E Windmill.MooV
+f  MYqt/MYST      1095     32640 Mar 22  1993 Village 45-E Windmill.MooV2
+f  MYqt/MYST      1095     31012 Mar 17  1993 VS 1-Down Windmill.MooV
+f  MYqt/MYST      1001    278183 Apr 29  1993 WA Windmill Shaft/Water.Mov
+
+:Myst Graphics:Mechanical:
+f  MYqt/MYST      1779    744780 Mar 12  1993 A-Throne Snake.MooV
+f  MYqt/MYST      1001    278183 Apr 29  1993 AR Water/wind Mov
+f  MYqt/MYST      3203     76659 Dec  1  1992 BirdCrank.MooV
+f  MYqt/MYST      2267    314251 Feb 13  1993 Elevator Window.MooV
+f  MYqt/MYST      2729    285088 Mar  2  1993 Holo On.MooV
+f  MYqt/MYST      8311    649444 Feb 13  1993 Holo.MooV
+f  MYqt/MYST      2935    338784 Feb 11  1993 HubControlElevator.MooV
+f  MYqt/MYST      4675    660224 Mar 12  1993 HubControlGears.MooV
+f  MYqt/MYST      3971    166689 May 12  1993 HubControlGears.MooV orig
+f  MYqt/MYST      3233    114088 Mar  5  1993 HubHallStairs.MooV
+f  MYqt/MYST      1917     17598 Mar  4  1993 LowerGears.MooV
+f  MYqt/MYST      2177    107733 Feb 16  1993 LowerGears.MooV (big)
+f  MYqt/MYST      1001    289310 Apr 29  1993 MR Bsmt Gear Mov
+f  MYqt/MYST      1073   1073392 Apr 29  1993 MU Achenar Cash.Mov
+f  MYqt/MYST      1085   1216189 Apr 29  1993 MU Achenar.Mov
+f  MYqt/MYST      1061    958413 Apr 29  1993 MU Bookroom.Mov
+f  MYqt/MYST      1013    428026 Apr 29  1993 MU Lower Layer.Mov
+f  MYqt/MYST      1009    381664 Apr 29  1993 MU MiddleLoop.Mov
+f  MYqt/MYST      1073   1069683 Apr 29  1993 MU Sirrus Cash.Mov
+f  MYqt/MYST      1065   1000325 Apr 29  1993 MU Sirrus.Mov
+f  MYqt/MYST      1407    211936 Mar 11  1993 MystLib.MooV
+f  MYqt/MYST      1163    139917 Feb 15  1993 S-Throne Bird.MooV
+f  MYqt/MYST      3171    717686 Dec  1  1992 SouthStairs.MooV
+
+:Myst Graphics:Myst:
+f  MYqt/MYST      1005     36820 Apr 14  1993 AR Gas MoV
+f  MYqt/MYST      1001    278553 Apr 28  1993 AR Howling&Birds Mov
+f  MYqt/MYST      1001    278183 Apr 28  1993 AR Lite Wind Mov
+f  MYqt/MYST      3135     72520 May 12  1993 Birds1.Moov
+f  MYqt/MYST      3731    103292 May 12  1993 Birds2.MooV
+f  MYqt/MYST      3731    103030 May 12  1993 Birds3.MooV
+f  MYqt/MYST      1001    278183 Apr 28  1993 BR Seagulls/Water Slosh Mx Mov
+f  MYqt/MYST      4124    829890 Jul  2  1993 Br¿derbund MooV
+f  MYqt/MYST      5312     61173 Apr 14  1993 CabinFire.MooV
+f  MYqt/MYST      4826     32557 Apr 14  1993 CabinFireFar.MooV
+f  MYqt/MYST      3243     39129 Jan 27  1993 CabinGauge.MooV
+f  MYqt/MYST      3167     17541 Jan 27  1993 CabinGaugeFar.MooV
+f  MYqt/MYST      3143     26509 Jan 27  1993 Clock1-W Gear1.MooV
+f  MYqt/MYST      3243     26243 Jan 27  1993 Clock1-W Gear2.MooV
+f  MYqt/MYST      3151     22292 Jan 27  1993 Clock1-W Gear3.MooV
+f  MYqt/MYST      3179    201430 Jan 27  1993 Clock1-W GearGate.MooV
+f  MYqt/MYST      3267    263640 Jan 27  1993 Clock1-W LeftChain.MooV
+f  MYqt/MYST      5274    862709 Jul 13  1993 Cyan Logo.MooV
+f  MYqt/MYST      1077    441880 Feb  8  1993 EL GenAll MoV
+f  MYqt/MYST      1001    278183 Apr 28  1993 EV Birds/Wind Mov
+f  MYqt/MYST      1763    562676 Mar 11  1993 FirePlace1-NE.MooV
+f  MYqt/MYST     24154   8407680 Apr 23  1993 FlyChannel/Music.MooV
+f  MYqt/MYST      7390   1745944 Mar 16  1993 FlyGearGate/Music.MooV
+f  MYqt/MYST     22296   4275416 Apr 24  1993 FlyStoneShip/Music.MooV
+f  MYqt/MYST      1711         0 Apr 14  1993 FR Furnace MoV
+f  MYqt/MYST      1903    113840 May 17  1993 Garden 4-W (BF1).MooV
+f  MYqt/MYST      1903    143892 May 17  1993 Garden 4-W (BF2).MooV
+f  MYqt/MYST      1227    168584 Apr  8  1993 Gears.MooV
+f  MYqt/MYST      1061    278258 Apr 23  1993 Intro Wind Mov
+f  MYqt/MYST      7606   3269957 Jul 13  1993 Intro.Moov
+f  MYqt/MYST      6654   2061557 May 15  1993 Intro2.Moov
+f  MYqt/MYST      2183    441780 Mar 11  1993 LibElevator.MooV
+f  MYqt/MYST      1355    217312 Mar 11  1993 LibraryStairsDown.MooV
+f  MYqt/MYST      1371    232720 Mar 11  1993 LibraryStairsUp.MooV
+f  MYqt/MYST      3183    178515 Jan 27  1993 LibraryTwirl.MooV
+f  MYqt/MYST      3183    175319 Jan 27  1993 LibraryTwist.MooV
+f  MYqt/MYST       985    120179 Apr 28  1993 MR Elev Room Loud Mov
+f  MYqt/MYST      1001    278183 Apr 28  1993 MU Generator Stairs Mov
+f  MYqt/MYST      1025    571194 Apr 28  1993 MU Obser/Elecmot Mix Mov
+f  MYqt/MYST      1065   1012935 Apr 28  1993 MU Planetarium MoV
+f  MYqt/MYST      1069   1024804 Apr 29  1993 MU QuitGame Mov
+f  MYqt/MYST      1057    909825 Apr 29  1993 MU QuitGame2 Mov
+f  MYqt/MYST      1093   1640313 May 14  1993 MU VaultSound Mov
+f  MYqt/MYST      1407    211936 Mar 11  1993 MystLib.MooV
+f  MYqt/MYST      2835    749936 Mar 11  1993 SeleniticBook.MooV
+f  MYqt/MYST      1239      4902 May  1  1993 Vault 1 Water.MooV
+f  MYqt/MYST      1239     11675 May  1  1993 Vault 2 Water.MooV
+f  MYqt/MYST      1483     21042 May  1  1993 Vault 3 Water.MooV
+f  MYqt/MYST      1483     50947 May  1  1993 Vault 4 Water.MooV
+f  MYqt/MYST      1483     29252 May  1  1993 Vault 5 Water.MooV
+f  MYqt/MYST      3223    250452 May  1  1993 Vault Blank.MooV
+f  MYqt/MYST      2759    621236 Jun 15  1993 Vault MarkerSwitch.Moov
+f  MYqt/MYST      4079   1587016 Apr 30  1993 Vault Mountain.MooV
+f  MYqt/MYST      2267    583384 Apr 30  1993 Vault Water.MooV
+
+:Myst Graphics:Selenitic:
+f  MYqt/MYST      4446   2035258 Mar 28  1993 *-A1
+f  MYqt/MYST      4642   2161580 Mar 28  1993 *-E1
+f  MYqt/MYST      3014   1009962 Mar 28  1993 *-F0
+f  MYqt/MYST      3326   1207014 Mar 29  1993 *-F1
+f  MYqt/MYST      4870   2236168 Mar 29  1993 *-L0
+f  MYqt/MYST      4870   2232116 Mar 28  1993 *-L1
+f  MYqt/MYST      3934   1624724 Mar 28  1993 *-O0
+f  MYqt/MYST      3922   1616538 Mar 28  1993 *-O1
+f  MYqt/MYST      3918   1619864 Mar 28  1993 *-P0
+f  MYqt/MYST      3906   1608429 Mar 28  1993 *-P1
+f  MYqt/MYST      4870   2237152 Mar 28  1993 *-R0
+f  MYqt/MYST      4870   2233100 Mar 28  1993 *-R1
+f  MYqt/MYST      4166   1812447 Mar 29  1993 *-S0
+f  MYqt/MYST      4166   1808395 Mar 29  1993 *-S1
+f  MYqt/MYST      4446   2037722 Mar 29  1993 *A1
+f  MYqt/MYST      4646   2181578 Mar 29  1993 *E0
+f  MYqt/MYST      3018   1014974 Mar 29  1993 *F0
+f  MYqt/MYST      3326   1208630 Mar 29  1993 *F1
+f  MYqt/MYST      4878   2237132 Mar 29  1993 *L0
+f  MYqt/MYST      4870   2229288 Mar 29  1993 *L1
+f  MYqt/MYST      1774    188685 Mar 29  1993 *Left00
+f  MYqt/MYST      1774    187277 Mar 29  1993 *Left01
+f  MYqt/MYST      1782    191837 Mar 29  1993 *Left10
+f  MYqt/MYST      1794    197397 Mar 29  1993 *Left11
+f  MYqt/MYST      3926   1622056 Mar 29  1993 *O0
+f  MYqt/MYST      3926   1618600 Mar 29  1993 *O1
+f  MYqt/MYST      3910   1614548 Mar 29  1993 *P0
+f  MYqt/MYST      3910   1611192 Mar 29  1993 *P1
+f  MYqt/MYST      4878   2239636 Mar 29  1993 *R0
+f  MYqt/MYST      4870   2231792 Mar 29  1993 *R1
+f  MYqt/MYST      1782    193253 Mar 29  1993 *Right00
+f  MYqt/MYST      1782    191573 Mar 29  1993 *Right01
+f  MYqt/MYST      1794    199333 Mar 29  1993 *Right10
+f  MYqt/MYST      1774    185473 Mar 29  1993 *Right11
+f  MYqt/MYST      4166   1810263 Mar 29  1993 *S0
+f  MYqt/MYST      4166   1806807 Mar 29  1993 *S1
+f  MYqt/MYST      1001    278183 Apr 29  1993 AR Howling Mov
+f  MYqt/MYST      1001    278183 Apr 29  1993 AR Lite Wind Mov
+f  MYqt/MYST      1323    153284 Mar 13  1993 Caldera North.MooV
+f  MYqt/MYST      1323    158872 Mar 13  1993 Caldera South.MooV
+f  MYqt/MYST      1001    278183 Apr 29  1993 EV Electmotors Mov
+f  MYqt/MYST      1001    278183 Apr 29  1993 EV StoneForest Mov
+f  MYqt/MYST      1001    278183 Apr 29  1993 EV StoneForest No Water Mov
+f  MYqt/MYST      1323    302948 Mar 13  1993 Fountain.MooV
+f  MYqt/MYST      1001    278183 Apr 29  1993 FR Caldron Mov
+f  MYqt/MYST      1001    278924 Apr 29  1993 GR Broken Clock Mov
+f  MYqt/MYST       958      6944 Feb  1  1993 MR Train Start Brake Rel Mov
+f  MYqt/MYST      1073   1089712 Apr 29  1993 MU Bookroom Mov
+f  MYqt/MYST      1407    211936 Mar 11  1993 MystLib.MooV
+f  MYqt/MYST      1001    278924 Apr 29  1993 WA Lapping Mov
+f  MYqt/MYST      1001    278183 Apr 29  1993 WA Running Far Mov
+
+:Myst Graphics:Stoneship:
+f  MYqt/MYST      1299    252936 Apr  7  1993 Achenar-Holo.MooV
+f  MYqt/MYST      1211    185264 Apr  7  1993 Achenar-HoloControls.MooV
+f  MYqt/MYST      3231    534035 Nov 30  1992 Achenar-HoloControls.old
+f  MYqt/MYST      1001    278183 Apr 29  1993 AR Water/wind Mov
+f  MYqt/MYST      3565    682108 Mar 28  1993 BookRoom.MooV
+f  MYqt/MYST      1001    278183 Apr 29  1993 BR Seagulls/Water Slosh Mov
+f  MYqt/MYST       981    278183 May 14  1993 EV Bubbles Mov
+f  MYqt/MYST       993    208082 Apr 29  1993 EV Drip II Mov
+f  MYqt/MYST      1001    277812 Apr 29  1993 EV Drip Mov
+f  MYqt/MYST      3255    248304 Nov 30  1992 Generator.MooV
+f  MYqt/MYST      3231    195790 Dec  1  1992 Key (chest).MooV
+f  MYqt/MYST      3043     57984 Dec  1  1992 Key (dry).MooV
+f  MYqt/MYST      3043     56591 Dec  1  1992 Key.MooV
+f  MYqt/MYST      3211    119002 Nov 30  1992 LighthouseSpigot.MooV
+f  MYqt/MYST      1077   1122351 Apr 29  1993 MU Achenar Rm Mov
+f  MYqt/MYST      1057   1121053 May 14  1993 MU Book/Bubbles Mov
+f  MYqt/MYST      1057    925032 Apr 29  1993 MU Compass Room Mov
+f  MYqt/MYST       989    205857 May 14  1993 MU Compass/Bubbles Off Mov
+f  MYqt/MYST      1025    719090 May 14  1993 MU Compass/Bubbles On Mov
+f  MYqt/MYST      1045    784461 Apr 29  1993 MU Sirrus Rm Mov
+f  MYqt/MYST      1065    979554 Apr 29  1993 MU Telescope/Wind Mov
+f  MYqt/MYST      1407    211936 Mar 11  1993 MystLib.MooV
+f  MYqt/MYST      3227    213033 Jun  4  1993 OpenLock.MooV
+f  MYqt/MYST      1323    166432 Mar 13  1993 Sirrus-Desk.MooV
+f  MYqt/MYST      1291    175716 Mar 13  1993 Sirrus-SphereEast.MooV
+f  MYqt/MYST      1651    403140 Mar 13  1993 Sirrus-SphereWest.Moov
+f  MYqt/MYST      1157     40873 Jul 20  1993 SW Buzzer.MoV
+f  MYqt/MYST      5110    245789 Jun  4  1993 TunnelA6-Down.MooV
+f  MYqt/MYST      4780    216385 Jun  4  1993 TunnelA7-up.MooV
+f  MYqt/MYST      5150    245873 Jun  4  1993 TunnelC6-down.MooV
+f  MYqt/MYST      4744    217501 Jun  4  1993 TunnelC7-up.MooV
