@@ -138,12 +138,16 @@ def getint(dat, pos):
     val = struct.unpack('>I', dat[ pos : pos+4 ])[0]
     return val
     
-def getsint(dat, pos):
+def getsignint(dat, pos):
     val = struct.unpack('>i', dat[ pos : pos+4 ])[0]
     return val
     
 def getshort(dat, pos):
     val = struct.unpack('>H', dat[ pos : pos+2 ])[0]
+    return val
+
+def getsignshort(dat, pos):
+    val = struct.unpack('>h', dat[ pos : pos+2 ])[0]
     return val
 
 def getstring(dat, pos):
@@ -217,7 +221,7 @@ def parse(filename):
     while pos < len(dat):
         bsize = getint(dat, pos+0)
         btype = dat[ pos+4 : pos+8 ].decode()
-        bid = getsint(dat, pos+8)
+        bid = getsignint(dat, pos+8)
         block = dat[ pos : pos+bsize ]
         if btype == 'STAK':
             assert stack is None
@@ -286,7 +290,7 @@ def parse_card(block, bid):
         pos += partsize
 
     for ix in range(numpartconts):
-        partid = getshort(block, pos+0)
+        partid = getsignshort(block, pos+0)
         pcsize = getshort(block, pos+2)
         if block[pos+4] == 0:
             partstr = block[ pos+5 : pos+4+pcsize ]
