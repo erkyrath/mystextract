@@ -13,6 +13,9 @@ class Stack:
         self.script = script
         self.cards = []
 
+    def __repr__(self):
+        return '<Stack: %d cards>' % (len(self.cards),)
+        
 class BlockList:
     def __init__(self, numpages, pagesize, numcards, cardrefsize):
         self.numpages = numpages
@@ -20,6 +23,20 @@ class BlockList:
         self.numcards = numcards
         self.cardrefsize = cardrefsize
         self.pagerefs = []
+
+class Card:
+    def __init__(self, id, pageblockid, background, numparts, numpartconts):
+        self.id = id
+        self.pageblockid = pageblockid
+        self.background = background
+        self.numparts = numparts
+        self.numpartconts = numpartconts
+        self.parts = []
+        self.partconts = []
+        self.script = None
+
+    def __repr__(self):
+        return '<Card %d>' % (self.id,)
         
 def getint(dat, pos):
     val = struct.unpack('>I', dat[ pos : pos+4 ])[0]
@@ -79,7 +96,8 @@ def parse(filename):
         elif btype == 'LIST':
             stack.list = parse_list(block, bid)
         elif btype == 'CARD':
-            parse_card(block, bid)
+            card = parse_card(block, bid)
+            stack.cards.append(card)
             #break ###
         else:
             print('%s %d:' % (btype, bid,))
@@ -108,15 +126,11 @@ def parse_list(block, bid):
     return res
 
 def parse_card(block, bid):
-    print('CARD %d:' % (bid,))
     pbid = getint(block, 0x20)
-    print('  PageBlockID:', pbid)
     background = getint(block, 0x24)
-    print('  Background:', background)
     numparts = getshort(block, 0x28)
-    print('  NumParts:', numparts)
     numpartconts = getshort(block, 0x30)
-    print('  NumPartConts:', numpartconts)
+    card = Card(bid, pbid, background, numparts, numpartconts)
 
     pos = 0x36
     for ix in range(numparts):
@@ -151,9 +165,9 @@ def parse_card(block, bid):
 
     script = block[ pos : ]
     script = decode_script(script)
-    if script:
-        print('  ...script: %r' % (script,))
+    card.script = script
 
+    return card
         
 for filename in sys.argv[ 1 : ]:
     stack = parse(filename)
