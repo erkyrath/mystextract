@@ -7,6 +7,20 @@ if len(sys.argv) <= 1:
     print('usage: stakread.py hypercard.stak')
     sys.exit()
 
+class Stack:
+    def __init__(self, format, script=None):
+        self.format = format
+        self.script = script
+        self.cards = []
+
+class BlockList:
+    def __init__(self, numpages, pagesize, numcards, cardrefsize):
+        self.numpages = numpages
+        self.pagesize = pagesize
+        self.numcards = numcards
+        self.cardrefsize = cardrefsize
+        self.pagerefs = []
+        
 def getint(dat, pos):
     val = struct.unpack('>I', dat[ pos : pos+4 ])[0]
     return val
@@ -27,56 +41,71 @@ def getstring(dat, pos):
     return val, ix+1
 
 def endnulls(script):
-    while len(script) and script[0] == 0:
-        script = script[ 1 : ]
-    while len(script) and script[-1] == 0:
-        script = script[ : -1 ]
+    pos = 0
+    while pos < len(script) and script[pos] == 0:
+        pos += 1
+    if pos > 0:
+        script = script[ pos : ]
+    pos = len(script)-1
+    while pos > 0 and script[pos] == 0:
+        pos -= 1
+    if pos < len(script)-1:
+        script = script[ : pos+1 ]
+    return script
+
+def decode_script(script):
+    script = endnulls(script)
+    if not len(script):
+        return None
+    script = script.decode('mac_roman').replace('\r', '\n')
     return script
 
 def parse(filename):
     with open(filename, 'rb') as fl:
         dat = fl.read()
+        
+    stack = None
     pos = 0
+    
     while pos < len(dat):
         bsize = getint(dat, pos+0)
         btype = dat[ pos+4 : pos+8 ].decode()
         bid = getsint(dat, pos+8)
-        #print(bsize, btype, bid)
         block = dat[ pos : pos+bsize ]
         if btype == 'STAK':
-            parse_stak(block, bid)
+            assert stack is None
+            # This must be the first block
+            stack = parse_stak(block, bid)
         elif btype == 'LIST':
-            parse_list(block, bid)
+            stack.list = parse_list(block, bid)
         elif btype == 'CARD':
             parse_card(block, bid)
             #break ###
         else:
             print('%s %d:' % (btype, bid,))
         pos += bsize
+        
+    return stack
 
 def parse_stak(block, bid):
-    print('STAK %d:' % (bid,))
     format = getint(block, 16)
-    print('  Format:', format)
     script = block[ 0x600 : ]
-    script = script.decode('mac_roman')
-    ###print('     %r' % (script,))
+    script = decode_script(script)
+    stack = Stack(format, script)
+    return stack
 
 def parse_list(block, bid):
-    print('LIST %d:' % (bid,))
     numpages = getint(block, 0x10)
-    print('  NumPages:', numpages)
     pagesize = getint(block, 0x14)
-    print('  PageSize:', pagesize)
     numcards = getint(block, 0x18)
-    print('  NumCards:', numcards)
     cardrefsize = getshort(block, 0x1C)
-    print('  CardRefSize:', cardrefsize)
+    res = BlockList(numpages, pagesize, numcards, cardrefsize)
     for ix in range(numpages):
         pos = 0x30 + 6*ix
         pbid = getint(block, pos)
         pcards = getshort(block, pos+4)
-        print('  ...page %d: block ID %d, %d cards' % (ix, pbid, pcards,))
+        res.pagerefs.append( (pbid, pcards) )
+    return res
 
 def parse_card(block, bid):
     print('CARD %d:' % (bid,))
@@ -103,8 +132,7 @@ def parse_card(block, bid):
         if npos < pos+partsize:
             assert(block[npos] == 0)
             script = block[ npos+1 : pos+partsize ]
-            script = endnulls(script)
-            script = script.decode('mac_roman').replace('\r', '\n')
+            script = decode_script(script)
             if script:
                 print('     %r' % (script,))
         pos += partsize
@@ -122,12 +150,11 @@ def parse_card(block, bid):
         pos += (4+pcsize)
 
     script = block[ pos : ]
-    script = endnulls(script)
-    script = script.decode('mac_roman').replace('\r', '\n')
+    script = decode_script(script)
     if script:
         print('  ...script: %r' % (script,))
 
         
 for filename in sys.argv[ 1 : ]:
-    parse(filename)
+    stack = parse(filename)
     
