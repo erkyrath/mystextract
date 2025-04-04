@@ -61,7 +61,7 @@ class Stack:
             card.consistency()
 
     def dump(self, outfl):
-        outfl.write('Stack (%d cards)\n' % (len(self.cards),))
+        outfl.write('Stack (%d cards, %d backgrounds)\n' % (len(self.cards), len(self.backgrounds),))
         
         if self.script:
             outfl.write('\n')
@@ -320,9 +320,19 @@ def parse_card(block, bid):
     numparts = getshort(block, 0x28)
     numpartconts = getshort(block, 0x30)
     card = Card(bid, pbid, background, numparts, numpartconts)
+    pos = parse_partstuff(card, block, 0x36)
+    return card
+        
+def parse_background(block, bid):
+    numcards = getint(block, 0x18)
+    numparts = getshort(block, 0x24)
+    numpartconts = getshort(block, 0x2C)
+    bkgd = Background(bid, numparts, numpartconts)
+    pos = parse_partstuff(bkgd, block, 0x32)
+    return bkgd
 
-    pos = 0x36
-    for ix in range(numparts):
+def parse_partstuff(card, block, pos):
+    for ix in range(card.numparts):
         partsize = getshort(block, pos+0)
         partid = getshort(block, pos+2)
         partname, npos = getstring(block, pos+30)
@@ -337,7 +347,7 @@ def parse_card(block, bid):
         card.parts.append(part)
         pos += partsize
 
-    for ix in range(numpartconts):
+    for ix in range(card.numpartconts):
         partid = getsignshort(block, pos+0)
         pcsize = getshort(block, pos+2)
         if block[pos+4] == 0:
@@ -360,15 +370,7 @@ def parse_card(block, bid):
     script = decode_script(script)
     card.script = script
 
-    return card
-        
-def parse_background(block, bid):
-    numcards = getint(block, 0x18)
-    numparts = getshort(block, 0x24)
-    numpartconts = getshort(block, 0x2C)
-    bkgd = Background(bid, numparts, numpartconts)
-
-    return bkgd
+    return pos
 
 for filename in sys.argv[ 1 : ]:
     stack = parse(filename)
