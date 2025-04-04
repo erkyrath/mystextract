@@ -11,10 +11,20 @@ class Stack:
     def __init__(self, format, script=None):
         self.format = format
         self.script = script
+        self.list = None
         self.cards = []
 
     def __repr__(self):
         return '<Stack: %d cards>' % (len(self.cards),)
+
+    def consistency(self):
+        if not self.list:
+            print('ERROR: no LIST block')
+            return
+        if self.list.numcards != len(self.cards):
+            print('ERROR: wrong number of cards')
+        for card in self.cards:
+            card.consistency()
         
 class BlockList:
     def __init__(self, numpages, pagesize, numcards, cardrefsize):
@@ -38,6 +48,12 @@ class Card:
     def __repr__(self):
         return '<Card %d>' % (self.id,)
 
+    def consistency(self):
+        if self.numparts != len(self.parts):
+            print('ERROR: wrong number of parts')
+        if self.numpartconts != len(self.partcontents):
+            print('ERROR: wrong number of part contents')
+    
 class CardPart:
     def __init__(self, id, name, rect):
         self.id = id
@@ -47,7 +63,7 @@ class CardPart:
 
     def __repr__(self):
         return '<CardPart %d "%s">' % (self.id, self.name,)
-    
+
 def getint(dat, pos):
     val = struct.unpack('>I', dat[ pos : pos+4 ])[0]
     return val
@@ -181,4 +197,6 @@ def parse_card(block, bid):
         
 for filename in sys.argv[ 1 : ]:
     stack = parse(filename)
+    stack.consistency()
+    
     
