@@ -36,6 +36,17 @@ class Stack:
             print('ERROR: wrong number of cards')
         for card in self.cards:
             card.consistency()
+
+    def dump(self, outfl):
+        outfl.write('Stack (%d cards)\n' % (len(self.cards),))
+        
+        if self.script:
+            outfl.write('\n')
+            print_script(self.script, outfl, indent=2)
+            outfl.write('\n')
+
+        for card in self.cards:
+            card.dump(outfl)
         
 class BlockList:
     def __init__(self, numpages, pagesize, numcards, cardrefsize):
@@ -66,6 +77,17 @@ class Card:
         if self.numpartconts != len(self.partcontents):
             print('ERROR: wrong number of part contents')
     
+    def dump(self, outfl):
+        outfl.write('  * Card %d "%s"\n' % (self.id, self.name,))
+        
+        if self.script:
+            outfl.write('\n')
+            print_script(self.script, outfl, indent=4)
+            outfl.write('\n')
+            
+        for part in self.parts:
+            part.dump(self.id, outfl)
+
 class CardPart:
     def __init__(self, id, name, rect):
         self.id = id
@@ -75,6 +97,11 @@ class CardPart:
 
     def __repr__(self):
         return '<CardPart %d "%s">' % (self.id, self.name,)
+
+    def dump(self, cardid, outfl):
+        outfl.write('    * Part %d:%d "%s"\n' % (cardid, self.id, self.name,))
+        if self.script:
+            print_script(self.script, outfl, indent=6)
 
 class Size:
     def __init__(self, width, height):
@@ -154,6 +181,16 @@ def decode_script(script):
         return None
     script = script.decode('mac_roman').replace('\r', '\n')
     return script
+
+def print_script(script, outfl, indent=0):
+    if not script:
+        return
+    tab = ' '*indent
+    ls = script.rstrip().split('\n')
+    for val in ls:
+        outfl.write(tab)
+        outfl.write(val)
+        outfl.write('\n')
 
 def parse(filename):
     with open(filename, 'rb') as fl:
@@ -255,5 +292,6 @@ def parse_card(block, bid):
         
 for filename in sys.argv[ 1 : ]:
     stack = parse(filename)
+    stack.dump(sys.stdout)
     
     
