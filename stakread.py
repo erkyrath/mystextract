@@ -8,11 +8,12 @@ if len(sys.argv) <= 1:
     sys.exit()
 
 class Stack:
-    def __init__(self, format, createversion, modversion, cardrect, script=None):
+    def __init__(self, format, createversion, modversion, cardrect, pixsize, script=None):
         self.format = format
         self.createversion = createversion
         self.modversion = modversion
         self.cardrect = cardrect
+        self.pixsize = pixsize
         self.script = script
         self.list = None
         self.cards = []
@@ -74,6 +75,14 @@ class CardPart:
     def __repr__(self):
         return '<CardPart %d "%s">' % (self.id, self.name,)
 
+class Size:
+    def __init__(self, width, height):
+        self.width = width
+        self.height = height
+
+    def __repr__(self):
+        return '<Size width=%d height=%d>' % (self.width, self.height,)
+    
 class Rect:
     def __init__(self, top, left, bottom, right):
         self.top = top
@@ -119,6 +128,11 @@ def getrectangle(dat, pos):
     rectbot = getshort(dat, pos+4)
     rectright = getshort(dat, pos+6)
     return Rect(recttop, rectleft, rectbot, rectright)
+
+def getsize(dat, pos):
+    height = getshort(dat, pos+0)
+    width = getshort(dat, pos+2)
+    return Size(width, height)
 
 def endnulls(script):
     pos = 0
@@ -176,9 +190,10 @@ def parse_stak(block, bid):
     createversion = getversion(block, 0x60)
     modversion = getversion(block, 0x6C)
     cardrect = getrectangle(block, 0x78)
+    pixsize = getsize(block, 0x1B8)
     script = block[ 0x600 : ]
     script = decode_script(script)
-    stack = Stack(format, createversion, modversion, cardrect, script)
+    stack = Stack(format, createversion, modversion, cardrect, pixsize, script)
     return stack
 
 def parse_list(block, bid):
