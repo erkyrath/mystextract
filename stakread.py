@@ -15,10 +15,15 @@ This script is in the public domain.
 
 import sys
 import struct
+import optparse
 
-if len(sys.argv) <= 1:
-    print('usage: stakread.py hypercard.stak')
-    sys.exit()
+popt = optparse.OptionParser(usage='stakread.py [ -o OUTFILE ] STACK')
+
+popt.add_option('-o', '--output',
+                action='store', dest='outfile')
+
+(opts, args) = popt.parse_args()
+
 
 class Stack:
     def __init__(self, format, numbackgrounds, numcards, createversion, modversion, cardrect, pixsize, script=None):
@@ -372,8 +377,18 @@ def parse_partstuff(card, block, pos):
 
     return pos
 
-for filename in sys.argv[ 1 : ]:
+if not args:
+    print('usage: stakread.py hypercard.stak')
+    sys.exit()
+    
+for filename in args:
     stack = parse(filename)
-    stack.dump(sys.stdout)
+    if opts.outfile:
+        if opts.outfile == '-':
+            stack.dump(sys.stdout)
+        else:
+            with open(opts.outfile, 'w') as outfl:
+                stack.dump(outfl)
+
     
     
