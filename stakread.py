@@ -73,6 +73,16 @@ class CardPart:
     def __repr__(self):
         return '<CardPart %d "%s">' % (self.id, self.name,)
 
+class Rect:
+    def __init__(self, top, left, bottom, right):
+        self.top = top
+        self.left = left
+        self.bottom = bottom
+        self.right = right
+
+    def __repr__(self):
+        return '<Rect top=%d left=%d bottom=%d right=%d>' % (self.top, self.left, self.bottom, self.right,)
+    
 def getint(dat, pos):
     val = struct.unpack('>I', dat[ pos : pos+4 ])[0]
     return val
@@ -101,6 +111,13 @@ def getversion(dat, pos):
     state = statemap.get(state, hex(state))
     release = dat[pos+3]
     return '%d.%d.%d-%s-%d' % (major, minor, patch, state, release,)
+
+def getrectangle(dat, pos):
+    recttop = getshort(dat, pos+0)
+    rectleft = getshort(dat, pos+2)
+    rectbot = getshort(dat, pos+4)
+    rectright = getshort(dat, pos+6)
+    return Rect(recttop, rectleft, rectbot, rectright)
 
 def endnulls(script):
     pos = 0
@@ -187,11 +204,8 @@ def parse_card(block, bid):
         partsize = getshort(block, pos+0)
         partid = getshort(block, pos+2)
         partname, npos = getstring(block, pos+30)
-        recttop = getshort(block, pos+6)
-        rectleft = getshort(block, pos+8)
-        rectbot = getshort(block, pos+10)
-        rectright = getshort(block, pos+12)
-        part = CardPart(partid, partname, (recttop, rectleft, rectbot, rectright))
+        rect = getrectangle(block, pos+6)
+        part = CardPart(partid, partname, rect)
         if npos < pos+partsize:
             assert(block[npos] == 0)
             script = block[ npos+1 : pos+partsize ]
