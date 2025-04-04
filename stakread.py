@@ -32,12 +32,22 @@ class Card:
         self.numparts = numparts
         self.numpartconts = numpartconts
         self.parts = []
-        self.partconts = []
+        self.partcontents = []
         self.script = None
 
     def __repr__(self):
         return '<Card %d>' % (self.id,)
-        
+
+class CardPart:
+    def __init__(self, id, name, rect):
+        self.id = id
+        self.name = name
+        self.rect = rect
+        self.script = None
+
+    def __repr__(self):
+        return '<CardPart %d "%s">' % (self.id, self.name,)
+    
 def getint(dat, pos):
     val = struct.unpack('>I', dat[ pos : pos+4 ])[0]
     return val
@@ -54,7 +64,7 @@ def getstring(dat, pos):
     ix = pos
     while dat[ix]:
         ix += 1
-    val = dat[ pos : ix ]
+    val = dat[ pos : ix ].decode('mac_roman')
     return val, ix+1
 
 def endnulls(script):
@@ -98,9 +108,9 @@ def parse(filename):
         elif btype == 'CARD':
             card = parse_card(block, bid)
             stack.cards.append(card)
-            #break ###
         else:
-            print('%s %d:' % (btype, bid,))
+            #print('%s %d:' % (btype, bid,))
+            pass
         pos += bsize
         
     return stack
@@ -141,14 +151,14 @@ def parse_card(block, bid):
         rectleft = getshort(block, pos+8)
         rectbot = getshort(block, pos+10)
         rectright = getshort(block, pos+12)
-        print('  ...part %d: ID %d %r' % (ix, partid, partname))
-        print('     rect: t=%d l=%d b=%d r=%d' % (recttop, rectleft, rectbot, rectright,))
+        part = CardPart(partid, partname, (recttop, rectleft, rectbot, rectright))
         if npos < pos+partsize:
             assert(block[npos] == 0)
             script = block[ npos+1 : pos+partsize ]
             script = decode_script(script)
-            if script:
-                print('     %r' % (script,))
+            part.script = script
+
+        card.parts.append(part)
         pos += partsize
 
     for ix in range(numpartconts):
@@ -159,8 +169,8 @@ def parse_card(block, bid):
         else:
             numruns = getshort(block, pos+4) & 0x7FFF
             partstr = block[ pos+6+2*numruns : pos+4+pcsize ]
-        partstr = partstr.decode()
-        print('  ...partcont %d: part %d %r' % (ix, partid, partstr))
+        partstr = partstr.decode('mac_roman')
+        card.partcontents.append( (partid, partstr) )
         pos += (4+pcsize)
 
     script = block[ pos : ]
