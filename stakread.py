@@ -21,8 +21,10 @@ if len(sys.argv) <= 1:
     sys.exit()
 
 class Stack:
-    def __init__(self, format, createversion, modversion, cardrect, pixsize, script=None):
+    def __init__(self, format, numbackgrounds, numcards, createversion, modversion, cardrect, pixsize, script=None):
         self.format = format
+        self.numbackgrounds = numbackgrounds
+        self.numcards = numcards
         self.createversion = createversion
         self.modversion = modversion
         self.cardrect = cardrect
@@ -45,6 +47,8 @@ class Stack:
         if not self.list:
             print('ERROR: no LIST block')
             return
+        if self.numcards != len(self.cards):
+            print('ERROR: wrong number of cards')
         if self.list.numcards != len(self.cards):
             print('ERROR: wrong number of cards')
         for card in self.cards:
@@ -242,6 +246,8 @@ def parse(filename):
 
 def parse_stak(block, bid):
     format = getint(block, 0x10)
+    numbackgrounds = getint(block, 0x24)
+    numcards = getint(block, 0x2C)
     passwdhash = getint(block, 0x44)
     userlevel = getshort(block, 0x48)
     createversion = getversion(block, 0x60)
@@ -250,7 +256,7 @@ def parse_stak(block, bid):
     pixsize = getsize(block, 0x1B8)
     script = block[ 0x600 : ]
     script = decode_script(script)
-    stack = Stack(format, createversion, modversion, cardrect, pixsize, script)
+    stack = Stack(format, numbackgrounds, numcards, createversion, modversion, cardrect, pixsize, script)
     return stack
 
 def parse_list(block, bid):
