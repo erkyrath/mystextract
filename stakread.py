@@ -275,6 +275,9 @@ def parse(filename):
         elif btype == 'CARD':
             card = parse_card(block, bid)
             stack.cards.append(card)
+        elif btype == 'BKGD':
+            bkgd = parse_background(block, bid)
+            stack.backgrounds.append(bkgd)
         else:
             #print('%s %d:' % (btype, bid,))
             pass
@@ -359,6 +362,14 @@ def parse_card(block, bid):
 
     return card
         
+def parse_background(block, bid):
+    numcards = getint(block, 0x18)
+    numparts = getshort(block, 0x24)
+    numpartconts = getshort(block, 0x2C)
+    bkgd = Background(bid, numparts, numpartconts)
+
+    return bkgd
+
 for filename in sys.argv[ 1 : ]:
     stack = parse(filename)
     stack.dump(sys.stdout)
