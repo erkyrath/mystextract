@@ -104,7 +104,7 @@ class Card:
             print('ERROR: wrong number of part contents')
     
     def dump(self, outfl):
-        outfl.write('  * Card %d "%s"\n' % (self.id, self.name,))
+        outfl.write('  * Card %d "%s" (%d parts)\n' % (self.id, self.name, len(self.parts),))
         
         if self.script:
             outfl.write('\n')
@@ -134,7 +134,7 @@ class Background:
             print('ERROR: wrong number of part contents')
     
     def dump(self, outfl):
-        outfl.write('  * Background %d "%s"\n' % (self.id, self.name,))
+        outfl.write('  * Background %d "%s" (%d parts)\n' % (self.id, self.name, len(self.parts),))
         
         if self.script:
             outfl.write('\n')
