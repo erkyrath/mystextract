@@ -1,0 +1,608 @@
+Stack (1 cards, 1 backgrounds)
+
+  ------------------------------------------------------------------------
+  --
+  --                              Myst®
+  --
+  --        Myst and Cyan® are registered trademarks of Cyan, Inc.
+  --           All graphic images (including icons & cursors),
+  --            Scripting, sounds, music, QuickTime™ movies
+  --        are Copyright © 1992,93 by Cyan Inc. All Rights Reserved
+  --
+  --            The HyperTint collection of XCMD's and XFCN's
+  --             are Copyright © 1992,93 by Symplex Systems.
+  --              All Rights Reserved. Used with permission.
+  --
+  --    Any use of the above items without the written permission of
+  --       Cyan, Inc. is a violation of federal copyright law.
+  --
+  --                            Cyan, Inc.
+  --                          P.O. Box 28096
+  --                      Spokane, WA  99228-8096
+  --
+  --
+  ------------------------------------------------------------------------
+  
+  on BlackFrame
+  if there is not a window "frame" then
+  unlock screen
+  xWindowFrame
+  if there is a window "frame" then
+  doMenu "next window"
+  hide menubar
+  hide titlebar
+  end if
+  end if
+  end BlackFrame
+  
+  --------------------      Development Handlers      -------------------
+  
+  on all
+  --development handler
+  edit script of stack allres
+  end all
+  
+  on bt
+  --development handler
+  --this is done on openstack
+  --remember to take it out of the openstack handler
+  set blindtyping to true
+  end bt
+  
+  on w
+  --development handler
+  put bg field "pict name"
+  end w
+  
+  on b
+  --development handler
+  htlock"bw"
+  opencard
+  end b
+  
+  on ps
+  -- development handler
+  global lastsound
+  put lastsound
+  end ps
+  
+  on zyx
+  -- development handler
+  -- used to add lines to default field in " Myst" stack
+  put "false & return before line 6 of card field defaults"
+  end zyx
+  
+  on mc
+  --development handler
+  go to next marked card
+  end mc
+  
+  on os
+  --development handler
+  set the cantmodify of this stack to false
+  end os
+  
+  on cs
+  --development handler
+  doMenu "Compact Stack"
+  set the cantmodify of this stack to true
+  end cs
+  
+  
+  -------------------------------Copied from Myst -----------------------
+  
+  on NewIt
+  ------------------------- Menu Option --------------------------
+  global RestoreData,charfile,Quick
+  if the short name of this stack is not " Myst" then
+  answer "Do you want to save this game before starting a new game?" with "Cancel" or "Don't Save" or "Save"
+  if it is "Cancel" then
+  hide menubar
+  exit NewIt
+  end if
+  if it is "Save" then SaveIt
+  end if
+  if quick is "true" then put "false" into quick
+  put empty into RestoreData
+  closemoovs
+  put empty into charfile
+  htchangePict "black","srccopy"
+  send closeStack
+  play stop
+  soundstop
+  hide menubar
+  set lockmessages to true
+  go card 1 of stack " Myst"
+  set lockmessages to false
+  stackInit
+  end newIt
+  
+  on restoreIt
+  ------------------------- Menu Option --------------------------
+  global charFile,restoreData,Quick
+  if the short name of this stack is not " Myst" then
+  answer "Do you want to save this game before restoring?" with "Cancel" or "Don't Save" or "Save"
+  if it is "Cancel" then
+  hide menubar
+  exit restoreIt
+  end if
+  if it is "Save" then SaveIt
+  end if
+  if the optionkey is down then
+  answer File "Restore Myst to…" of type "STAK"
+  else
+  answer File "Restore Myst to…" of type "MYag"
+  end if
+  if it is not empty then
+  put it into charFile
+  play stop
+  soundstop
+  closemoovs
+  hide menubar
+  put false into Quick
+  push card
+  lock screen
+  htlock true
+  set lockmessages to true
+  set lockrecent to true
+  go to stack charFile
+  put card field "globals" into RestoreData
+  pop card
+  htlock forcefalse
+  unlock screen
+  set lockmessages to false
+  htchangePict "black","srccopy"
+  send closeStack
+  set lockmessages to true
+  go to card 1 in stack " Myst"
+  set lockmessages to false
+  stackInit
+  end if
+  hide menubar
+  ww
+  end restoreIt
+  
+  on SaveIt
+  ------------------------- Menu Option --------------------------
+  global CharFile,quick,quicktemp
+  put quick into quicktemp
+  if quick is true then
+  put false into quick
+  put true into temp
+  
+  end if
+  if charFile is empty then SaveAs
+  else saveGame
+  if temp is true then put true into quick
+  ww
+  end SaveIt
+  
+  --function added 12/6/93 to compare names to reserved Myst file names
+  function checkName theName
+  set itemDelimiter to ":"
+  put last item of theName into theName
+  set itemDelimiter to ","
+  put false into theAnswer
+  put "Myst, Myst,Channelwood Age,Mechanical Age,Selenitic Age,Stoneship Age,Dunny Age" into ReservedNames
+  repeat with x = 1 to 7
+  if theName = item x of ReservedNames then
+  put true into theAnswer
+  exit repeat
+  end if
+  end repeat
+  if theAnswer is false then
+  put "MYRes,MERes,INRes,CHRes,STRes,SERes,ALLRes,DURes,template" into reservedNames
+  repeat with x = 1 to 9
+  if item x of ReservedNames is in theName then
+  put true into theAnswer
+  exit repeat
+  end if
+  end repeat
+  end if
+  return theAnswer
+  end checkName
+  
+  on SaveAs
+  ------------------------- Menu Option --------------------------
+  global CharFile,quick
+  if quick is true then
+  put false into quick
+  put true into temp
+  end if
+  if charFile is empty then get "Myst Saved Game"
+  else get charFile
+  set itemdelimiter to ":"
+  get last item of it
+  set itemdelimiter to ","
+  ask File "Save Myst game as…" with it
+  if it is not empty then
+  -- added 12/6/93 --
+  if checkName(it) is true then
+  repeat until checkName (it) is false
+  beep
+  put it into ItTemp
+  answer "The name you choose is reserved by Myst. Please choose another name." with "OK"
+  set itemDelimiter to ":"
+  put last item of ItTemp into it
+  set itemDelimiter to ","
+  ask File "Save Myst game as…" with it
+  if it is empty then
+  hide menubar
+  if temp is true then put true into quick
+  ww
+  exit SaveAs
+  end if
+  end repeat
+  end if
+  ----
+  put it into charFile
+  save stack "Myst:Myst Graphics:Template" as charFile
+  saveGame
+  end if
+  hide menubar
+  if temp is true then put true into quick
+  ww
+  end SaveAs
+  
+  on newgame
+  global charfile,Start_Game,RestoreData
+  put "new" into Start_Game
+  put card field "Defaults" of card "Defaults" into RestoreData
+  LoadGlobals
+  ww
+  end newgame
+  
+  on restoreGame
+  global charfile,Start_Game,lineNum,ST_DadLight,ST_GenTime,ST_SonLight,CH_Elevator1,chksum
+  global RestoreData
+  put empty into chksum
+  put "false" into ValidFile
+  --
+  if line 1 of RestoreData is "Channelwood Age" then put "true" into ValidFile
+  if line 1 of RestoreData is "Dunny Age" then put "true" into ValidFile
+  if line 1 of RestoreData is "Mechanical Age" then put "true" into ValidFile
+  if line 1 of RestoreData is "Myst" then put "true" into ValidFile
+  if line 1 of RestoreData is "Selenitic Age" then put "true" into ValidFile
+  if line 1 of RestoreData is "Stoneship Age" then put "true" into ValidFile
+  if ValidFile is "true" then
+  put "restore" into Start_Game
+  LoadGlobals
+  if chksum ≠ the last line of RestoreData then put "false" into validfile
+  put 0 into ST_GenTime
+  put "off" into ST_Dadlight
+  put "off" into ST_Sonlight
+  put "down" into CH_Elevator1
+  end if
+  if ValidFile is "false" then
+  answer "Invalid or corrupted save file." with "Quit"
+  put "bad" into Start_game
+  doMenu "Quit Hypercard"
+  end if
+  put empty into RestoreData
+  go to card "finalBookOpen"
+  mystmenu
+  --
+  ww
+  end restoreGame
+  
+  on LoadGlobals
+  global lineNum
+  --
+  put 1 into lineNum
+  --
+  putit "ALL_CurrStack"
+  putit "ALL_Page"
+  putit "ALL_Version"
+  putit "Playsounds"
+  putit "Trans"
+  putit "Quick"
+  
+  putit "CH_Bridge"
+  putit "CH_Elevator1"
+  putit "CH_LowerStairs"
+  putit "CH_Monitor"
+  putit "CH_PipeBridge"
+  putit "CH_Qlist"
+  putit "CH_UpperStairs"
+  putit "CH_WaterPath"
+  --
+  putit "DU_End"
+  --
+  putit "ME_ACacheChest"
+  putit "ME_ACacheDoor"
+  putit "ME_ControlGearsBrake"
+  putit "ME_ControlGearsThrottle"
+  putit "ME_Direction"
+  putit "ME_Elevator"
+  putit "ME_HoloBrake"
+  putit "ME_HoloThrottle"
+  putit "ME_HubRotate"
+  putit "ME_HubStairs"
+  putit "ME_LowGearSpeed"
+  putit "ME_Pedestal"
+  putit "ME_Qlist"
+  putit "ME_SCacheDoor"
+  putit "ME_SouthStair"
+  --
+  putit "MY_Atrus"
+  putit "MY_BlueBook"
+  putit "MY_Boat"
+  putit "MY_CabinValve"
+  putit "MY_CabMarker"
+  putit "MY_ClockHour"
+  putit "MY_ClockMinute"
+  putit "MY_CloMarker"
+  putit "MY_DocMarker"
+  putit "MY_GarMarker"
+  putit "MY_GeaMarker"
+  putit "MY_GearGate"
+  putit "MY_Gears"
+  putit "MY_GenBreaker"
+  putit "MY_Generators"
+  putit "MY_GenVolts"
+  putit "MY_LibStairs"
+  putit "MY_MinMarker"
+  putit "MY_ObserveAngle"
+  putit "MY_Pillars"
+  putit "MY_Pilot"
+  putit "MY_PlaDay"
+  putit "MY_PlaLastDate"
+  putit "MY_PlaLight"
+  putit "MY_PlaMarker"
+  putit "MY_PlaMonth"
+  putit "MY_PlaTime"
+  putit "MY_PlaYear"
+  putit "MY_Qlist"
+  putit "MY_RedBook"
+  putit "MY_Safe"
+  putit "MY_ShiMarker"
+  putit "line 1 of MY_SpaceNotes"
+  putit "line 2 of MY_SpaceNotes"
+  putit "line 3 of MY_SpaceNotes"
+  putit "line 4 of MY_SpaceNotes"
+  putit "line 5 of MY_SpaceNotes"
+  putit "MY_TreeGate"
+  putit "MY_VaultDI"
+  putit "MY_VaultErase"
+  putit "MY_VaultNum"
+  --
+  putit "SE_CameraID"
+  putit "line 1 of SE_Headings"
+  putit "line 2 of SE_Headings"
+  putit "line 3 of SE_Headings"
+  putit "line 4 of SE_Headings"
+  putit "line 5 of SE_Headings"
+  putit "line 1 of SE_MazeKey"
+  putit "line 2 of SE_MazeKey"
+  putit "line 3 of SE_MazeKey"
+  putit "line 4 of SE_MazeKey"
+  putit "line 5 of SE_MazeKey"
+  putit "SE_MicSwitch"
+  putit "SE_Qlist"
+  putit "SE_Tower"
+  putit "SE_TunnelLight"
+  --
+  putit "ST_ADrawers"
+  putit "ST_Book"
+  putit "ST_Chest"
+  putit "ST_ChestValve"
+  putit "ST_DadLight"
+  putit "ST_DomeTunnel"
+  putit "ST_Drawers"
+  putit "ST_GenTime"
+  putit "ST_Hatch"
+  putit "ST_Key"
+  putit "ST_Pump"
+  putit "ST_Qlist"
+  putit "ST_SonLight"
+  --
+  end LoadGlobals
+  
+  on putit which
+  global lineNum,Start_Game,chksum,RestoreData
+  --
+  global All_CurrStack,ALL_Page,All_Version,Playsounds,Trans,Quick
+  --
+  global CH_Bridge,CH_Elevator1,CH_LowerStairs,CH_Monitor,CH_PipeBridge
+  global CH_Qlist,CH_UpperStairs,CH_WaterPath
+  --
+  global DU_End
+  --
+  global ME_ACacheChest,ME_ACacheDoor
+  global ME_ControlGearsBrake,ME_ControlGearsThrottle,ME_Direction
+  global ME_Elevator,ME_HoloBrake,ME_HoloThrottle
+  global ME_HubRotate,ME_HubStairs,ME_LowGearSpeed,ME_Pedestal
+  global ME_Qlist,ME_SCacheDoor,ME_SouthStair
+  --
+  global MY_Atrus,MY_BlueBook,MY_Boat,MY_CabinValve,MY_CabMarker,MY_ClockHour
+  global MY_ClockMinute,MY_CloMarker,MY_DocMarker,MY_GarMarker
+  global MY_GeaMarker,MY_GearGate,MY_Gears,MY_GenBreaker,MY_Generators
+  global MY_GenVolts,MY_LibStairs,MY_MinMarker,MY_ObserveAngle,MY_Pillars
+  global MY_Pilot,MY_PlaDay,MY_PlaLastDate,MY_PlaLight,MY_PlaMarker
+  global MY_PlaMonth,MY_PlaTime,MY_PlaYear,MY_Qlist,MY_RedBook,MY_Safe
+  global MY_ShiMarker
+  global MY_SpaceNotes,MY_TreeGate,MY_VaultDI,MY_VaultErase,MY_VaultNum
+  --
+  global SE_CameraID,SE_Headings,SE_MazeKey
+  global SE_MicSwitch,SE_Qlist,SE_Tower,SE_TunnelLight
+  --
+  global ST_ADrawers,ST_Book,ST_Chest,ST_ChestValve
+  global ST_DadLight,ST_DomeTunnel,ST_Drawers,ST_GenTime,ST_Hatch
+  global ST_Key,ST_Pump,ST_Qlist,ST_SonLight
+  --
+  if Start_Game is "restore" then
+  get line linenum of RestoreData
+  get  charToNum (it) + (the number of characters in it)
+  add it to chksum
+  end if
+  do ("put line lineNum of RestoreData into " & which)
+  add 1 to lineNum
+  set cursor to busy
+  end putit
+  
+  -----------------------------------------------------------------------
+  on savegame
+  global charfile,chksum,RestoreData
+  global All_CurrStack,ALL_Page,All_Version,Playsounds,Trans,Quicktemp
+  
+  global CH_Bridge,CH_Elevator1,CH_LowerStairs,CH_Monitor,CH_PipeBridge
+  global CH_Qlist,CH_UpperStairs,CH_WaterPath
+  
+  global DU_End
+  
+  global ME_ACacheChest,ME_ACacheDoor
+  global ME_ControlGearsBrake,ME_ControlGearsThrottle,ME_Direction
+  global ME_Elevator,ME_HoloBrake,ME_HoloThrottle
+  global ME_HubRotate,ME_HubStairs,ME_LowGearSpeed,ME_Pedestal
+  global ME_QList,ME_SCacheDoor,ME_SouthStair
+  
+  global MY_Atrus,MY_BlueBook,MY_Boat,MY_CabinValve,MY_CabMarker,MY_ClockHour
+  global MY_ClockMinute,MY_CloMarker,MY_DocMarker,MY_GarMarker
+  global MY_GeaMarker,MY_GearGate,MY_Gears,MY_GenBreaker,MY_Generators
+  global MY_GenVolts,MY_LibStairs,MY_MinMarker,MY_ObserveAngle,MY_Pillars
+  global MY_Pilot,MY_PlaDay,MY_PlaLastDate,MY_PlaLight,MY_PlaMarker
+  global MY_PlaMonth,MY_PlaTime,MY_PlaYear,MY_Qlist,MY_RedBook,MY_Safe
+  global MY_ShiMarker
+  global MY_SpaceNotes,MY_TreeGate,MY_VaultDI,MY_VaultErase,MY_VaultNum
+  
+  global SE_CameraID,SE_Headings,SE_MazeKey
+  global SE_MicSwitch,SE_Qlist,SE_Tower,SE_TunnelLight
+  
+  global ST_ADrawers,ST_Book,ST_Chest,ST_ChestValve
+  global ST_DadLight,ST_DomeTunnel,ST_Drawers,ST_GenTime,ST_Hatch
+  global ST_Key,ST_Pump,ST_Qlist,ST_SonLight
+  
+  
+  put 0 into chksum
+  put empty into RestoreData
+  addit ALL_CurrStack
+  addit ALL_Page
+  addit All_Version
+  addit playsounds
+  addit trans
+  addit quicktemp
+  
+  addit CH_Bridge
+  addit CH_Elevator1
+  addit CH_LowerStairs
+  addit CH_Monitor --10
+  addit CH_PipeBridge
+  addit CH_Qlist
+  addit CH_UpperStairs
+  addit CH_WaterPath
+  
+  addit DU_End
+  
+  addit ME_ACacheChest
+  addit ME_ACacheDoor
+  addit ME_ControlGearsBrake
+  addit ME_ControlGearsThrottle
+  addit ME_Direction --20
+  addit ME_Elevator
+  addit ME_HoloBrake
+  addit ME_HoloThrottle
+  addit ME_HubRotate
+  addit ME_HubStairs
+  addit ME_LowGearSpeed
+  addit ME_Pedestal
+  addit ME_Qlist
+  addit ME_SCacheDoor
+  addit ME_SouthStair --30
+  
+  addit MY_Atrus
+  addit MY_BlueBook
+  addit MY_Boat
+  addit MY_CabinValve
+  addit MY_CabMarker
+  addit MY_ClockHour
+  addit MY_ClockMinute
+  addit MY_CloMarker
+  addit MY_DocMarker
+  addit MY_GarMarker --40
+  addit MY_GeaMarker
+  addit MY_GearGate
+  addit MY_Gears
+  addit MY_GenBreaker
+  addit MY_Generators
+  addit MY_GenVolts
+  addit MY_LibStairs
+  addit MY_MinMarker
+  addit MY_ObserveAngle
+  addit MY_Pillars --50
+  addit MY_Pilot
+  addit MY_PlaDay
+  addit MY_PlaLastDate
+  addit MY_PlaLight
+  addit MY_PlaMarker
+  addit MY_PlaMonth
+  addit MY_PlaTime
+  addit MY_PlaYear
+  addit MY_Qlist
+  addit MY_RedBook --60
+  addit MY_Safe
+  addit MY_ShiMarker
+  addit line 1 of MY_SpaceNotes
+  addit line 2 of MY_SpaceNotes
+  addit line 3 of MY_SpaceNotes
+  addit line 4 of MY_SpaceNotes
+  addit line 5 of MY_SpaceNotes
+  addit MY_TreeGate
+  addit MY_VaultDI
+  addit MY_VaultErase --70
+  addit MY_VaultNum
+  
+  addit SE_CameraID
+  addit line 1 of SE_Headings
+  addit line 2 of SE_Headings
+  addit line 3 of SE_Headings
+  addit line 4 of SE_Headings
+  addit line 5 of SE_Headings
+  addit line 1 of SE_MazeKey
+  addit line 2 of SE_MazeKey
+  addit line 3 of SE_MazeKey --80
+  addit line 4 of SE_MazeKey
+  addit line 5 of SE_MazeKey
+  addit SE_MicSwitch
+  addit SE_Qlist
+  addit SE_Tower
+  addit SE_TunnelLight
+  
+  addit ST_ADrawers
+  addit ST_Book
+  addit ST_Chest
+  addit ST_ChestValve --90
+  addit ST_DadLight
+  addit ST_DomeTunnel
+  addit ST_Drawers
+  addit ST_GenTime
+  addit ST_Hatch
+  addit ST_Key
+  addit ST_Pump
+  addit ST_Qlist
+  addit ST_SonLight
+  
+  put chksum & return after RestoreData
+  
+  push card
+  lock screen
+  set lockmessages to true
+  set lockrecent to true
+  go to stack charFile
+  get the result
+  if it is empty then put RestoreData into card field "Globals"
+  else answer it with OK
+  pop card
+  set lockmessages to false
+  hide menubar
+  put empty into restoreData
+  end savegame
+  
+  on addit which
+  global chksum,RestoreData
+  put which & return after RestoreData
+  get  charToNum (which) + (the number of characters in which)
+  add it to chksum
+  end addit
+
+  * Card 5907 "" (0 parts)
+  * Background 2651 "" (0 parts)

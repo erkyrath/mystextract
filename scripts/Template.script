@@ -1,0 +1,25 @@
+Stack (1 cards, 1 backgrounds)
+  * Card 2978 "" (1 parts)
+
+    on openCard
+    global RestoreData,charFile,S_SCREENPOS
+    hide menubar
+    set the loc of window "scroll" to "-200,-200"
+    if S_SCREENPOS is not empty then set the loc of the card window to S_SCREENPOS
+    set the width of the card window to 544
+    set the height of the card window to 332
+    hide window "scroll"
+    lock screen
+    put card field globals into RestoreData
+    put the short name of this stack into charFile
+    set lockmessages to true
+    go card 1 of stack " Myst"
+    if the result is not empty then
+    doMenu "Quit HyperCard"
+    end if
+    set lockmessages to false
+    startup
+    end openCard
+
+    * Part 2978:1 "globals"
+  * Background 2704 "" (0 parts)

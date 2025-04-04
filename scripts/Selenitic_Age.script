@@ -1,0 +1,5491 @@
+Stack (223 cards, 1 backgrounds)
+
+  on idle
+  soundidle
+  pass idle
+  end idle
+  
+  on closeCard
+  global startTime
+  set cursor to none
+  put the ticks into startTime
+  HTLock "on"
+  end closeCard
+  
+  on openCard
+  global pictAdd,startTime,HCSounds
+  soundIdle
+  HTChangePict bg fld "pict name","srccopy"
+  get the result
+  if it is not empty then
+  soundstop
+  xmemory(1)
+  HTChangePict bg fld "pict name","srccopy"
+  end if
+  soundIdle
+  if pictAdd is not empty then
+  set itemdelimiter to "|"
+  repeat with x = 1 to the number of lines in pictAdd
+  if line x of pictAdd is not empty then
+  HTAddPict item 1 of line x of pictAdd,item 2 of line x of pictAdd,"srccopy"
+  end if
+  soundIdle
+  end repeat
+  set itemdelimiter to ","
+  put empty into pictAdd
+  end if
+  soundIdle
+  if HCSounds is not empty then
+  play stop
+  repeat with x = 1 to the number of lines in HCSounds
+  do ("Play " & quote & line x of HCSounds & quote)
+  end repeat
+  put empty into HCSounds
+  end if
+  soundIdle
+  HTLock "forceFalse"
+  soundIdle
+  hide msg
+  wait while the mouseclick
+  updateCursor ML
+  pass openCard
+  end openCard
+  
+  on openStack
+  global All_CurrStack,S_SCREENPOS,documents
+  -- The documents paths are for MooVs - always on the CD
+  put "Myst:Myst Graphics:Selenitic:" into documents
+  SetScreen
+  set userlevel to 5 -- development only
+  BlackFrame
+  xMemory(1)
+  HTUDefPal 1002
+  HyperTint "later","delay","iRes5","NoTEOpt"
+  htlock novbl
+  htlock nobw
+  htlock nocolormap
+  start using stack "SERes1"
+  start using stack "SERes2"
+  DeCurse "install"
+  deCurse "override","hand","color","nodelay"
+  put "Selenitic Age" into All_CurrStack
+  end openStack
+  
+  on closeStack
+  htlock true
+  DeCurse "remove"
+  closemoovs
+  HTRemove
+  stop using stack "SEres1"
+  stop using stack "SEres2"
+  end closeStack
+  
+  on closemoovs
+  if there is a window "TowerScroll" then close window "TowerScroll"
+  repeat with x = (the number of lines in the windows) down to 1
+  if line x of the windows contains "moov" then close window (line x of the windows)
+  else if line x of the windows contains "mov" then close window (line x of the windows)
+  end repeat
+  end closemoovs
+  
+  on movieCalderaNorth
+  put "Caldera North.MooV" into theMovieName
+  if there is not a window TheMovieName then
+  Movie TheMovieName,"borderless","221,144","invisible","Floating"
+  end if
+  if there is a window TheMovieName then
+  set the dontErase of window TheMovieName to true
+  set the movieCursorID of window theMovieName to 128
+  set the audioLevel of window TheMovieName to "0"
+  set the mute of window TheMovieName to true
+  set the badge of window TheMovieName to false
+  set the controllerVisible of window TheMovieName to false
+  set the useCustomClut of window theMovieName to false
+  set the closeOnFinish of window TheMovieName to false
+  set the loop of window TheMovieName to true
+  set the seeAllFrames of window TheMovieName to false
+  set the startTime of window TheMovieName to "0"
+  --set the endTime of window TheMovieName to "2,240"
+  --set the callBackMsg of window theMovieName to "Done"
+  set the passMovieClick of window theMovieName to false
+  set the rate of window TheMovieName to "0.0"
+  --show window TheMovieName
+  end if
+  end movieCalderaNorth
+  
+  on movieCalderaSouth
+  put "Caldera South.MooV" into theMovieName
+  if there is not a window TheMovieName then
+  Movie TheMovieName,"borderless","230,173","invisible","Floating"
+  end if
+  if there is a window TheMovieName then
+  set the dontErase of window TheMovieName to true
+  set the movieCursorID of window theMovieName to 128
+  set the audioLevel of window TheMovieName to "0"
+  set the mute of window TheMovieName to true
+  set the badge of window TheMovieName to false
+  set the useCustomClut of window theMovieName to false
+  set the controllerVisible of window TheMovieName to false
+  set the closeOnFinish of window TheMovieName to false
+  set the loop of window TheMovieName to true
+  set the seeAllFrames of window TheMovieName to false
+  set the startTime of window TheMovieName to "0"
+  --set the endTime of window TheMovieName to "2,240"
+  --set the callBackMsg of window theMovieName to "Done"
+  set the passMovieClick of window theMovieName to false
+  set the rate of window TheMovieName to "0.0"
+  --show window TheMovieName
+  end if
+  end movieCalderaSouth
+  
+  on movieFountain
+  put "Fountain.MooV" into theMovieName
+  if there is not a window TheMovieName then
+  Movie TheMovieName,"borderless","177,162","invisible","Floating"
+  end if
+  if there is a window TheMovieName then
+  set the dontErase of window TheMovieName to true
+  set the movieCursorID of window theMovieName to 128
+  set the audioLevel of window TheMovieName to "0"
+  set the mute of window TheMovieName to true
+  set the badge of window TheMovieName to false
+  set the controllerVisible of window TheMovieName to false
+  set the useCustomClut of window theMovieName to false
+  set the closeOnFinish of window TheMovieName to false
+  set the loop of window TheMovieName to true
+  set the seeAllFrames of window TheMovieName to false
+  set the startTime of window TheMovieName to "0"
+  --set the endTime of window TheMovieName to "2,240"
+  --set the callBackMsg of window theMovieName to "Done"
+  set the passMovieClick of window theMovieName to false
+  set the rate of window TheMovieName to "0.0"
+  --show window TheMovieName
+  end if
+  end movieFountain
+  \0MovieName
+  end if
+  end movieFountain
+  \0
+  \0ieFountain
+  \0ame to "0.0"
+  --show window T
+
+  * Card 45136 "Restart" (2 parts)
+
+    on openCard
+    pass opencard
+    end openCard
+    
+    on closeCard
+    htlock nobw
+    pass closeCard
+    end closeCard
+
+    * Part 45136:1 "left"
+      on mouseUp
+      go to card id 58670
+      end mouseUp
+    * Part 45136:2 "right"
+      on mouseUp
+      go to card id 58670
+      end mouseUp
+  * Card 62357 "Black" (0 parts)
+  * Card 47305 "" (4 parts)
+    * Part 47305:1 ""
+      on mouseUp
+      PlayQT "EV Electmotors Mov",, loop, 175
+      go to card id 47612
+      end mouseUp
+    * Part 47305:2 "right"
+      on mouseUp
+      go to card id 45359
+      end mouseUp
+    * Part 47305:3 "left"
+      on mouseUp
+      go to card id 45359
+      end mouseUp
+    * Part 47305:4 "qhal1"
+      on mouseUp
+      PlayQT "EV Electmotors Mov",, loop, 175
+      go to card id 47612
+      end mouseUp
+  * Card 45359 "" (4 parts)
+    * Part 45359:1 ""
+      on mouseUp
+      go to card id 45637
+      end mouseUp
+    * Part 45359:2 "right"
+      on mouseUp
+      go to card id 47305
+      end mouseUp
+    * Part 45359:3 "left"
+      on mouseUp
+      go to card id 47305
+      end mouseUp
+    * Part 45359:4 "qbay"
+      on mouseUp
+      go to card id 45637
+      end mouseUp
+  * Card 46893 "" (4 parts)
+    * Part 46893:1 ""
+      on mouseUp
+      go to card id 47305
+      end mouseUp
+    * Part 46893:2 "right"
+      on mouseUp
+      go to card id 50469
+      end mouseUp
+    * Part 46893:3 "left"
+      on mouseUp
+      go to card id 41252
+      end mouseUp
+    * Part 46893:5 "qhal1"
+      on mouseUp
+      go to card id 47305
+      end mouseUp
+  * Card 45637 "" (4 parts)
+    * Part 45637:1 ""
+      on mouseUp
+      go to card id 45893
+      end mouseUp
+    * Part 45637:2 "right"
+      on mouseUp
+      go to card id 41252
+      end mouseUp
+    * Part 45637:3 "left"
+      on mouseUp
+      go to card id 50469
+      end mouseUp
+    * Part 45637:4 "qbay"
+      on mouseUp
+      go to card id 45893
+      end mouseUp
+  * Card 46723 "" (4 parts)
+    * Part 46723:1 ""
+      on mouseUp
+      go to card id 46893
+      end mouseUp
+    * Part 46723:2 "right"
+      on mouseUp
+      go to card id 50469
+      end mouseUp
+    * Part 46723:3 "left"
+      on mouseUp
+      go to card id 41252
+      end mouseUp
+    * Part 46723:4 "qhal1"
+      on mouseUp
+      go to card id 46893
+      end mouseUp
+  * Card 45893 "" (3 parts)
+    * Part 45893:1 ""
+      on mouseUp
+      go to card id 46177
+      end mouseUp
+    * Part 45893:2 "right"
+      on mouseUp
+      go to card id 46723
+      end mouseUp
+    * Part 45893:3 "left"
+      on mouseUp
+      go to card id 46723
+      end mouseUp
+  * Card 46409 "" (4 parts)
+    * Part 46409:1 ""
+      on mouseUp
+      go to card id 46723
+      end mouseUp
+    * Part 46409:3 "right"
+      on mouseUp
+      go to card id 46177
+      end mouseUp
+    * Part 46409:4 "left"
+      on mouseUp
+      go to card id 46177
+      end mouseUp
+    * Part 46409:5 "qhal1"
+      on mouseUp
+      go to card id 46723
+      end mouseUp
+  * Card 46177 "qbay" (6 parts)
+
+    on opencard
+    playqt "EV Electmotors Mov","","loop","250"
+    pass opencard
+    end opencard
+
+    * Part 46177:1 "right"
+      on mouseUp
+      go to card id 46409
+      end mouseUp
+    * Part 46177:2 "left"
+      on mouseUp
+      go to card id 46409
+      end mouseUp
+    * Part 46177:4 ""
+    * Part 46177:5 "none"
+      on mouseDown
+      hide me
+      play "SW PushButton In"
+      xCIcon3 the loc of me,6001
+      wait 15
+      wait until the mouse is up
+      show me
+      play "SW PushButton Out"
+      htlock true
+      htvisual "scrollaway up",,the rect of card button doorU,2,32
+      htvisual "wipe down",,the rect of card button doorD,2,32
+      dplay "DR SpaceShip II"
+      go to card id 50254
+      end mouseDown
+    * Part 46177:7 "doorU"
+    * Part 46177:8 "doorD"
+  * Card 50254 "" (3 parts)
+    * Part 50254:1 "doorU"
+      on mouseUp
+      global SE_Current,SE_Direction
+      put 0 into SE_Current
+      put 1 into SE_Direction
+      go to card id 54153
+      htlock true
+      htvisual "wipe down",,,2,32
+      HTAddPict "Ship 1-Forward (open)",the rect of card button marker,"srccopy"
+      play "DR Spaceship II"
+      htlock forcefalse
+      PlayQT "EV Electmotors Mov", splice, loop, 20
+      end mouseUp
+    * Part 50254:2 "none"
+      on mouseDown
+      hide me
+      play "SW PushButton In"
+      xCIcon3 the loc of me,6001
+      wait 15
+      wait until the mouse is up
+      show me
+      play "SW PushButton Out"
+      htlock true
+      htvisual "scroll down",,the rect of card button doorU,2,32
+      htvisual "wipe up",,the rect of card button doorD,2,32
+      dplay "DR SpaceShip II"
+      go to card id 46177
+      end mouseDown
+    * Part 50254:3 "doorD"
+      on mouseUp
+      global SE_Current,SE_Direction
+      put 0 into SE_Current
+      put 1 into SE_Direction
+      go to card id 54153
+      htlock true
+      htvisual "wipe down",,,2,32
+      HTAddPict "Ship 1-Forward (open)",the rect of card button marker,"srccopy"
+      play "DR Spaceship II"
+      htlock forcefalse
+      PlayQT "EV Electmotors Mov", splice, loop, 20
+      end mouseUp
+  * Card 49998 "qhal2" (4 parts)
+
+    on opencard
+    PlayQT "EV Electmotors Mov",, loop, 25
+    pass opencard
+    end opencard
+
+    * Part 49998:1 ""
+      on mouseUp
+      PlayQT "AR Lite Wind Mov", fadein, loop, 200
+      go to card id 5801
+      play "DR GenRoom Down"
+      end mouseUp
+    * Part 49998:2 ""
+      on mouseUp
+      PlayQT "AR Lite Wind Mov", fadein, loop, 200
+      go to card id 7030
+      play "DR GenRoom Down"
+      end mouseUp
+    * Part 49998:3 "left"
+      on mouseUp
+      go to card id 42331
+      end mouseUp
+    * Part 49998:4 "right"
+      on mouseUp
+      go to card id 42331
+      end mouseUp
+  * Card 42331 "" (4 parts)
+    * Part 42331:1 ""
+      on mouseUp
+      PlayQT "EV Electmotors Mov",, loop, 35
+      go to card id 42717
+      end mouseUp
+    * Part 42331:2 "right"
+      on mouseUp
+      go to card id 49998
+      end mouseUp
+    * Part 42331:3 "left"
+      on mouseUp
+      go to card id 49998
+      end mouseUp
+    * Part 42331:5 "qhal"
+      on mouseUp
+      PlayQT "EV Electmotors Mov",, loop, 35
+      go to card id 42717
+      end mouseUp
+  * Card 49709 "" (3 parts)
+    * Part 49709:1 ""
+      on mouseUp
+      PlayQT "EV Electmotors Mov",, loop, 25
+      go to card id 49998
+      end mouseUp
+    * Part 49709:2 "right"
+      on mouseUp
+      go to card id 42717
+      end mouseUp
+    * Part 49709:3 "left"
+      on mouseUp
+      go to card id 42717
+      end mouseUp
+  * Card 42717 "" (4 parts)
+    * Part 42717:1 ""
+      on mouseUp
+      PlayQT "EV Electmotors Mov",, loop, 45
+      go to card id 42772
+      end mouseUp
+    * Part 42717:2 "right"
+      on mouseUp
+      go to card id 49709
+      end mouseUp
+    * Part 42717:3 "left"
+      on mouseUp
+      go to card id 49709
+      end mouseUp
+    * Part 42717:5 "qhal"
+      on mouseUp
+      PlayQT "EV Electmotors Mov",, loop, 45
+      go to card id 42772
+      end mouseUp
+  * Card 49553 "" (4 parts)
+    * Part 49553:1 ""
+      on mouseUp
+      PlayQT "EV Electmotors Mov",, loop, 35
+      go to card id 49709
+      end mouseUp
+    * Part 49553:2 "right"
+      on mouseUp
+      go to card id 42772
+      end mouseUp
+    * Part 49553:3 "left"
+      on mouseUp
+      go to card id 42772
+      end mouseUp
+    * Part 49553:4 "qhal2"
+      on mouseUp
+      PlayQT "EV Electmotors Mov",, loop, 35
+      go to card id 49709
+      end mouseUp
+  * Card 42772 "" (4 parts)
+    * Part 42772:1 ""
+      on mouseUp
+      PlayQT "EV Electmotors mov",,loop,55
+      go to card id 43138
+      end mouseUp
+    * Part 42772:2 "right"
+      on mouseUp
+      go to card id 49553
+      end mouseUp
+    * Part 42772:3 "left"
+      on mouseUp
+      go to card id 49553
+      end mouseUp
+    * Part 42772:5 "qhal"
+      on mouseUp
+      PlayQT "EV Electmotors mov",,loop,55
+      go to card id 43138
+      end mouseUp
+  * Card 49257 "" (4 parts)
+    * Part 49257:1 ""
+      on mouseUp
+      go to card id 49553
+      PlayQT "EV Electmotors Mov",, loop, 45
+      end mouseUp
+    * Part 49257:2 "right"
+      on mouseUp
+      go to card id 43138
+      end mouseUp
+    * Part 49257:3 "left"
+      on mouseUp
+      go to card id 43138
+      end mouseUp
+    * Part 49257:5 "qhal2"
+      on mouseUp
+      go to card id 49553
+      PlayQT "EV Electmotors Mov",, loop, 45
+      end mouseUp
+  * Card 43138 "" (4 parts)
+    * Part 43138:1 ""
+      on mouseUp
+      PlayQT "EV Electmotors mov",,loop,75
+      go to card id 43281
+      end mouseUp
+    * Part 43138:2 "right"
+      on mouseUp
+      go to card id 49257
+      end mouseUp
+    * Part 43138:3 "left"
+      on mouseUp
+      go to card id 49257
+      end mouseUp
+    * Part 43138:5 "qhal"
+      on mouseUp
+      PlayQT "EV Electmotors mov",,loop,75
+      go to card id 43281
+      end mouseUp
+  * Card 49062 "" (4 parts)
+    * Part 49062:1 ""
+      on mouseUp
+      PlayQT "EV Electmotors Mov",, loop, 55
+      go to card id 49257
+      end mouseUp
+    * Part 49062:2 "right"
+      on mouseUp
+      go to card id 43281
+      end mouseUp
+    * Part 49062:3 "left"
+      on mouseUp
+      go to card id 43281
+      end mouseUp
+    * Part 49062:4 "qhal2"
+      on mouseUp
+      PlayQT "EV Electmotors Mov",, loop, 55
+      go to card id 49257
+      end mouseUp
+  * Card 43281 "" (4 parts)
+    * Part 43281:1 ""
+      on mouseUp
+      PlayQT "EV Electmotors mov",,loop,85
+      go to card id 43546
+      end mouseUp
+    * Part 43281:2 "right"
+      on mouseUp
+      go to card id 49062
+      end mouseUp
+    * Part 43281:3 "left"
+      on mouseUp
+      go to card id 49062
+      end mouseUp
+    * Part 43281:5 "qhal"
+      on mouseUp
+      PlayQT "EV Electmotors mov",,loop,85
+      go to card id 43546
+      end mouseUp
+  * Card 48887 "qhal1" (4 parts)
+
+    on opencard
+    PlayQT "EV Electmotors Mov",, loop, 85
+    pass opencard
+    end opencard
+
+    * Part 48887:1 ""
+      on mouseUp
+      PlayQT "EV Electmotors Mov",, loop, 75
+      go to card id 49062
+      end mouseUp
+    * Part 48887:2 "right"
+      on mouseUp
+      go to card id 43546
+      end mouseUp
+    * Part 48887:3 "left"
+      on mouseUp
+      go to card id 43546
+      end mouseUp
+    * Part 48887:4 "qhal2"
+      on mouseUp
+      PlayQT "EV Electmotors Mov",, loop, 75
+      go to card id 49062
+      end mouseUp
+  * Card 43546 "" (3 parts)
+    * Part 43546:1 ""
+      on mouseUp
+      PlayQT "EV Electmotors Mov",fadein,loop, 150
+      go to card id 43809
+      end mouseUp
+    * Part 43546:2 "left"
+      on mouseUp
+      go to card id 48887
+      end mouseUp
+    * Part 43546:3 "right"
+      on mouseUp
+      go to card id 48887
+      end mouseUp
+  * Card 48018 "" (3 parts)
+    * Part 48018:1 ""
+      on mouseUp
+      PlayQT "EV Electmotors Mov",, loop, 85
+      go to card id 48887
+      end mouseUp
+    * Part 48018:2 "left"
+      on mouseUp
+      go to card id 43809
+      end mouseUp
+    * Part 48018:3 "right"
+      on mouseUp
+      go to card id 43809
+      end mouseUp
+  * Card 43809 "qhal" (4 parts)
+
+    on opencard
+    PlayQT "EV Electmotors Mov",fadein,loop, 150
+    pass opencard
+    end opencard
+
+    * Part 43809:1 ""
+      on mouseUp
+      PlayQT "EV Electmotors Mov",, loop, 160
+      go to card id 44077
+      end mouseUp
+    * Part 43809:3 "left"
+      on mouseUp
+      go to card id 48018
+      end mouseUp
+    * Part 43809:4 "right"
+      on mouseUp
+      go to card id 48018
+      end mouseUp
+    * Part 43809:5 "qbay"
+      on mouseUp
+      PlayQT "EV Electmotors Mov",, loop, 160
+      go to card id 44077
+      end mouseUp
+  * Card 47707 "" (4 parts)
+    * Part 47707:1 ""
+      on mouseUp
+      PlayQT "EV Electmotors Mov",, loop, 150
+      go to card id 48018
+      end mouseUp
+    * Part 47707:3 "left"
+      on mouseUp
+      go to card id 44077
+      end mouseUp
+    * Part 47707:4 "right"
+      on mouseUp
+      go to card id 44077
+      end mouseUp
+    * Part 47707:5 "qhal1"
+      on mouseUp
+      PlayQT "EV Electmotors Mov",, loop, 150
+      go to card id 48018
+      end mouseUp
+  * Card 44077 "" (4 parts)
+    * Part 44077:1 ""
+      on mouseUp
+      PlayQT "EV Electmotors Mov", splice, loop, 175
+      go to card id 44361
+      end mouseUp
+    * Part 44077:2 "right"
+      on mouseUp
+      go to card id 47707
+      end mouseUp
+    * Part 44077:3 "left"
+      on mouseUp
+      go to card id 47707
+      end mouseUp
+    * Part 44077:5 "qbay"
+      on mouseUp
+      PlayQT "EV Electmotors Mov", splice, loop, 175
+      go to card id 44361
+      end mouseUp
+  * Card 47612 "" (4 parts)
+    * Part 47612:1 ""
+      on mouseUp
+      PlayQT "EV Electmotors Mov",, loop, 160
+      go to card id 47707
+      end mouseUp
+    * Part 47612:2 "right"
+      on mouseUp
+      go to card id 44361
+      end mouseUp
+    * Part 47612:3 "left"
+      on mouseUp
+      go to card id 44361
+      end mouseUp
+    * Part 47612:4 "qhal1"
+      on mouseUp
+      PlayQT "EV Electmotors Mov",, loop, 160
+      go to card id 47707
+      end mouseUp
+  * Card 44361 "" (4 parts)
+    * Part 44361:1 ""
+      on mouseUp
+      PlayQT "EV Electmotors Mov",,loop, 250
+      go to card id 45359
+      end mouseUp
+    * Part 44361:2 "right"
+      on mouseUp
+      go to card id 47612
+      end mouseUp
+    * Part 44361:3 "left"
+      on mouseUp
+      go to card id 47612
+      end mouseUp
+    * Part 44361:4 "qbay"
+      on mouseUp
+      PlayQT "EV Electmotors Mov",,loop, 250
+      go to card id 45359
+      end mouseUp
+  * Card 41252 "" (3 parts)
+    * Part 41252:1 "right"
+      on mouseUp
+      go to card id 46893
+      end mouseUp
+    * Part 41252:2 "left"
+      on mouseUp
+      go to card id 45637
+      end mouseUp
+    * Part 41252:3 ""
+      on mouseUp
+      go to card id 51920
+      end mouseUp
+  * Card 50469 "" (3 parts)
+    * Part 50469:1 "left"
+      on mouseUp
+      go to card id 46893
+      end mouseUp
+    * Part 50469:2 "right"
+      on mouseUp
+      go to card id 45637
+      end mouseUp
+    * Part 50469:3 ""
+      on mouseUp
+      go to card id 50747
+      end mouseUp
+  * Card 52714 "" (3 parts)
+    * Part 52714:1 ""
+      on mouseUp
+      go to card id 41252
+      end mouseUp
+    * Part 52714:2 "left"
+      on mouseUp
+      go to card id 52772
+      end mouseUp
+    * Part 52714:3 "right"
+      on mouseUp
+      go to card id 50747
+      end mouseUp
+  * Card 50747 "" (3 parts)
+    * Part 50747:1 ""
+      on mouseUp
+      go to card id 51113
+      end mouseUp
+    * Part 50747:2 "right"
+      on mouseUp
+      go to card id 52772
+      end mouseUp
+    * Part 50747:3 "left"
+      on mouseUp
+      go to card id 52714
+      end mouseUp
+  * Card 52772 "" (2 parts)
+    * Part 52772:1 "left"
+      on mouseUp
+      go to card id 50747
+      end mouseUp
+    * Part 52772:2 "right"
+      on mouseUp
+      go to card id 52714
+      end mouseUp
+  * Card 52457 "" (3 parts)
+    * Part 52457:1 ""
+      on mouseUp
+      go to card id 52714
+      end mouseUp
+    * Part 52457:2 "left"
+      on mouseUp
+      go to card id 53215
+      end mouseUp
+    * Part 52457:3 "right"
+      on mouseUp
+      go to card id 51113
+      end mouseUp
+  * Card 51113 "" (3 parts)
+    * Part 51113:1 ""
+      on mouseUp
+      go to card id 51414
+      end mouseUp
+    * Part 51113:2 "right"
+      on mouseUp
+      go to card id 53215
+      end mouseUp
+    * Part 51113:3 "left"
+      on mouseUp
+      go to card id 52457
+      end mouseUp
+  * Card 53215 "" (2 parts)
+    * Part 53215:1 "left"
+      on mouseUp
+      go to card id 51113
+      end mouseUp
+    * Part 53215:2 "right"
+      on mouseUp
+      go to card id 52457
+      end mouseUp
+  * Card 52099 "" (3 parts)
+    * Part 52099:1 ""
+      on mouseUp
+      go to card id 52457
+      end mouseUp
+    * Part 52099:2 "left"
+      on mouseUp
+      go to card id 53435
+      end mouseUp
+    * Part 52099:3 "right"
+      on mouseUp
+      go to card id 51414
+      end mouseUp
+  * Card 51414 "" (3 parts)
+    * Part 51414:1 ""
+      on mouseUp
+      go to card id 51511
+      end mouseUp
+    * Part 51414:2 "right"
+      on mouseUp
+      go to card id 53435
+      end mouseUp
+    * Part 51414:3 "left"
+      on mouseUp
+      go to card id 52099
+      end mouseUp
+  * Card 53435 "" (2 parts)
+    * Part 53435:1 "left"
+      on mouseUp
+      go to card id 51414
+      end mouseUp
+    * Part 53435:2 "right"
+      on mouseUp
+      go to card id 52099
+      end mouseUp
+  * Card 51920 "" (3 parts)
+    * Part 51920:1 ""
+      on mouseUp
+      go to card id 52099
+      end mouseUp
+    * Part 51920:2 "left"
+      on mouseUp
+      go to card id 53566
+      end mouseUp
+    * Part 51920:3 "right"
+      on mouseUp
+      go to card id 51511
+      end mouseUp
+  * Card 51511 "" (3 parts)
+    * Part 51511:1 ""
+      on mouseUp
+      go to card id 50469
+      end mouseUp
+    * Part 51511:2 "right"
+      on mouseUp
+      go to card id 53566
+      end mouseUp
+    * Part 51511:3 "left"
+      on mouseUp
+      go to card id 51920
+      end mouseUp
+  * Card 53566 "" (2 parts)
+    * Part 53566:1 "left"
+      on mouseUp
+      go to card id 51511
+      end mouseUp
+    * Part 53566:2 "right"
+      on mouseUp
+      go to card id 51920
+      end mouseUp
+  * Card 57644 "qshi" (3 parts)
+
+    on opencard
+    playqt "MU Bookroom Mov","","loop","80"
+    pass opencard
+    end opencard
+
+    * Part 57644:1 "right"
+      on mouseUp
+      go to card id 56929
+      end mouseUp
+    * Part 57644:2 "left"
+      on mouseUp
+      go to card id 56929
+      end mouseUp
+    * Part 57644:5 ""
+      on mouseUp
+      go to card id 54153
+      play "DR Spaceship II"
+      htlock true
+      htvisual "wipe down",,,2,32
+      HTAddPict "Ship 1-Forward (open)",the rect of card button marker,"srccopy"
+      htlock forcefalse
+      PlayQT "EV Electmotors Mov",, loop, 20
+      end mouseUp
+  * Card 56929 "" (4 parts)
+    * Part 56929:1 ""
+      on mouseUp
+      PlayQT "MU Bookroom Mov",, loop, 80
+      go to card id 57194
+      end mouseUp
+    * Part 56929:2 "left"
+      on mouseUp
+      go to card id 57644
+      end mouseUp
+    * Part 56929:3 "right"
+      on mouseUp
+      go to card id 57644
+      end mouseUp
+    * Part 56929:4 "qbook"
+      on mouseUp
+      PlayQT "MU Bookroom Mov",, loop, 80
+      go to card id 57194
+      end mouseUp
+  * Card 57373 "" (4 parts)
+    * Part 57373:1 ""
+      on mouseUp
+      PlayQT "MU Bookroom Mov",, loop, 70
+      go to card id 57644
+      end mouseUp
+    * Part 57373:2 "right"
+      on mouseUp
+      go to card id 57194
+      end mouseUp
+    * Part 57373:3 "left"
+      on mouseUp
+      go to card id 57194
+      end mouseUp
+    * Part 57373:4 "qshi"
+      on mouseUp
+      PlayQT "MU Bookroom Mov",, loop, 70
+      go to card id 57644
+      end mouseUp
+  * Card 57194 "" (4 parts)
+    * Part 57194:1 "right"
+      on mouseUp
+      go to card id 57373
+      end mouseUp
+    * Part 57194:2 "left"
+      on mouseUp
+      go to card id 57373
+      end mouseUp
+    * Part 57194:4 ""
+      on mouseUp
+      PlayQT "MU Bookroom Mov",, loop, 90
+      go to card id 38335
+      end mouseUp
+    * Part 57194:5 "qbook"
+      on mouseUp
+      PlayQT "MU Bookroom Mov",, loop, 90
+      go to card id 38335
+      end mouseUp
+  * Card 58308 "" (4 parts)
+    * Part 58308:1 ""
+      on mouseUp
+      PlayQT "MU Bookroom Mov",, loop, 80
+      go to card id 57373
+      end mouseUp
+    * Part 58308:2 "right"
+      on mouseUp
+      go to card id 38335
+      end mouseUp
+    * Part 58308:3 "left"
+      on mouseUp
+      go to card id 38335
+      end mouseUp
+    * Part 58308:4 "qshi"
+      on mouseUp
+      PlayQT "MU Bookroom Mov",, loop, 80
+      go to card id 57373
+      end mouseUp
+  * Card 38335 "" (4 parts)
+    * Part 38335:1 ""
+      on mouseUp
+      PlayQT "MU Bookroom Mov",, loop, 100
+      go to card id 56076
+      end mouseUp
+    * Part 38335:2 "right"
+      on mouseUp
+      go to card id 58308
+      end mouseUp
+    * Part 38335:3 "left"
+      on mouseUp
+      go to card id 58308
+      end mouseUp
+    * Part 38335:4 "qbook"
+      on mouseUp
+      PlayQT "MU Bookroom Mov",, loop, 100
+      go to card id 56076
+      end mouseUp
+  * Card 58072 "" (2 parts)
+    * Part 58072:1 ""
+      on mouseUp
+      PlayQT "MU Bookroom Mov",, loop, 80
+      go to card id 58308
+      end mouseUp
+    * Part 58072:2 "qshi"
+      on mouseUp
+      PlayQT "MU Bookroom Mov",, loop, 80
+      go to card id 58308
+      end mouseUp
+  * Card 60990 "" (4 parts)
+    * Part 60990:1 "right"
+      on mouseUp
+      go to card id 56076
+      end mouseUp
+    * Part 60990:2 "left"
+      on mouseUp
+      go to card id 56076
+      end mouseUp
+    * Part 60990:3 ""
+      on mouseUp
+      PlayQT "MU Bookroom Mov",, loop, 90
+      go to card id 58072
+      end mouseUp
+    * Part 60990:4 "qshi"
+      on mouseUp
+      PlayQT "MU Bookroom Mov",, loop, 90
+      go to card id 58072
+      end mouseUp
+  * Card 56076 "" (4 parts)
+    * Part 56076:1 ""
+      on mouseUp
+      go to card id 58460
+      PlayQT "MU Bookroom Mov",fadein, loop, 200
+      end mouseUp
+    * Part 56076:2 "right"
+      on mouseUp
+      go to card id 60990
+      end mouseUp
+    * Part 56076:3 "left"
+      on mouseUp
+      go to card id 60990
+      end mouseUp
+    * Part 56076:4 "qbook"
+      on mouseUp
+      go to card id 58460
+      PlayQT "MU Bookroom Mov",fadein, loop, 200
+      end mouseUp
+  * Card 60716 "" (4 parts)
+    * Part 60716:1 "right"
+      on mouseUp
+      go to card id 58460
+      end mouseUp
+    * Part 60716:2 "left"
+      on mouseUp
+      go to card id 58460
+      end mouseUp
+    * Part 60716:3 ""
+      on mouseUp
+      PlayQT "MU Bookroom Mov",, loop, 100
+      go to card id 60990
+      end mouseUp
+    * Part 60716:4 "qshi"
+      on mouseUp
+      PlayQT "MU Bookroom Mov",, loop, 100
+      go to card id 60990
+      end mouseUp
+  * Card 58460 "" (4 parts)
+    * Part 58460:1 ""
+      on mouseUp
+      go to card id 59242
+      end mouseUp
+    * Part 58460:2 "right"
+      on mouseUp
+      go to card id 60716
+      end mouseUp
+    * Part 58460:3 "left"
+      on mouseUp
+      go to card id 60716
+      end mouseUp
+    * Part 58460:4 "qbook"
+      on mouseUp
+      go to card id 59242
+      end mouseUp
+  * Card 60619 "" (4 parts)
+    * Part 60619:1 "right"
+      on mouseUp
+      go to card id 59242
+      end mouseUp
+    * Part 60619:2 "left"
+      on mouseUp
+      go to card id 59242
+      end mouseUp
+    * Part 60619:3 ""
+      on mouseUp
+      go to card id 60716
+      end mouseUp
+    * Part 60619:4 "qshi"
+      on mouseUp
+      go to card id 60716
+      end mouseUp
+  * Card 59242 "" (3 parts)
+    * Part 59242:1 ""
+      on mouseUp
+      go to card id 59522
+      end mouseUp
+    * Part 59242:2 "right"
+      on mouseUp
+      go to card id 60619
+      end mouseUp
+    * Part 59242:3 "left"
+      on mouseUp
+      go to card id 60619
+      end mouseUp
+  * Card 60223 "" (4 parts)
+    * Part 60223:1 "right"
+      on mouseUp
+      go to card id 59522
+      end mouseUp
+    * Part 60223:2 "left"
+      on mouseUp
+      go to card id 59522
+      end mouseUp
+    * Part 60223:3 ""
+      on mouseUp
+      go to card id 60619
+      end mouseUp
+    * Part 60223:4 "qshi"
+      on mouseUp
+      go to card id 60619
+      end mouseUp
+  * Card 59522 "qbook" (4 parts)
+
+    on opencard
+    playqt "MU Bookroom Mov","fadein","loop","200"
+    pass opencard
+    end opencard
+
+    * Part 59522:1 ""
+      on mouseUp
+      go to card id 59649
+      end mouseUp
+    * Part 59522:2 "right"
+      on mouseUp
+      go to card id 60223
+      end mouseUp
+    * Part 59522:3 "left"
+      on mouseUp
+      go to card id 60223
+      end mouseUp
+    * Part 59522:4 ""
+      on mouseUp
+      global SE_MazeKey
+      put "171,90" & return & "197,90" & return & "224,90" & return ¬
+      & "251,90" & return & "278,90" into SE_MazeKey
+      play "TN Pulse UP"
+      play "TN Pulse Dn"
+      end mouseUp
+  * Card 59649 "" (2 parts)
+    * Part 59649:2 ""
+      on mouseUp
+      go to card id 59522
+      end mouseUp
+    * Part 59649:1 ""
+      on mouseUp
+      go to card id 59926
+      end mouseUp
+  * Card 59926 "" (3 parts)
+
+    on mouseDownInMovie
+    deCurse "override",2003,"color","nodelay"
+    lock screen
+    put "MystLib.MooV" into TheMovieName --∆
+    if there is a window TheMovieName then
+    hide window TheMovieName
+    close window TheMovieName
+    end if
+    soundstop
+    play "transport"
+    go to card "black"
+    htlock true
+    lock screen
+    go to card "black" of stack "Myst"
+    vd
+    push card id 46439 of stack "Myst"
+    go to card id 44018 of stack "Myst"
+    play "transport"
+    end mouseDownInMovie
+    
+    on idle
+    get "MystLib.MooV"
+    if there is not a window it then flyby
+    end idle
+    
+    on closeCard
+    put "MystLib.MooV" into TheMovieName --∆
+    if there is a window TheMovieName then
+    hide window TheMovieName
+    close window TheMovieName
+    end if
+    pass closeCard
+    end closeCard
+    
+    on FlyBy
+    put "MystLib.MooV" into TheMovieName --∆
+    if there is not a window TheMovieName then
+    Movie TheMovieName,"borderless",the topleft of card button marker,"invisible","Floating"
+    end if
+    if there is a window TheMovieName then
+    set the dontErase of window TheMovieName to true
+    set the movieCursorID of window theMovieName to 128
+    set the audioLevel of window TheMovieName to "0"
+    set the mute of window TheMovieName to false
+    set the badge of window TheMovieName to false
+    set the controllerVisible of window TheMovieName to false
+    set the closeOnFinish of window TheMovieName to false
+    set the loop of window TheMovieName to true
+    set the seeAllFrames of window TheMovieName to false
+    set the startTime of window TheMovieName to "0"
+    --set the endTime of window TheMovieName to "1,140"
+    --set the callBackMsg of window theMovieName to "Done"
+    set the passMovieClick of window theMovieName to false
+    set the rate of window TheMovieName to "1.0"
+    show window TheMovieName
+    end if
+    end FlyBy
+
+    * Part 59926:2 ""
+      on mouseUp
+      htlock true
+      go to card id 59522
+      end mouseUp
+    * Part 59926:1 ""
+    * Part 59926:3 "marker"
+      on mouseUp
+      send mouseDownInMovie to card
+      end mouseUp
+  * Card 28762 "" (3 parts)
+    * Part 28762:1 ""
+      on mouseUp
+      go to card id 29147
+      PlayQT "AR Lite Wind Mov", , loop, 150
+      end mouseUp
+    * Part 28762:2 "right"
+      on mouseUp
+      go to card id 8646
+      play stop
+      end mouseUp
+    * Part 28762:4 "left"
+      on mouseUp
+      go to card id 9028
+      play stop
+      end mouseUp
+  * Card 31357 "qcal3" (4 parts)
+
+    on opencard
+    PlayQT "FR Caldron Mov", , loop, 50,,,,,true
+    pass opencard
+    end opencard
+    
+    on closecard
+    if there is a window "Caldera South.Moov" ¬
+    then close window "Caldera South.Moov"
+    if there is a window "Caldera North.Moov" ¬
+    then close window "Caldera North.Moov"
+    pass closecard
+    end closecard
+
+    * Part 31357:1 ""
+      on mouseUp
+      PlayQT "WA Lapping Mov", , loop, 100
+      go to card id 9389
+      end mouseUp
+    * Part 31357:2 "right"
+      on mouseUp
+      go to card id 29378
+      end mouseUp
+    * Part 31357:3 "left"
+      on mouseUp
+      go to card id 29378
+      end mouseUp
+    * Part 31357:6 "qclo"
+      on mouseUp
+      global quick
+      if quick is "true" then
+      PlayQT "GR Broken Clock Mov", , loop, 75,,,,,true
+      else
+      PlayQT "WA Lapping Mov", , loop, 100
+      end if
+      go to card id 9389
+      end mouseUp
+  * Card 29147 "qcal1" (2 parts)
+
+    on opencard
+    PlayQT "AR Lite Wind Mov",,loop,150
+    pass opencard
+    end opencard
+
+    * Part 29147:1 ""
+      on mouseUp
+      PlayQT "FR Caldron Mov",,loop,50,,,,,true
+      go to card id 29378
+      end mouseUp
+    * Part 29147:4 "qcal2"
+      on mouseUp
+      PlayQT "FR Caldron Mov", , loop, 50,,,,,true
+      go to card id 29378
+      end mouseUp
+  * Card 29378 "" (4 parts)
+    * Part 29378:1 ""
+      on mouseUp
+      PlayQT "FR Caldron Mov", , loop, 100,,,,,true
+      go to card id 29522
+      MovieCalderaNorth
+      end mouseUp
+    * Part 29378:2 "right"
+      on mouseUp
+      go to card id 31357
+      end mouseUp
+    * Part 29378:3 "left"
+      on mouseUp
+      go to card id 31357
+      end mouseUp
+    * Part 29378:4 "qcal2"
+      on mouseUp
+      PlayQT "FR Caldron Mov", , loop, 100,,,,,true
+      go to card id 29522
+      MovieCalderaNorth
+      end mouseUp
+  * Card 29522 "" (3 parts)
+    * Part 29522:1 ""
+      on mouseUp
+      PlayQT "FR Caldron Mov",,loop,200,,,,,true
+      go to card id 29905
+      MovieCalderaSouth
+      end mouseUp
+    * Part 29522:2 "left"
+      on mouseUp
+      go to card id 31046
+      end mouseUp
+    * Part 29522:3 "qcal2"
+      on mouseUp
+      PlayQT "FR Caldron Mov",,loop,200,,,,,true
+      go to card id 29905
+      MovieCalderaSouth
+      end mouseUp
+  * Card 31046 "" (3 parts)
+    * Part 31046:1 "right"
+      on mouseUp
+      go to card id 29522
+      end mouseUp
+    * Part 31046:2 ""
+      on mouseUp
+      PlayQT "FR Caldron Mov", , loop, 50,,,,,true
+      go to card id 31357
+      if there is a window "Caldera North.Moov" ¬
+      then close window "Caldera North.Moov"
+      end mouseUp
+    * Part 31046:3 "qcal3"
+      on mouseUp
+      PlayQT "FR Caldron Mov", , loop, 50,,,,,true
+      go to card id 31357
+      if there is a window "Caldera North.Moov" ¬
+      then close window "Caldera North.Moov"
+      end mouseUp
+  * Card 29905 "" (3 parts)
+    * Part 29905:1 ""
+      on mouseUp
+      go to card id 30113
+      end mouseUp
+    * Part 29905:2 "left"
+      on mouseUp
+      go to card id 30885
+      end mouseUp
+    * Part 29905:3 "right"
+      on mouseUp
+      go to card id 30885
+      end mouseUp
+  * Card 30885 "" (6 parts)
+    * Part 30885:4 ""
+      on mouseUp
+      PlayQT "FR Caldron Mov", , loop, 100,,,,,true
+      go to card id 31046
+      if there is a window "Caldera South.Moov" ¬
+      then close window "Caldera South.Moov"
+      end mouseUp
+    * Part 30885:5 "left"
+      on mouseUp
+      go to card id 29905
+      end mouseUp
+    * Part 30885:8 "left"
+      on mouseUp
+      go to card id 30278
+      end mouseUp
+    * Part 30885:9 "right"
+      on mouseUp
+      go to card id 29905
+      end mouseUp
+    * Part 30885:2 "qcal3 right"
+      on mouseUp
+      go to card id 29905
+      end mouseUp
+    * Part 30885:6 "right"
+      on mouseUp
+      go to card id 30507
+      end mouseUp
+  * Card 30113 "qcal2" (6 parts)
+
+    on openCard
+    global pictAdd,SE_MicSwitch
+    if char 2 of SE_MicSwitch is 1 then
+    put field "pict name" & " (on)|" & the rect ¬
+    of card button Marker into pictAdd
+    end if
+    PlayQT "FR Caldron Mov",,loop,200,,,,,true
+    pass openCard
+    end openCard
+
+    * Part 30113:6 "marker"
+    * Part 30113:1 "right"
+      on mouseUp
+      go to card id 30278
+      end mouseUp
+    * Part 30113:2 "left"
+      on mouseUp
+      go to card id 30507
+      end mouseUp
+    * Part 30113:3 ""
+      on mouseDown
+      global SE_MicSwitch
+      if char 2 of SE_MicSwitch is 1 then
+      put 0 into char 2 of SE_MicSwitch
+      play stop
+      play "SW PushButton Out"
+      xCIcon3 "279,164",1001
+      HTAddPict "Caldera 6-E (Off)",the rect of card button "marker","srccopy"
+      else
+      put 1 into char 2 of SE_MicSwitch
+      play stop
+      play "SW PushButton Out"
+      xCIcon3 "279,164",1011
+      HTAddPict "Caldera 6-E (On)",the rect of card button "marker","srccopy"
+      end if
+      end mouseDown
+    * Part 30113:4 "right"
+      on mouseUp
+      go to card id 30885
+      end mouseUp
+    * Part 30113:5 "left"
+      on mouseUp
+      go to card id 30885
+      end mouseUp
+  * Card 39271 "" (0 parts)
+  * Card 30507 "" (3 parts)
+
+    on closecard
+    global preLoad
+    if there is a window "Caldera North.MooV" then
+    hide window "Caldera North.MooV"
+    set the rate of window "Caldera North.MooV" to "0.0"
+    end if
+    put empty into preLoad
+    pass closeCard
+    end closecard
+    
+    on idle
+    global preLoad
+    if preload is empty then
+    if there is a window "Caldera North.MooV" then
+    set the rate of window "Caldera North.MooV" to "1.0"
+    show window "Caldera North.MooV"
+    end if
+    put true into preload
+    end if
+    pass idle
+    end idle
+
+    * Part 30507:1 "right"
+      on mouseUp
+      htlock true
+      go to card id 30113
+      end mouseUp
+    * Part 30507:2 "left"
+      on mouseUp
+      htlock true
+      go to card id 30885
+      end mouseUp
+    * Part 30507:3 "marker"
+  * Card 30278 "" (3 parts)
+
+    on closecard
+    global preLoad
+    if there is a window "Caldera South.MooV" then
+    hide window "Caldera South.MooV"
+    set the rate of window "Caldera South.MooV" to "0.0"
+    end if
+    put empty into preLoad
+    pass closeCard
+    end closecard
+    
+    on idle
+    global preLoad
+    if preload is empty then
+    if there is a window "Caldera South.MooV" then
+    set the rate of window "Caldera South.MooV" to "1.0"
+    show window "Caldera South.MooV"
+    end if
+    put true into preload
+    end if
+    pass idle
+    end idle
+
+    * Part 30278:1 "left"
+      on mouseUp
+      htlock true
+      go to card id 30113
+      end mouseUp
+    * Part 30278:2 "right"
+      on mouseUp
+      htlock true
+      go to card id 30885
+      end mouseUp
+    * Part 30278:3 "marker"
+  * Card 31497 "" (5 parts)
+
+    on openCard
+    global pictAdd,SE_MicSwitch
+    if char 3 of SE_MicSwitch is 1 then
+    put field "pict name" & " (on)|" & the rect ¬
+    of card button Marker into pictAdd
+    end if
+    pass openCard
+    end openCard
+
+    * Part 31497:3 ""
+    * Part 31497:6 "marker"
+    * Part 31497:1 ""
+      on mouseUp
+      PlayQT "GR Broken Clock Mov", , loop, 100,,,,,true
+      go to card id 11445
+      end mouseUp
+    * Part 31497:2 "Left"
+      on mouseUp
+      PlayQT "GR Broken Clock Mov", , loop, 100,,,,,true
+      go to card id 11604
+      end mouseUp
+    * Part 31497:4 ""
+      on mouseDown
+      global SE_MicSwitch
+      if char 3 of SE_MicSwitch is 1 then
+      put 0 into char 3 of SE_MicSwitch
+      play stop
+      play "SW Pushbutton out"
+      xCIcon3 "274,176",1002
+      HTAddPict "ClockTower ButtonStand (Off)",the rect of card button "marker","srccopy"
+      else
+      put 1 into char 3 of SE_MicSwitch
+      play stop
+      play "SW Pushbutton out"
+      xCIcon3  "275,176",1012
+      HTAddPict "ClockTower ButtonStand (On)",the rect of card button "marker","srccopy"
+      end if
+      end mouseDown
+  * Card 31863 "" (1 parts)
+    * Part 31863:1 "down"
+      on mouseUp
+      go to card id 11445
+      end mouseUp
+  * Card 8871 "" (5 parts)
+    * Part 8871:1 "right"
+      on mouseUp
+      go to card id 8646
+      end mouseUp
+    * Part 8871:2 "left"
+      on mouseUp
+      go to card id 9028
+      end mouseUp
+    * Part 8871:3 ""
+      on mouseUp
+      go to card id 28762
+      PlayQT "WA Lapping Mov",, loop, 75
+      end mouseUp
+    * Part 8871:4 "qcal1"
+      on mouseUp
+      go to card id 28762
+      PlayQT "WA Lapping Mov",, loop, 75
+      end mouseUp
+    * Part 8871:5 "qcal2"
+      on mouseUp
+      go to card id 28762
+      PlayQT "WA Lapping Mov",, loop, 75
+      end mouseUp
+  * Card 8646 "" (2 parts)
+    * Part 8646:1 "left"
+      on mouseUp
+      go to card id 8871
+      end mouseUp
+    * Part 8646:2 "right"
+      on mouseUp
+      go to card id 9389
+      end mouseUp
+  * Card 9028 "" (5 parts)
+    * Part 9028:1 "right"
+      on mouseUp
+      go to card id 8871
+      end mouseUp
+    * Part 9028:2 ""
+      on mouseUp
+      go to card id 6473
+      PlayQT "AR Lite Wind Mov", , loop, 150
+      end mouseUp
+    * Part 9028:3 "left"
+      on mouseUp
+      go to card id 9389
+      end mouseUp
+    * Part 9028:4 "qpat1"
+      on mouseUp
+      go to card id 6473
+      PlayQT "AR Lite Wind Mov", , loop, 150
+      end mouseUp
+    * Part 9028:5 "qdor2"
+      on mouseUp
+      go to card id 6473
+      PlayQT "AR Lite Wind Mov", , loop, 150
+      end mouseUp
+  * Card 9389 "" (5 parts)
+    * Part 9389:1 "left"
+      on mouseUp
+      go to card id 8646
+      end mouseUp
+    * Part 9389:2 ""
+      on mouseUp
+      PlayQT "GR Broken Clock Mov", , loop, 75,,,,,true
+      go to card id 10153
+      end mouseUp
+    * Part 9389:3 "right"
+      on mouseUp
+      go to card id 9028
+      end mouseUp
+    * Part 9389:4 "qclo"
+      on mouseUp
+      PlayQT "GR Broken Clock Mov", , loop, 75,,,,,true
+      go to card id 10153
+      end mouseUp
+    * Part 9389:5 "qpat2"
+      on mouseUp
+      PlayQT "GR Broken Clock Mov", , loop, 75,,,,,true
+      go to card id 10153
+      end mouseUp
+  * Card 14695 "qpat5" (4 parts)
+
+    on opencard
+    PlayQT "WA Lapping Mov", , loop, 200
+    pass opencard
+    end opencard
+
+    * Part 14695:1 ""
+      on mouseUp
+      go to card id 41140
+      end mouseUp
+    * Part 14695:2 "right"
+      on mouseUp
+      go to card id 15996
+      end mouseUp
+    * Part 14695:3 "left"
+      on mouseUp
+      go to card id 12953
+      end mouseUp
+    * Part 14695:4 "qpat6"
+      on mouseUp
+      go to card id 41140
+      end mouseUp
+  * Card 12953 "qpat3" (4 parts)
+
+    on opencard
+    PlayQT "WA Lapping Mov", , loop, 200
+    pass opencard
+    end opencard
+
+    * Part 12953:1 ""
+      on mouseUp
+      PlayQT "AR Lite Wind Mov",, loop, 200
+      go to card id 13395
+      end mouseUp
+    * Part 12953:3 "left"
+      on mouseUp
+      go to card id 15996
+      end mouseUp
+    * Part 12953:4 "right"
+      on mouseUp
+      go to card id 14695
+      end mouseUp
+    * Part 12953:5 "qpat4"
+      on mouseUp
+      PlayQT "AR Lite Wind Mov",, loop, 200
+      go to card id 13395
+      end mouseUp
+  * Card 13290 "" (2 parts)
+    * Part 13290:1 ""
+      on mouseUp
+      go to card id 13395
+      end mouseUp
+    * Part 13290:2 "left"
+      on mouseUp
+      go to card id 15996
+      end mouseUp
+  * Card 15996 "" (2 parts)
+    * Part 15996:1 "right"
+      on mouseUp
+      go to card id 12953
+      end mouseUp
+    * Part 15996:2 "left"
+      on mouseUp
+      go to card id 14695
+      end mouseUp
+  * Card 14519 "" (3 parts)
+    * Part 14519:1 ""
+      on mouseUp
+      go to card id 14695
+      PlayQT "WA Lapping Mov", , loop, 200
+      end mouseUp
+    * Part 14519:2 "right"
+      on mouseUp
+      go to card id 16208
+      end mouseUp
+    * Part 14519:3 "qpat6"
+  * Card 13395 "" (4 parts)
+    * Part 13395:1 ""
+      on mouseUp
+      go to card id 40703
+      end mouseUp
+    * Part 13395:2 "left"
+      on mouseUp
+      go to card id 16208
+      end mouseUp
+    * Part 13395:3 "qpat4"
+      on mouseUp
+      go to card id 40703
+      end mouseUp
+    * Part 13395:4 "qtun"
+      on mouseUp
+      go to card id 40703
+      end mouseUp
+  * Card 16208 "" (2 parts)
+    * Part 16208:1 "right"
+      on mouseUp
+      go to card id 13395
+      end mouseUp
+    * Part 16208:3 "left"
+      on mouseUp
+      go to card id 14519
+      end mouseUp
+  * Card 40703 "" (3 parts)
+    * Part 40703:1 ""
+      on mouseUp
+      go to card id 13774
+      end mouseUp
+    * Part 40703:2 "left"
+      on mouseUp
+      go to card id 41622
+      end mouseUp
+    * Part 40703:3 "qtun"
+      on mouseUp
+      go to card id 13774
+      end mouseUp
+  * Card 41779 "" (4 parts)
+    * Part 41779:1 "right"
+      on mouseUp
+      go to card id 41622
+      end mouseUp
+    * Part 41779:2 ""
+      on mouseUp
+      go to card id 14519
+      end mouseUp
+    * Part 41779:3 "left"
+      on mouseUp
+      go to card id 40703
+      end mouseUp
+    * Part 41779:4 "qpat5"
+      on mouseUp
+      go to card id 14519
+      end mouseUp
+  * Card 41622 "" (2 parts)
+    * Part 41622:1 "right"
+      on mouseUp
+      go to card id 40703
+      end mouseUp
+    * Part 41622:2 "left"
+      on mouseUp
+      go to card id 41779
+      end mouseUp
+  * Card 14183 "" (4 parts)
+    * Part 14183:1 "left"
+      on mouseUp
+      go to card id 13774
+      end mouseUp
+    * Part 14183:2 "right"
+      on mouseUp
+      go to card id 14046
+      end mouseUp
+    * Part 14183:3 ""
+      on mouseUp
+      go to card id 41779
+      end mouseUp
+    * Part 14183:4 "qpat5"
+      on mouseUp
+      go to card id 41779
+      end mouseUp
+  * Card 13774 "qpat4" (3 parts)
+
+    on opencard
+    playqt "AR Lite Wind Mov","","loop","200"
+    pass opencard
+    end opencard
+
+    * Part 13774:1 "left"
+      on mouseUp
+      go to card id 14046
+      end mouseUp
+    * Part 13774:2 "right"
+      on mouseUp
+      go to card id 14183
+      end mouseUp
+    * Part 13774:3 ""
+      on mouseUp
+      go to card id 21856
+      PlayQT "AR Howling Mov", , loop, 200,,,,,true
+      end mouseUp
+  * Card 14046 "" (2 parts)
+    * Part 14046:1 "right"
+      on mouseUp
+      go to card id 13774
+      end mouseUp
+    * Part 14046:2 "left"
+      on mouseUp
+      go to card id 14183
+      PlayQT "AR Lite Wind Mov", , loop, 200
+      end mouseUp
+  * Card 10474 "" (5 parts)
+    * Part 10474:1 ""
+      on mouseUp
+      PlayQT "WA Lapping Mov", , loop, 200
+      go to card id 8871
+      end mouseUp
+    * Part 10474:2 "left"
+      on mouseUp
+      go to card id 10153
+      end mouseUp
+    * Part 10474:3 "right"
+      on mouseUp
+      go to card id 32311
+      end mouseUp
+    * Part 10474:4 "qcal1"
+      on mouseUp
+      PlayQT "WA Lapping Mov", , loop, 200
+      go to card id 8871
+      end mouseUp
+    * Part 10474:5 "qpat1"
+      on mouseUp
+      PlayQT "WA Lapping Mov", , loop, 200
+      go to card id 8871
+      end mouseUp
+  * Card 10153 "" (6 parts)
+    * Part 10153:1 "left"
+      on mouseUp
+      go to card id 32311
+      end mouseUp
+    * Part 10153:2 ""
+      on mouseUp
+      PlayQT "GR Broken Clock Mov", , loop, 150,,,,,true
+      go to card id 11604
+      end mouseUp
+    * Part 10153:3 ""
+      on mouseUp
+      PlayQT "GR Broken Clock Mov", , loop, 150,,,,,true
+      go to card id 11445
+      end mouseUp
+    * Part 10153:4 "qclo"
+      on mouseUp
+      PlayQT "GR Broken Clock Mov", , loop, 150,,,,,true
+      go to card id 11445
+      end mouseUp
+    * Part 10153:5 "qpat2"
+      on mouseUp
+      PlayQT "GR Broken Clock Mov", , loop, 150,,,,,true
+      go to card id 11604
+      end mouseUp
+    * Part 10153:6 "qpat2"
+      on mouseUp
+      go to card id 32311
+      end mouseUp
+  * Card 32311 "" (2 parts)
+    * Part 32311:1 "left"
+      on mouseUp
+      go to card id 10474
+      end mouseUp
+    * Part 32311:2 "right"
+      on mouseUp
+      go to card id 10153
+      end mouseUp
+  * Card 11112 "qclo1" (4 parts)
+
+    on opencard
+    PlayQT "GR Broken Clock Mov", , loop, 150,,,,,true
+    pass opencard
+    end opencard
+
+    * Part 11112:1 "right"
+      on mouseUp
+      go to card id 10897
+      end mouseUp
+    * Part 11112:2 "left"
+      on mouseUp
+      go to card id 11445
+      end mouseUp
+    * Part 11112:3 ""
+      on mouseUp
+      PlayQT "GR Broken Clock Mov", , loop, 50,,,,,true
+      go to card id 10474
+      end mouseUp
+    * Part 11112:4 "qcal1"
+      on mouseUp
+      PlayQT "GR Broken Clock Mov", , loop, 50,,,,,true
+      go to card id 10474
+      end mouseUp
+  * Card 10522 "" (3 parts)
+    * Part 10522:1 "left"
+      on mouseUp
+      go to card id 10897
+      end mouseUp
+    * Part 10522:2 "right"
+      on mouseUp
+      go to card id 11445
+      end mouseUp
+    * Part 10522:3 ""
+      on mouseUp
+      go to card id 11604
+      end mouseUp
+  * Card 10897 "" (2 parts)
+    * Part 10897:1 "right"
+      on mouseUp
+      go to card id 11604
+      end mouseUp
+    * Part 10897:2 "left"
+      on mouseUp
+      go to card id 11112
+      end mouseUp
+  * Card 11445 "qclo" (4 parts)
+
+    on openCard
+    play stop
+    PlayQT "GR Broken Clock Mov", , loop, 150,,,,,true
+    pass openCard
+    end openCard
+
+    * Part 11445:1 "right"
+      on mouseUp
+      go to card id 11112
+      end mouseUp
+    * Part 11445:2 "left"
+      on mouseUp
+      go to card id 11604
+      end mouseUp
+    * Part 11445:3 ""
+      on mouseUp
+      PlayQT "GR Broken Clock Mov", , loop, 150,,,,,true
+      go to card id 31497
+      end mouseUp
+    * Part 11445:4 "up"
+      on mouseUp
+      go to card id 31863
+      end mouseUp
+  * Card 11604 "" (5 parts)
+    * Part 11604:1 ""
+      on mouseUp
+      PlayQT "GR Broken Clock Mov", , loop, 50,,,,,true
+      go to card id 12324
+      end mouseUp
+    * Part 11604:2 "left"
+      on mouseUp
+      go to card id 10897
+      end mouseUp
+    * Part 11604:3 "right"
+      on mouseUp
+      go to card id 11445
+      end mouseUp
+    * Part 11604:4 "qpat3"
+      on mouseUp
+      PlayQT "GR Broken Clock Mov", , loop, 50,,,,,true
+      go to card id 12324
+      end mouseUp
+    * Part 11604:8 "qsto1 right"
+      on mouseUp
+      go to card id 11445
+      end mouseUp
+  * Card 11797 "" (2 parts)
+    * Part 11797:1 "right"
+      on mouseUp
+      go to card id 12324
+      end mouseUp
+    * Part 11797:2 "left"
+      on mouseUp
+      go to card id 15605
+      end mouseUp
+  * Card 15605 "" (3 parts)
+    * Part 15605:1 ""
+      on mouseUp
+      PlayQT "GR Broken Clock Mov", , loop, 150,,,,,true
+      go to card id 11112
+      end mouseUp
+    * Part 15605:2 "right"
+      on mouseUp
+      go to card id 11797
+      end mouseUp
+    * Part 15605:3 "left"
+      on mouseUp
+      go to card id 12324
+      end mouseUp
+  * Card 15799 "" (2 parts)
+    * Part 15799:1 "right"
+      on mouseUp
+      go to card id 12324
+      end mouseUp
+    * Part 15799:2 "left"
+      on mouseUp
+      go to card id 15605
+      end mouseUp
+  * Card 12324 "qpat2" (6 parts)
+
+    on opencard
+    PlayQT "GR Broken Clock Mov", , loop, 50,,,,,true
+    pass opencard
+    end opencard
+
+    * Part 12324:4 "right"
+      on mouseUp
+      go to card id 15605
+      end mouseUp
+    * Part 12324:1 ""
+      on mouseUp
+      PlayQT "WA Lapping Mov", , loop, 200
+      go to card id 12227
+      end mouseUp
+    * Part 12324:2 "left"
+      on mouseUp
+      go to card id 11797
+      end mouseUp
+    * Part 12324:3 ""
+      on mouseUp
+      PlayQT "WA Lapping Mov", , loop, 200
+      go to card id 21709
+      end mouseUp
+    * Part 12324:5 "right"
+      on mouseUp
+      go to card id 15605
+      end mouseUp
+    * Part 12324:7 "left"
+      on mouseUp
+      go to card id 11797
+      end mouseUp
+  * Card 21709 "" (4 parts)
+    * Part 21709:1 ""
+      on mouseUp
+      go to card id 17143
+      end mouseUp
+    * Part 21709:2 "left"
+      on mouseUp
+      go to card id 12686
+      end mouseUp
+    * Part 21709:3 "right"
+      on mouseUp
+      go to card id 15605
+      end mouseUp
+    * Part 21709:4 "qsto1"
+      on mouseUp
+      go to card id 17143
+      end mouseUp
+  * Card 15135 "qpat6" (4 parts)
+
+    on opencard
+    PlayQT "GR Broken Clock Mov", , loop, 50,,,,,true
+    pass opencard
+    end opencard
+
+    * Part 15135:1 ""
+      on mouseUp
+      PlayQT "GR Broken Clock Mov", , loop, 50,,,,,true
+      go to card id 15605
+      end mouseUp
+    * Part 15135:2 "left"
+      on mouseUp
+      go to card id 16769
+      end mouseUp
+    * Part 15135:3 "right"
+      on mouseUp
+      go to card id 16515
+      end mouseUp
+    * Part 15135:4 "qclo1"
+      on mouseUp
+      PlayQT "GR Broken Clock Mov", , loop, 50,,,,,true
+      go to card id 15605
+      end mouseUp
+  * Card 12227 "" (5 parts)
+    * Part 12227:1 ""
+      on mouseUp
+      go to card id 12686
+      end mouseUp
+    * Part 12227:2 "left"
+      on mouseUp
+      go to card id 16515
+      end mouseUp
+    * Part 12227:3 "right"
+      on mouseUp
+      go to card id 16769
+      end mouseUp
+    * Part 12227:5 "qpat3 left"
+      on mouseUp
+      go to card id 16515
+      end mouseUp
+    * Part 12227:6 "qpat3"
+      on mouseUp
+      go to card id 12686
+      end mouseUp
+  * Card 16515 "" (2 parts)
+    * Part 16515:1 "left"
+      on mouseUp
+      go to card id 15135
+      end mouseUp
+    * Part 16515:2 "right"
+      on mouseUp
+      go to card id 12227
+      end mouseUp
+  * Card 16769 "" (4 parts)
+    * Part 16769:1 "right"
+      on mouseUp
+      go to card id 15135
+      end mouseUp
+    * Part 16769:2 ""
+      on mouseUp
+      go to card id 17143
+      PlayQT "WA Lapping Mov", , loop, 100
+      end mouseUp
+    * Part 16769:3 "left"
+      on mouseUp
+      go to card id 12227
+      end mouseUp
+    * Part 16769:4 "qsto1"
+      on mouseUp
+      go to card id 17143
+      PlayQT "WA Lapping Mov", , loop, 100
+      end mouseUp
+  * Card 15029 "" (4 parts)
+    * Part 15029:1 ""
+      on mouseUp
+      go to card id 15135
+      end mouseUp
+    * Part 15029:2 "right"
+      on mouseUp
+      go to card id 39863
+      end mouseUp
+    * Part 15029:3 "qsto1"
+      on mouseUp
+      go to card id 15135
+      end mouseUp
+    * Part 15029:4 "qclo1 right"
+      on mouseUp
+      go to card id 39863
+      end mouseUp
+  * Card 12686 "" (4 parts)
+    * Part 12686:1 ""
+      on mouseUp
+      go to card id 40422
+      end mouseUp
+    * Part 12686:3 "left"
+      on mouseUp
+      go to card id 39863
+      end mouseUp
+    * Part 12686:4 "right"
+      on mouseUp
+      go to card id 15029
+      end mouseUp
+    * Part 12686:6 "qpat3"
+      on mouseUp
+      go to card id 40422
+      end mouseUp
+  * Card 39863 "" (2 parts)
+    * Part 39863:1 "right"
+      on mouseUp
+      go to card id 12686
+      end mouseUp
+    * Part 39863:2 "left"
+      on mouseUp
+      go to card id 15029
+      end mouseUp
+  * Card 41140 "" (3 parts)
+    * Part 41140:1 "right"
+      on mouseUp
+      go to card id 40792
+      end mouseUp
+    * Part 41140:2 ""
+      on mouseUp
+      go to card id 15029
+      end mouseUp
+    * Part 41140:3 "qpat6"
+      on mouseUp
+      go to card id 15029
+      end mouseUp
+  * Card 40422 "" (3 parts)
+    * Part 40422:1 ""
+      on mouseUp
+      go to card id 12953
+      end mouseUp
+    * Part 40422:2 "left"
+      on mouseUp
+      go to card id 40792
+      end mouseUp
+    * Part 40422:3 "qpat4 left"
+      on mouseUp
+      go to card id 40792
+      end mouseUp
+  * Card 40792 "" (2 parts)
+    * Part 40792:1 "right"
+      on mouseUp
+      go to card id 40422
+      end mouseUp
+    * Part 40792:2 "left"
+      on mouseUp
+      go to card id 41140
+      end mouseUp
+  * Card 7475 "" (4 parts)
+    * Part 7475:1 ""
+      on mouseUp
+      go to card id 4375
+      end mouseUp
+    * Part 7475:2 "left"
+      on mouseUp
+      go to card id 5520
+      end mouseUp
+    * Part 7475:3 "right"
+      on mouseUp
+      go to card id 5520
+      end mouseUp
+    * Part 7475:4 "qspa"
+      on mouseUp
+      go to card id 4375
+      end mouseUp
+  * Card 5520 "" (3 parts)
+    * Part 5520:1 ""
+      on mouseUp
+      go to card id 5801
+      end mouseUp
+    * Part 5520:2 "right"
+      on mouseUp
+      go to card id 7475
+      end mouseUp
+    * Part 5520:4 "left"
+      on mouseUp
+      go to card id 7475
+      end mouseUp
+  * Card 7030 "qdor2" (4 parts)
+
+    on opencard
+    PlayQT "AR Lite Wind Mov", , loop, 150
+    pass opencard
+    end opencard
+
+    * Part 7030:1 ""
+      on mouseUp
+      go to card id 7475
+      end mouseUp
+    * Part 7030:2 "left"
+      on mouseUp
+      go to card id 7689
+      end mouseUp
+    * Part 7030:3 "right"
+      on mouseUp
+      go to card id 5801
+      end mouseUp
+    * Part 7030:4 "qspa"
+      on mouseUp
+      go to card id 7475
+      end mouseUp
+  * Card 7689 "" (4 parts)
+    * Part 7689:1 "left"
+      on mouseUp
+      go to card id 5801
+      end mouseUp
+    * Part 7689:3 "right"
+      on mouseUp
+      go to card id 7030
+      end mouseUp
+    * Part 7689:4 ""
+      on mouseUp
+      htlock "bw"
+      go to card id 7990
+      end mouseUp
+    * Part 7689:5 "doormarker"
+      on mouseUp
+      
+      end mouseUp
+  * Card 42081 "" (5 parts)
+    * Part 42081:1 "doormarker"
+      on mouseUp
+      PlayQT "EV Electmotors Mov",, loop, 25
+      go to card id 42331
+      end mouseUp
+    * Part 42081:2 ""
+      on mouseUp
+      HTVisual "scroll down",,the rect of card button doormarker,2,16
+      play stop
+      dplay "DR GenRoom Down"
+      go to card id 7689
+      wait until the sound is "done"
+      htlock "bw"
+      go to card id 7990
+      end mouseUp
+    * Part 42081:3 "right"
+      on mouseUp
+      go to card id 7030
+      play stop
+      play "DR GenRoom Down"
+      wait until the sound is "done"
+      end mouseUp
+    * Part 42081:4 "left"
+      on mouseUp
+      go to card id 5801
+      play stop
+      play "DR GenRoom Down"
+      wait until the sound is "done"
+      end mouseUp
+    * Part 42081:5 "qhal"
+      on mouseUp
+      PlayQT "EV Electmotors Mov",, loop, 25
+      go to card id 42331
+      end mouseUp
+  * Card 5801 "qdor" (3 parts)
+
+    on opencard
+    PlayQT "AR Lite Wind Mov", , loop, 150
+    pass opencard
+    end opencard
+
+    * Part 5801:1 ""
+      on mouseUp
+      go to card id 6070
+      end mouseUp
+    * Part 5801:2 "right"
+      on mouseUp
+      go to card id 7689
+      end mouseUp
+    * Part 5801:3 "left"
+      on mouseUp
+      go to card id 7030
+      end mouseUp
+  * Card 6677 "" (4 parts)
+    * Part 6677:1 ""
+      on mouseUp
+      go to card id 7030
+      end mouseUp
+    * Part 6677:2 "left"
+      on mouseUp
+      go to card id 6070
+      end mouseUp
+    * Part 6677:3 "right"
+      on mouseUp
+      go to card id 8207
+      end mouseUp
+    * Part 6677:4 "qdor2"
+      on mouseUp
+      go to card id 7030
+      end mouseUp
+  * Card 6070 "" (4 parts)
+    * Part 6070:1 ""
+      on mouseUp
+      go to card id 6361
+      end mouseUp
+    * Part 6070:2 "right"
+      on mouseUp
+      go to card id 6677
+      end mouseUp
+    * Part 6070:3 "left"
+      on mouseUp
+      go to card id 8207
+      end mouseUp
+    * Part 6070:4 "qcal1"
+      on mouseUp
+      go to card id 6361
+      end mouseUp
+  * Card 6473 "" (5 parts)
+    * Part 6473:1 ""
+      on mouseUp
+      go to card id 6677
+      end mouseUp
+    * Part 6473:2 "left"
+      on mouseUp
+      go to card id 6361
+      end mouseUp
+    * Part 6473:3 "right"
+      on mouseUp
+      go to card id 6361
+      end mouseUp
+    * Part 6473:4 ""
+      on mouseUp
+      go to card id 8207
+      end mouseUp
+    * Part 6473:5 "qdor2"
+      on mouseUp
+      go to card id 6677
+      end mouseUp
+  * Card 8207 "qpat1" (4 parts)
+
+    on opencard
+    PlayQT "AR Lite Wind Mov", , loop, 150
+    pass opencard
+    end opencard
+
+    * Part 8207:1 "right"
+      on mouseUp
+      go to card id 6070
+      end mouseUp
+    * Part 8207:2 "left"
+      on mouseUp
+      go to card id 6677
+      end mouseUp
+    * Part 8207:3 ""
+      on mouseUp
+      go to card id 32185
+      end mouseUp
+    * Part 8207:4 "qfou1"
+      on mouseUp
+      go card
+      end mouseUp
+  * Card 6361 "" (5 parts)
+    * Part 6361:2 "right"
+      on mouseUp
+      go to card id 6473
+      end mouseUp
+    * Part 6361:3 ""
+      on mouseUp
+      PlayQT "WA Lapping Mov", , loop, 200
+      go to card id 8646
+      end mouseUp
+    * Part 6361:4 "left"
+      on mouseUp
+      go to card id 8207
+      end mouseUp
+    * Part 6361:5 ""
+      on mouseUp
+      PlayQT "WA Lapping Mov", , loop, 200
+      go to card id 28762
+      end mouseUp
+    * Part 6361:6 "qcal1"
+      on mouseUp
+      PlayQT "WA Lapping Mov", , loop, 200
+      go to card id 28762
+      end mouseUp
+  * Card 7990 "" (8 parts)
+
+    on openCard
+    global SE_MazeKey
+    repeat with x = 1 to 5
+    set the loc of button ("s" & x) to line x of SE_MazeKey
+    end repeat
+    pass openCard
+    end openCard
+    
+    on closeCard
+    global SE_MazeKey
+    repeat with x = 1 to 5
+    put the loc of button ("s" & x) into line x of SE_MazeKey
+    end repeat
+    htlock "nobw"
+    pass closeCard
+    end closeCard
+    
+    on slide
+    put "AR Howling,AR Slide,AR Steam Whistle,EL Shutter Release,EL Sparks,EV StoneForest,FR Caldron,GR Broken Clock,MR Metal Shear,WA Running" into theSounds
+    put the loc of the target into theLoc
+    if there is a window "AR Lite Wind Mov" then ¬
+    set the rate of window "AR Lite Wind Mov" to "0.0"
+    repeat until the mouse is up
+    get the mouseV
+    if it < 85 then get 85
+    if it > 202 then get 202
+    get (it div 12)
+    if it ≠ oldSound then
+    play stop
+    play "SW PushButton In"
+    play item (it - 6) of theSounds
+    else
+    if the sound is "done" then play item (it - 6) of theSounds
+    end if
+    put it into oldSound
+    get it * 12 + 6
+    put it into item 2 of theLoc
+    if oldLoc ≠ theLoc then
+    set the loc of the target to theLoc
+    put theLoc into oldLoc
+    xcIcon3 theLoc,8001
+    end if
+    end repeat
+    hide the target
+    show the target
+    play stop
+    if there is a window "AR Lite Wind Mov" then ¬
+    set the rate of window "AR Lite Wind Mov" to "1.0"
+    end slide
+
+    * Part 7990:1 ""
+      on mouseUp
+      go to card id 7689
+      end mouseUp
+    * Part 7990:2 ""
+    * Part 7990:3 "s1"
+      on mouseDown
+      deCurse "override",2004,"color","nodelay"
+      slide
+      end mouseDown
+      
+      on mousewithin
+      deCurse "override",2003,"color","nodelay"
+      end mousewithin
+    * Part 7990:8 ""
+      on mouseDown
+      global SE_Current,INITTEMP
+      hide me
+      hc -- added (1.0b8)
+      play "SW PushButton In"
+      xCIcon3 the loc of me, 5001
+      put playslide() into theKey
+      play "SW PushButton Out"
+      if theKey = "610178" then
+      xCIcon3 the loc of me, 5002
+      xCIcon3 the loc of me, 5001
+      xCIcon3 the loc of me, 5002
+      xCIcon3 the loc of me, 5001
+      xCIcon3 the loc of me, 5002
+      go to card id 7689
+      HTVisual "scrollaway up",,the rect of card button doormarker,2,16
+      dplay "DR Spaceship II"
+      go to card id 42081
+      put 0 into SE_Current
+      put empty into INITTEMP
+      end if
+      show me
+      ww -- added (1.0b8)
+      set cursor to hand  -- added (1.0b8)
+      end mouseDown
+      
+      
+      function playSlide
+      put empty into theKey
+      --put "AR Steam Whistle,EL Shutter Release,EV StoneForest,AR Slide,WA Pouring,MR Metal Shear,AR Howling,EL Sparks,FR Caldron,GR Broken Clock" into theSounds
+      put "AR Howling,AR Slide,AR Steam Whistle,EL Shutter Release,EL Sparks,EV StoneForest,FR Caldron,GR Broken Clock,MR Metal Shear,WA Running" into theSounds
+      repeat with x = 1 to 5
+      put "s" & x into which
+      get (item 2 of the loc of card button which) div 12
+      play stop
+      xcIcon3 the Loc of button which,8001
+      --set the hilite of button which to true
+      --play "SW PushButton In"
+      play item (it - 6) of theSounds
+      put (it - 6) after theKey
+      put the ticks into startTime
+      repeat until the ticks > startTime + 120
+      if the sound is "done" then exit repeat
+      end repeat
+      --set the hilite of button which to false
+      hide button which
+      show button which
+      end repeat
+      play stop
+      return theKey
+      end playSlide
+    * Part 7990:9 "s2"
+      on mouseDown
+      deCurse "override",2004,"color","nodelay"
+      slide
+      end mouseDown
+      
+      on mousewithin
+      deCurse "override",2003,"color","nodelay"
+      end mousewithin
+    * Part 7990:10 "s3"
+      on mouseDown
+      deCurse "override",2004,"color","nodelay"
+      slide
+      end mouseDown
+      
+      on mousewithin
+      deCurse "override",2003,"color","nodelay"
+      end mousewithin
+    * Part 7990:11 "s4"
+      on mouseDown
+      deCurse "override",2004,"color","nodelay"
+      slide
+      end mouseDown
+      
+      on mousewithin
+      deCurse "override",2003,"color","nodelay"
+      end mousewithin
+    * Part 7990:12 "s5"
+      on mouseDown
+      deCurse "override",2004,"color","nodelay"
+      slide
+      end mouseDown
+      
+      on mousewithin
+      deCurse "override",2003,"color","nodelay"
+      end mousewithin
+  * Card 34053 "qfou" (6 parts)
+
+    on openCard
+    global pictAdd,ALL_Page,MY_BlueBook
+    if item 1 to 2 of ALL_Page is "2,A"  or char 2 of MY_BlueBook = 1 then
+    put field "pict name" & " (noPage)|" & the rect ¬
+    of card button Marker into pictAdd
+    end if
+    PlayQT "WA Running Far Mov",,loop,150,,,,,true
+    pass openCard
+    end openCard
+
+    * Part 34053:6 "marker"
+    * Part 34053:2 ""
+      on mouseUp
+      PlayQT "WA Running Far Mov", , loop, 100,,,,,true
+      go to card id 34737
+      end mouseUp
+    * Part 34053:1 ""
+      on mouseUp
+      PlayQT "WA Running Far Mov", , loop, 100,,,,,true
+      go to card id 34421
+      end mouseUp
+    * Part 34053:3 "left"
+      on mouseUp
+      go to card id 35615
+      end mouseUp
+    * Part 34053:4 "right"
+      on mouseUp
+      go to card id 35615
+      end mouseUp
+    * Part 34053:5 ""
+      on mouseUp
+      PlayQT "WA Running Far Mov",,loop,200,,,,,true
+      go to card id 35569
+      end mouseUp
+  * Card 35615 "" (4 parts)
+    * Part 35615:1 "left"
+      on mouseUp
+      go to card id 34053
+      end mouseUp
+    * Part 35615:2 "right"
+      on mouseUp
+      go to card id 34053
+      end mouseUp
+    * Part 35615:3 ""
+      on mouseUp
+      PlayQT "WA Running Far Mov", , loop, 100,,,,,true
+      go to card id 35933
+      end mouseUp
+    * Part 35615:4 "qfou2"
+      on mouseUp
+      global quick
+      if quick is true then
+      soundstop
+      go card
+      else
+      PlayQT "WA Running Far Mov", , loop, 100,,,,,true
+      go to card id 35933
+      end if
+      end mouseUp
+  * Card 35569 "" (3 parts)
+
+    on closecard
+    global preLoad
+    if there is a window "Fountain.MooV" then
+    hide window "Fountain.MooV"
+    set the rate of window "Fountain.MooV" to "0.0"
+    end if
+    put empty into preLoad
+    pass closeCard
+    end closecard
+    
+    on idle
+    global preLoad
+    if preload is empty then
+    if there is a window "Fountain.MooV" then
+    set the rate of window "Fountain.MooV" to "1.0"
+    show window "Fountain.MooV"
+    end if
+    put true into preload
+    end if
+    if there is a window "Fountain.MooV" then
+    send movieidle to window "Fountain.MooV"
+    end if
+    
+    pass idle
+    end idle
+
+    * Part 35569:1 "right"
+      on mouseUp
+      htlock true
+      PlayQT "WA Running Far Mov", , loop, 150,,,,,true
+      go to card id 35615
+      end mouseUp
+    * Part 35569:2 "left"
+      on mouseUp
+      htlock true
+      PlayQT "WA Running Far Mov",,loop,150,,,,,true
+      go to card id 34053
+      end mouseUp
+    * Part 35569:3 "marker"
+  * Card 34737 "" (3 parts)
+
+    on openCard
+    global pictAdd,ALL_Page,MY_BlueBook
+    if item 1 to 2 of ALL_Page is "2,A"  or char 2 of MY_BlueBook = 1 then
+    put field "pict name" & " (noPage)|" & the rect ¬
+    of card button Marker into pictAdd
+    end if
+    pass openCard
+    end openCard
+
+    * Part 34737:1 "right"
+      on mouseUp
+      go to card id 34421
+      end mouseUp
+    * Part 34737:2 "left"
+      on mouseUp
+      go to card id 35133
+      end mouseUp
+    * Part 34737:3 "marker"
+      on MouseDown
+      global MY_BlueBook,ALL_Page
+      if char 2 of MY_BlueBook is "0" then
+      if char 1 to 3 of ALL_Page is not "2,A" then
+      if All_Page is not empty then dropPage
+      put "2,A,0" into ALL_Page
+      htlock true
+      opencard
+      else
+      put empty into ALL_Page
+      UpdateCursor
+      opencard
+      end if
+      end if
+      dropState
+      end MouseDown
+  * Card 35133 "" (3 parts)
+    * Part 35133:1 "right"
+      on mouseUp
+      go to card id 34737
+      end mouseUp
+    * Part 35133:2 ""
+      on mouseUp
+      PlayQT "WA Running Far Mov", , loop, 200,,,,,true
+      go to card id 35569
+      end mouseUp
+    * Part 35133:3 ""
+      on mouseUp
+      PlayQT "WA Running Far Mov", , loop, 150,,,,,true
+      go to card id 35615
+      end mouseUp
+  * Card 34421 "" (4 parts)
+
+    on openCard
+    global pictAdd,SE_MicSwitch
+    if char 1 of SE_MicSwitch is 1 then
+    put field "pict name" & " (on)|" & the rect ¬
+    of card button Marker into pictAdd
+    end if
+    pass openCard
+    end openCard
+
+    * Part 34421:4 "marker"
+    * Part 34421:1 "left"
+      on mouseUp
+      go to card id 34737
+      end mouseUp
+    * Part 34421:2 "right"
+      on mouseUp
+      go to card id 35133
+      end mouseUp
+    * Part 34421:3 ""
+      on mouseDown
+      global SE_MicSwitch
+      set cursor to none
+      if char 1 of SE_MicSwitch is 1 then
+      put 0 into char 1 of SE_MicSwitch
+      play stop
+      play "SW PushButton Out"
+      xCIcon3 "284,216",1005
+      HTAddPict "Oasis Platform-S (Off)",the rect of card button "marker","srccopy"
+      else
+      put 1 into char 1 of SE_MicSwitch
+      play stop
+      play "SW PushButton Out"
+      xCIcon3 "284,216",1015
+      HTAddPict "Oasis Platform-S (On)",the rect of card button "marker","srccopy"
+      end if
+      
+      end mouseDown
+  * Card 9703 "" (3 parts)
+    * Part 9703:1 ""
+      on mouseUp
+      go to card id 6361
+      end mouseUp
+    * Part 9703:2 ""
+      on mouseUp
+      go to card id 6677
+      end mouseUp
+    * Part 9703:3 "right"
+      on mouseUp
+      go to card id 8207
+      end mouseUp
+  * Card 35933 "" (4 parts)
+    * Part 35933:1 ""
+      on mouseUp
+      PlayQT "WA Running Far Mov", , loop, 50,,,,,true
+      go to card id 36321
+      if there is a window "Fountain.Moov" then close window "Fountain.Moov"
+      end mouseUp
+    * Part 35933:2 "right"
+      on mouseUp
+      go to card id 37684
+      end mouseUp
+    * Part 35933:3 "left"
+      on mouseUp
+      go to card id 37684
+      end mouseUp
+    * Part 35933:4 "qfou2"
+      on mouseUp
+      PlayQT "WA Running Far Mov", , loop, 50,,,,,true
+      go to card id 36321
+      if there is a window "Fountain.Moov" then close window "Fountain.Moov"
+      end mouseUp
+  * Card 37684 "" (3 parts)
+    * Part 37684:1 ""
+      on mouseUp
+      global preload
+      put empty into preload
+      PlayQT "WA Running Far Mov",,loop,150,,,,,true
+      go to card id 34053
+      end mouseUp
+    * Part 37684:2 "right"
+      on mouseUp
+      go to card id 35933
+      end mouseUp
+    * Part 37684:3 "left"
+      on mouseUp
+      go to card id 35933
+      end mouseUp
+  * Card 37398 "qfou3" (3 parts)
+
+    on opencard
+    playqt "AR Lite Wind Mov","","loop","150"
+    pass opencard
+    end opencard
+
+    * Part 37398:1 ""
+      on mouseUp
+      go to card id 9703
+      end mouseUp
+    * Part 37398:2 "left"
+      on mouseUp
+      go to card id 32185
+      end mouseUp
+    * Part 37398:3 "right"
+      on mouseUp
+      go to card id 32185
+      end mouseUp
+  * Card 32185 "" (4 parts)
+    * Part 32185:1 ""
+      on mouseUp
+      go to card id 32578
+      end mouseUp
+    * Part 32185:2 "right"
+      on mouseUp
+      go to card id 37398
+      end mouseUp
+    * Part 32185:3 "left"
+      on mouseUp
+      go to card id 37398
+      end mouseUp
+    * Part 32185:5 "qfou1"
+      on mouseUp
+      go to card id 32578
+      end mouseUp
+  * Card 37271 "" (3 parts)
+    * Part 37271:1 ""
+      on mouseUp
+      go to card id 37398
+      end mouseUp
+    * Part 37271:2 "right"
+      on mouseUp
+      go to card id 32578
+      end mouseUp
+    * Part 37271:3 "left"
+      on mouseUp
+      go to card id 32578
+      end mouseUp
+  * Card 32578 "" (4 parts)
+    * Part 32578:1 ""
+      on mouseUp
+      go to card id 32879
+      end mouseUp
+    * Part 32578:2 "left"
+      on mouseUp
+      go to card id 37271
+      end mouseUp
+    * Part 32578:3 "right"
+      on mouseUp
+      go to card id 37271
+      end mouseUp
+    * Part 32578:4 "qfou1"
+      on mouseUp
+      go to card id 32879
+      end mouseUp
+  * Card 32879 "" (2 parts)
+    * Part 32879:1 ""
+      on mouseUp
+      go to card id 33146
+      end mouseUp
+    * Part 32879:2 "left"
+      on mouseUp
+      go to card id 37271
+      end mouseUp
+  * Card 37016 "" (4 parts)
+    * Part 37016:1 ""
+      on mouseUp
+      go to card id 37271
+      end mouseUp
+    * Part 37016:2 "right"
+      on mouseUp
+      go to card id 33146
+      end mouseUp
+    * Part 37016:3 "left"
+      on mouseUp
+      go to card id 33146
+      end mouseUp
+    * Part 37016:4 "qfou3"
+      on mouseUp
+      go to card id 37271
+      end mouseUp
+  * Card 33146 "qfou1" (3 parts)
+
+    on opencard
+    playqt "AR Lite Wind Mov","","loop","150"
+    pass opencard
+    end opencard
+
+    * Part 33146:1 ""
+      on mouseUp
+      go to card id 33514
+      end mouseUp
+    * Part 33146:2 "right"
+      on mouseUp
+      go to card id 37016
+      end mouseUp
+    * Part 33146:3 "left"
+      on mouseUp
+      go to card id 37016
+      end mouseUp
+  * Card 36746 "qfou2" (3 parts)
+
+    on opencard
+    playqt "AR Lite Wind Mov","","loop","150"
+    pass opencard
+    end opencard
+
+    * Part 36746:1 ""
+      on mouseUp
+      go to card id 37016
+      end mouseUp
+    * Part 36746:2 "right"
+      on mouseUp
+      go to card id 33514
+      end mouseUp
+    * Part 36746:3 "left"
+      on mouseUp
+      go to card id 33514
+      end mouseUp
+  * Card 33514 "" (4 parts)
+    * Part 33514:1 ""
+      on mouseUp
+      PlayQT "AR Lite Wind Mov", , loop, 75
+      go to card id 33578
+      end mouseUp
+    * Part 33514:2 "right"
+      on mouseUp
+      go to card id 36746
+      end mouseUp
+    * Part 33514:3 "left"
+      on mouseUp
+      go to card id 36746
+      end mouseUp
+    * Part 33514:4 "qfou"
+      on mouseUp
+      PlayQT "AR Lite Wind Mov", , loop, 75
+      go to card id 33578
+      end mouseUp
+  * Card 36414 "" (3 parts)
+    * Part 36414:1 ""
+      on mouseUp
+      PlayQT "AR Lite Wind Mov", , loop, 150
+      go to card id 36746
+      end mouseUp
+    * Part 36414:2 "right"
+      on mouseUp
+      go to card id 33578
+      end mouseUp
+    * Part 36414:3 "left"
+      on mouseUp
+      go to card id 33578
+      end mouseUp
+  * Card 33578 "" (4 parts)
+    * Part 33578:1 ""
+      on mouseUp
+      PlayQT "WA Running Far Mov",,loop,50,,,,,true
+      go to card id 33989
+      end mouseUp
+    * Part 33578:2 "right"
+      on mouseUp
+      go to card id 36414
+      end mouseUp
+    * Part 33578:3 "left"
+      on mouseUp
+      go to card id 36414
+      end mouseUp
+    * Part 33578:4 "qfou"
+      on mouseUp
+      PlayQT "WA Running Far Mov",,loop,50,,,,,true
+      go to card id 33989
+      end mouseUp
+  * Card 36321 "" (4 parts)
+    * Part 36321:1 ""
+      on mouseUp
+      PlayQT "AR Lite Wind Mov", , loop, 75
+      go to card id 36414
+      end mouseUp
+    * Part 36321:2 "right"
+      on mouseUp
+      go to card id 33989
+      end mouseUp
+    * Part 36321:3 "left"
+      on mouseUp
+      go to card id 33989
+      end mouseUp
+    * Part 36321:4 "qfou2"
+      on mouseUp
+      PlayQT "AR Lite Wind Mov", , loop, 75
+      go to card id 36414
+      end mouseUp
+  * Card 33989 "" (4 parts)
+    * Part 33989:1 ""
+      on mouseUp
+      PlayQT "WA Running Far Mov",,loop,100,,,,,true
+      go to card id 37684
+      moviefountain
+      end mouseUp
+    * Part 33989:2 "left"
+      on mouseUp
+      go to card id 36321
+      end mouseUp
+    * Part 33989:3 "right"
+      on mouseUp
+      go to card id 36321
+      end mouseUp
+    * Part 33989:4 "qfou"
+      on mouseUp
+      PlayQT "WA Running Far Mov",,loop,100,,,,,true
+      go to card id 37684
+      moviefountain
+      end mouseUp
+  * Card 55809 "qspa" (1 parts)
+
+    on opencard
+    playqt "WA Lapping Mov","","loop","200"
+    pass opencard
+    end opencard
+
+    * Part 55809:1 "left"
+      on mouseUp
+      go to card id 25246
+      end mouseUp
+  * Card 55498 "" (4 parts)
+    * Part 55498:1 "left"
+      on mouseUp
+      global pictAdd
+      put "Ship 1-Forward (open)|455,148,544,332" into pictAdd
+      go to card id 54153
+      end mouseUp
+    * Part 55498:2 ""
+      on mouseDown
+      global SE_Current
+      hide me
+      play stop
+      play "SW PushButton In"
+      if SE_Current ≠ 15 and SE_Current ≠ 0 then play "SW Buzzer"
+      xCIcon3 the loc of me,6000
+      wait 30
+      wait until the mouse is up
+      show me
+      play stop
+      play "SW PushButton Out"
+      if SE_current = 0 then
+      htlock true
+      htvisual "wipe up",,the rect of card button doorU,2,16
+      htvisual "wipe down",,the rect of card button doorD,2,16
+      dplay "DR Spaceship II"
+      go to card id 55574
+      end if
+      if SE_Current = 15 then
+      htlock true
+      htvisual "wipe up",,the rect of card button doorU,2,16
+      htvisual "wipe down",,the rect of card button doorD,2,16
+      dplay "DR Spaceship II"
+      go to card id 53872
+      end if
+      if SE_Current = 0 then PlayQT "EV Electmotors Mov",, loop, 50
+      if SE_Current = 15 then PlayQT "MU Bookroom Mov",, loop, 50
+      end mouseDown
+    * Part 55498:3 "doorU"
+    * Part 55498:4 "doorD"
+  * Card 55574 "" (4 parts)
+    * Part 55574:1 "none"
+      on mouseDown
+      hide me
+      play "SW PushButton In"
+      xCIcon3 the loc of me,6000
+      wait 30
+      wait until the mouse is up
+      show me
+      play "SW PushButton Out"
+      htlock true
+      htvisual "wipe down",,the rect of card button doorU,2,16
+      htvisual "wipe up",,the rect of card button doorD,2,16
+      dplay "DR Spaceship II"
+      go to card id 55498
+      PlayQT "EV Electmotors Mov",, loop, 20
+      end mouseDown
+    * Part 55574:2 "doorU"
+      on mouseUp
+      PlayQT "EV Electmotors Mov",, loop, 200
+      go to card id 46409
+      play "DR Spaceship II"
+      end mouseUp
+    * Part 55574:3 "left"
+      on mouseUp
+      go to card id 54153
+      play "DR Spaceship II"
+      htlock true
+      htvisual "wipe down",,,2,32
+      HTAddPict "Ship 1-Forward (open)",the rect of card button marker,"srccopy"
+      htlock forcefalse
+      PlayQT "EV Electmotors Mov",fadein, loop, 20
+      end mouseUp
+    * Part 55574:4 "doorD"
+      on mouseUp
+      PlayQT "EV Electmotors Mov",, loop, 200
+      get "Ship-Motion.MooV"
+      if there is a window it then close window it
+      
+      go to card id 46409
+      play "DR Spaceship II"
+      end mouseUp
+  * Card 53872 "" (4 parts)
+    * Part 53872:1 "doorU"
+      on mouseUp
+      PlayQT "EV Electmotors Mov",, loop, 50
+      go to card id 56929
+      end mouseUp
+    * Part 53872:2 ""
+      on mouseDown
+      hide me
+      play "SW PushButton In"
+      xCIcon3 the loc of me,6000
+      wait 30
+      wait until the mouse is up
+      show me
+      play "SW PushButton Out"
+      htlock true
+      htvisual "wipe down",,the rect of card button doorU,2,16
+      htvisual "wipe up",,the rect of card button doorD,2,16
+      dplay "DR Spaceship II"
+      go to card id 55498
+      PlayQT "EV Electmotors Mov",, loop, 20
+      end mouseDown
+    * Part 53872:3 "left"
+      on mouseUp
+      go to card id 54153
+      play "DR Spaceship II"
+      htlock true
+      htvisual "wipe down",,,2,32
+      HTAddPict "Ship 1-Forward (open)",the rect of card button marker,"srccopy"
+      htlock forcefalse
+      PlayQT "EV Electmotors Mov",fadein, loop, 20
+      end mouseUp
+    * Part 53872:4 "doorD"
+      on mouseUp
+      PlayQT "MU Bookroom Mov",, loop, 70
+      get "Ship-Motion.MooV"
+      if there is a window it then close window it
+      go to card id 56929
+      end mouseUp
+  * Card 24522 "" (3 parts)
+    * Part 24522:1 "right"
+      on mouseUp
+      go to card id 25246
+      end mouseUp
+    * Part 24522:2 "left"
+      on mouseUp
+      go to card id 25246
+      end mouseUp
+    * Part 24522:3 ""
+      on mouseUp
+      go to card id 55809
+      end mouseUp
+  * Card 54153 "" (3 parts)
+    * Part 54153:3 "marker"
+    * Part 54153:1 ""
+      on mouseUp
+      go to card id 54404
+      end mouseUp
+    * Part 54153:2 "right"
+      on mouseUp
+      go to card id 55498
+      end mouseUp
+  * Card 25246 "" (4 parts)
+    * Part 25246:1 ""
+      on mouseUp
+      go to card id 2252
+      end mouseUp
+    * Part 25246:5 "right"
+      on mouseUp
+      go to card id 24522
+      end mouseUp
+    * Part 25246:6 "left"
+      on mouseUp
+      go to card id 24522
+      end mouseUp
+    * Part 25246:9 "qdor"
+      on mouseUp
+      go to card id 2252
+      end mouseUp
+  * Card 55056 "" (2 parts)
+    * Part 55056:1 ""
+      on mouseUp
+      go to card id 55498
+      end mouseUp
+    * Part 55056:2 "left"
+      on mouseUp
+      go to card id 54404
+      end mouseUp
+  * Card 4871 "" (4 parts)
+    * Part 4871:1 "right"
+      on mouseUp
+      go to card id 2252
+      end mouseUp
+    * Part 4871:2 "left"
+      on mouseUp
+      go to card id 2252
+      end mouseUp
+    * Part 4871:3 ""
+      on mouseUp
+      go to card id 24522
+      end mouseUp
+    * Part 4871:4 "qspa"
+      on mouseUp
+      go to card id 24522
+      end mouseUp
+  * Card 54404 "" (2 parts)
+    * Part 54404:1 ""
+      on mouseUp
+      go to card id 54693
+      soundstop
+      end mouseUp
+    * Part 54404:2 "right"
+      on mouseUp
+      go to card id 55056
+      end mouseUp
+  * Card 2252 "" (4 parts)
+    * Part 2252:1 ""
+      on mouseUp
+      go to card id 2522
+      end mouseUp
+    * Part 2252:2 "left"
+      on mouseUp
+      go to card id 4871
+      end mouseUp
+    * Part 2252:3 "right"
+      on mouseUp
+      go to card id 4871
+      end mouseUp
+    * Part 2252:4 "qdor"
+      on mouseUp
+      go to card id 2522
+      end mouseUp
+  * Card 54790 "" (3 parts)
+    * Part 54790:1 "left"
+      on mouseUp
+      go to card id 54693
+      soundstop
+      end mouseUp
+    * Part 54790:2 "right"
+      on mouseUp
+      go to card id 54693
+      end mouseUp
+    * Part 54790:3 ""
+      on mouseUp
+      go to card id 55056
+      end mouseUp
+  * Card 4819 "" (4 parts)
+    * Part 4819:1 ""
+      on mouseUp
+      go to card id 4871
+      end mouseUp
+    * Part 4819:2 "right"
+      on mouseUp
+      go to card id 2522
+      end mouseUp
+    * Part 4819:3 "left"
+      on mouseUp
+      go to card id 2522
+      end mouseUp
+    * Part 4819:4 "qspa"
+      on mouseUp
+      go to card id 4871
+      end mouseUp
+  * Card 54693 "none" (16 parts)
+
+    on Heading which
+    put "Ship Heading" into thePict
+    put the rect of card button Compass into theLoc
+    put "0,0,35,18" into theClip
+    put which * 18 into item 2 of theClip
+    --put it * 37 + 37 into item 3 of theClip
+    HTAddPict thePict,theLoc,"srccopy","srcRect",theClip
+    end Heading
+    
+    on noHeading
+    put "Ship Heading" into thePict
+    put the rect of card button Compass into theLoc
+    put "0,0,35,18" into theClip
+    HTAddPict thePict,theLoc,"srccopy","srcRect",theClip
+    end noHeading
+    
+    on setcompass
+    global SE_Current,SE_Direction
+    if SE_Current = 15 then
+    foff
+    loff
+    roff
+    bglow
+    soff
+    noHeading
+    else
+    if SE_Current = 0 then
+    Soff
+    Roff
+    Loff
+    Boff
+    put "1" into SE_Direction
+    noHeading
+    else
+    rglow
+    lglow
+    if item (SE_Direction) of line (SE_Current) of card field destination ≠ 0 then Fglow
+    else Foff
+    if item 10 of line (SE_Current) of card field destination = "-" then boff
+    else bglow
+    Heading SE_Direction
+    
+    end if
+    end if
+    end setCompass
+    
+    on shipMove where
+    global SE_current,SE_Direction
+    set cursor to none
+    if char 1 of where is "-" then
+    delete char 1 of where
+    put -1 into speed
+    else
+    put 1 into speed
+    end if
+    put "Ship-Motion.MooV" into TheMovieName
+    if where contains "left" or where contains "right" then
+    get "*" & where
+    set the movie of window TheMovieName to it
+    set the rate of window theMovieName to 1
+    repeat until the rate of window TheMovieName = 0
+    send movieIdle to window theMovieName
+    end repeat
+    else
+    if the length of where > 1 then
+    put char 2 of where into thePath
+    delete char 2 of where
+    end if
+    put item (SE_Direction) of line (SE_Current) of card field destination into deadEnd
+    get "*" & where & "1"
+    if speed > 0 then
+    if deadEnd is "0" then put "0" into last char of it
+    wait 0
+    else
+    put "-" after char 1 of it
+    if thePath is "D" then put "0" into last char of it
+    end if
+    set the movie of window TheMovieName to it
+    set the rate of window theMovieName to 1
+    repeat until the rate of window TheMovieName = 0
+    send movieIdle to window theMovieName
+    end repeat
+    soundClue
+    end if
+    end shipMove
+    
+    on soundClue
+    global SE_Current
+    get item 9 of line SE_Current of card field destination
+    Son
+    play stop
+    play "MZ Snd-" & it
+    wait until the sound is "done"
+    Soff
+    end soundClue
+    
+    on idle
+    global INITTEMP,SE_Current,SE_Direction
+    if SE_Current is 1 then Bglow
+    if SE_Current ≠ 0 then Son
+    if INITTEMP is empty then
+    Fglow
+    Bglow
+    Lglow
+    Rglow
+    Son
+    soff
+    setcompass
+    shipMovie
+    put true into INITTEMP
+    end if
+    wait 2
+    if SE_Current is 1 then Boff
+    if SE_Current ≠ 0 then soff
+    end idle
+    
+    on openCard
+    global SE_Current,SE_Direction
+    set cursor to none
+    if SE_Current is empty then put 0 into SE_Current
+    if SE_Direction is empty then put 1 into SE_Direction
+    FixBGPict
+    pass openCard
+    end openCard
+    
+    on FixBGPict
+    global SE_Current,SE_Direction
+    if the last word of field "pict name" contains "(" then delete last word of field "pict name"
+    if SE_Current = 0 or SE_Current = 15 then
+    put " (" & SE_Current & ")" after field "pict name"
+    else
+    if item (SE_Direction) of line (SE_Current) of card field destination = 0 then
+    put " (-)" after field "pict name"
+    else
+    put " (+)" after field "pict name"
+    end if
+    end if
+    end FixBGPict
+    
+    on closeCard
+    global INITTEMP
+    htlock true
+    if the last word of field "pict name" contains "(" then delete last word of field "pict name"
+    put empty into INITTEMP
+    get "Ship-Motion.MooV"
+    if there is a window it then hide window it
+    pass closeCard
+    end closeCard
+    
+    on Fon
+    HTAddPict "Ship Button (fore-down)",the rect of button markerF,"srccopy"
+    end Fon
+    
+    on Fglow
+    HTAddPict "Ship Button (fore-glow)",the rect of button markerF,"srccopy"
+    end Fglow
+    
+    on Foff
+    HTAddPict "Ship Button (fore)",the rect of button markerF,"srccopy"
+    end Foff
+    
+    on Bon
+    HTAddPict "Ship Button (back-down)",the rect of button markerB,"srccopy"
+    end Bon
+    
+    on Bglow
+    HTAddPict "Ship Button (back-glow)",the rect of button markerB,"srccopy"
+    end Bglow
+    
+    on Boff
+    HTAddPict "Ship Button (back)",the rect of button markerB,"srccopy"
+    end Boff
+    
+    on Lon
+    xCIcon3 the loc of button markerL,7003
+    end Lon
+    
+    on Lglow
+    xCIcon3 the loc of button markerL,7002
+    end Lglow
+    
+    on Loff
+    hide button markerL
+    show button markerL
+    end Loff
+    
+    on Ron
+    xCIcon3 the loc of button markerR,7005
+    end Ron
+    
+    on Rglow
+    xCIcon3 the loc of button markerR,7004
+    end Rglow
+    
+    on Roff
+    hide button markerR
+    show button markerR
+    end Roff
+    
+    on Son
+    xCIcon3 the loc of button markerS,7001
+    end Son
+    
+    on Soff
+    hide button markerS
+    show button markerS
+    end Soff
+    
+    on ShipMovie
+    global SE_Current,SE_Direction
+    put "Ship-Motion.MooV" into TheMovieName --∆
+    if there is not a window TheMovieName then
+    Movie "*Left11","borderless",the topleft of card button window,"invisible","Floating"
+    set the windowName of window "*Left11" to theMovieName
+    set the dontErase of window TheMovieName to true
+    set the movieCursorID of window theMovieName to 128
+    set the fastIdle of window theMovieName to true
+    set the audioLevel of window TheMovieName to "128"
+    set the mute of window TheMovieName to false
+    set the badge of window TheMovieName to false
+    set the controllerVisible of window TheMovieName to false
+    set the closeOnFinish of window TheMovieName to false
+    set the loop of window TheMovieName to false
+    set the seeAllFrames of window TheMovieName to false
+    set the startTime of window TheMovieName to "0"
+    set the passMovieClick of window theMovieName to false
+    end if
+    if there is a window TheMovieName then
+    if SE_Current = 0 then set the Movie of window theMovieName to "*A1"
+    else if SE_Current = 15 then set the Movie of window theMovieName to "*-E1"
+    else
+    if item (SE_Direction) of line (SE_Current) of card field destination = 0 then
+    set the Movie of window theMovieName to "*Left00"
+    else
+    set the Movie of window theMovieName to "*Left11"
+    end if
+    end if
+    show window theMovieName
+    set the rate of window theMovieName to 0
+    end if
+    end ShipMovie
+
+    * Part 54693:2 "left"
+      on mouseUp
+      go to card id 54790
+      end mouseUp
+    * Part 54693:3 "markerS"
+      on mouseDown
+      global SE_Current
+      Son
+      get item 9 of line SE_Current of card field destination
+      play stop
+      play "MZ Snd-" & it
+      repeat until the mouse is up
+      if the sound is "done" then
+      Soff
+      play "MZ Snd-" & it
+      Son
+      wait 10
+      end if
+      end repeat
+      Soff
+      end mouseDown
+    * Part 54693:7 "markerF"
+      on mouseDown
+      Fon
+      play stop
+      play "SW PushButton In"
+      noHeading
+      get fore()
+      if it is not "D" then shipMove it
+      setcompass
+      ww
+      end mouseDown
+      
+      function fore
+      global SE_Current,SE_Direction
+      if SE_Current = 0 then
+      put 1 into SE_Current
+      put 1 into SE_Direction
+      put "A" into how
+      else
+      get item (SE_Direction) of line (SE_Current) of card field destination
+      if it = 0 then
+      play "SW buzzer" tempo 300 c
+      put "D" into how
+      else
+      put char (SE_Direction) of line (SE_Current) of card field paths into how
+      -- turning left / change the compass heading
+      if how = "L" then
+      put ((SE_Direction + 5) mod 8) + 1 into SE_Direction
+      end if
+      -- turning right / change the compass heading
+      if how = "R" then
+      put ((SE_Direction + 1) mod 8) + 1 into SE_Direction
+      end if
+      put it into SE_Current
+      end if
+      end if
+      return how
+      end fore
+    * Part 54693:8 "markerB"
+      on mouseDown
+      Bon
+      play "SW PushButton In"
+      noHeading
+      get back()
+      noHeading
+      if it is not "-" then shipMove it
+      setcompass
+      ww
+      end mouseDown
+      
+      function back
+      global SE_Current,SE_Direction
+      if SE_Current = 0 then
+      put "-" into how
+      else
+      if SE_Current = 15 then put 4 into SE_Direction
+      if SE_Current = 1 then
+      -- rotate to prepare for backtracking
+      put 1 into NewDirection
+      if NewDirection > SE_Direction then
+      if NewDirection - SE_Direction > 4 then put "L" into delta else put "R" into delta
+      else
+      if SE_Direction - NewDirection > 4 then put "R" into delta else put "L" into delta
+      end if
+      repeat until SE_Direction = NewDirection
+      send mouseDown to card button ("Marker" & delta)
+      end repeat
+      
+      put 0 into SE_Current
+      put 1 into SE_Direction
+      put "-AF" into how
+      else
+      put item 10 of line (SE_Current) of card field destination into backTrack
+      if backTrack = "-" then
+      beep
+      put "-" into how
+      else
+      get item backTrack of line (SE_Current) of card field destination
+      
+      -- rotate to prepare for backtracking
+      put ((backtrack + 3) mod 8) + 1 into NewDirection
+      put char NewDirection of line (SE_Current) of card field paths into thePath
+      if NewDirection > SE_Direction then
+      if NewDirection - SE_Direction > 4 then put "L" into delta else put "R" into delta
+      else
+      if SE_Direction - NewDirection > 4 then put "R" into delta else put "L" into delta
+      end if
+      repeat until SE_Direction = NewDirection
+      send mouseDown to card button ("Marker" & delta)
+      end repeat
+      
+      put "-" & char backTrack of line (SE_Current) of card field paths into how
+      if how = "-L" then put "-R" into how
+      else if how = "-R" then put "-L" into how
+      -- turning left / change the compass heading
+      if how = "-R" then
+      put ((SE_Direction + 5) mod 8) + 1 into SE_Direction
+      end if
+      -- turning right / change the compass heading
+      if how = "-L" then
+      put ((SE_Direction + 1) mod 8) + 1 into SE_Direction
+      end if
+      put it into SE_Current
+      put thePath after how
+      end if
+      end if
+      end if
+      return how
+      end back
+    * Part 54693:9 "window"
+    * Part 54693:10 "Paths"
+    * Part 54693:13 "Destination"
+    * Part 54693:6 "markerR"
+      on mouseDown
+      global SE_Current
+      Ron
+      play "SW PushButton In"
+      noHeading
+      right
+      setcompass
+      wait 10
+      if the mouse is down then
+      repeat until the mouse is up
+      noHeading
+      right
+      setcompass
+      wait 10
+      end repeat
+      end if
+      --play "SW PushButton In"
+      if SE_current ≠ 15 and SE_Current ≠ 0 then Rglow
+      ww
+      end mouseDown
+      
+      on right
+      global SE_current,SE_Direction
+      if SE_current ≠ 15 and SE_Current ≠ 0 then
+      get SE_Direction
+      put item it of line SE_current of card field destination into theFrom
+      if theFrom ≠ 0 then put 1 into theFrom
+      add 1 to it
+      if it > 8 then get 1
+      put item it of line SE_current of card field destination into theTo
+      if theTo ≠ 0 then put 1 into theTo
+      shipMove right & theFrom & theTo
+      put it into SE_Direction
+      end if
+      end right
+    * Part 54693:5 "MarkerL"
+      on mouseDown
+      global SE_Current
+      Lon
+      play "SW PushButton In"
+      noHeading
+      left
+      setcompass
+      wait 10
+      if the mouse is down then
+      repeat until the mouse is up
+      noHeading
+      left
+      setcompass
+      wait 10
+      end repeat
+      end if
+      --play "SW PushButton In"
+      if SE_current ≠ 15 and SE_Current ≠ 0 then Lglow
+      ww
+      end mouseDown
+      
+      on left
+      global SE_current,SE_Direction
+      if SE_current ≠ 15 and SE_Current ≠ 0 then
+      get SE_Direction
+      put item it of line SE_current of card field destination into theFrom
+      if theFrom ≠ 0 then put 1 into theFrom
+      subtract 1 from it
+      if it < 1 then get 8
+      put item it of line SE_current of card field destination into theTo
+      if theTo ≠ 0 then put 1 into theTo
+      shipMove left & theFrom & theTo
+      put it into SE_Direction
+      end if
+      end left
+    * Part 54693:18 "left"
+      on mouseUp
+      htlock true
+      FixBGPict
+      put bg fld "pict name" into WhichPict
+      HTChangePict WhichPict,"srccopy"
+      
+      go to card id 54790
+      PlayQT "EV Electmotors Mov",, loop, 20
+      end mouseUp
+    * Part 54693:19 "step +"
+      on mousedown
+      put "Ship-Motion.MooV" into TheMovieName
+      send stepFwd to window themovieName
+      put the currTime of window theMoviename
+      repeat until the mouse is up
+      send stepFwd to window themovieName
+      put the currTime of window theMoviename
+      end repeat
+      end mousedown
+    * Part 54693:20 "step -"
+      on mousedown
+      put "Ship-Motion.MooV" into TheMovieName
+      send stepRev to window themovieName
+      put the currTime of window theMoviename
+      repeat until the mouse is up
+      send stepRev to window themovieName
+      put the currTime of window theMoviename
+      end repeat
+      end mousedown
+    * Part 54693:21 "GO"
+      on mousedown
+      ask "go where?" with "0,0"
+      if it is not empty then
+      put "Ship-Motion.MooV" into TheMovieName
+      set the currTime of window theMoviename to it
+      end if
+      end mousedown
+    * Part 54693:22 ""
+    * Part 54693:1 "right"
+      on mouseUp
+      htlock true
+      FixBGPict
+      put bg fld "pict name" into WhichPict
+      HTChangePict WhichPict,"srccopy"
+      
+      go to card id 54790
+      PlayQT "EV Electmotors Mov",, loop, 20
+      end mouseUp
+    * Part 54693:23 "Compass"
+      on Heading which
+      put "Ship Headings" into thePict
+      put the rect of card button Compass into theLoc
+      put "0,0,35,18" into theClip
+      put which * 35 into item 1 of theClip
+      --put it * 37 + 37 into item 3 of theClip
+      HTAddPict thePict,theLoc,"srccopy","srcRect",theClip
+      end Heading
+  * Card 2522 "" (4 parts)
+    * Part 2522:1 ""
+      on mouseUp
+      go to card id 3071
+      PlayQT "AR Lite Wind Mov",, loop, 200
+      end mouseUp
+    * Part 2522:2 "left"
+      on mouseUp
+      go to card id 4819
+      end mouseUp
+    * Part 2522:3 "right"
+      on mouseUp
+      go to card id 4819
+      end mouseUp
+    * Part 2522:4 ""
+      on mouseUp
+      go to card id 3071
+      PlayQT "AR Lite Wind Mov",, loop, 200
+      end mouseUp
+  * Card 4375 "" (4 parts)
+    * Part 4375:1 ""
+      on mouseUp
+      go to card id 4819
+      PlayQT "WA Lapping Mov", , loop, 200
+      end mouseUp
+    * Part 4375:2 "right"
+      on mouseUp
+      go to card id 3071
+      end mouseUp
+    * Part 4375:3 "left"
+      on mouseUp
+      go to card id 3071
+      end mouseUp
+    * Part 4375:4 "qspa"
+      on mouseUp
+      go to card id 4819
+      PlayQT "WA Lapping Mov", , loop, 200
+      end mouseUp
+  * Card 3071 "" (4 parts)
+    * Part 3071:1 "right"
+      on mouseUp
+      go to card id 4375
+      end mouseUp
+    * Part 3071:2 "left"
+      on mouseUp
+      go to card id 4375
+      end mouseUp
+    * Part 3071:3 ""
+      on mouseUp
+      go to card id 5520
+      end mouseUp
+    * Part 3071:5 ""
+      on mouseUp
+      go to card id 5520
+      end mouseUp
+  * Card 44746 "" (3 parts)
+    * Part 44746:1 "left"
+      on mouseUp
+      go to card id 59030
+      end mouseUp
+    * Part 44746:2 "right"
+      on mouseUp
+      go to card id 44826
+      end mouseUp
+    * Part 44746:3 ""
+      on mouseUp
+      PlayQT "WA Lapping Mov", , loop, 20
+      go to card id 45136
+      end mouseUp
+  * Card 44826 "" (3 parts)
+    * Part 44826:1 "left"
+      on mouseUp
+      go to card id 44746
+      end mouseUp
+    * Part 44826:2 ""
+      on mouseUp
+      PlayQT "WA Lapping Mov", , loop, 50
+      go to card id 56574
+      end mouseUp
+    * Part 44826:3 "right"
+      on mouseUp
+      PlayQT "WA Lapping Mov", , loop, 50
+      go to card id 59030
+      end mouseUp
+  * Card 56574 "" (2 parts)
+    * Part 56574:1 "left"
+      on mouseUp
+      go to card id 56664
+      end mouseUp
+    * Part 56574:2 "right"
+      on mouseUp
+      go to card id 56664
+      end mouseUp
+  * Card 56664 "" (4 parts)
+    * Part 56664:1 ""
+      on mouseUp
+      PlayQT "WA Lapping Mov", , loop, 100
+      go to card id 44746
+      end mouseUp
+    * Part 56664:2 "left"
+      on mouseUp
+      go to card id 56574
+      end mouseUp
+    * Part 56664:3 "right"
+      on mouseUp
+      go to card id 56574
+      end mouseUp
+    * Part 56664:4 ""
+      on mouseUp
+      PlayQT "WA Lapping Mov", , loop, 100
+      go to card id 59030
+      end mouseUp
+  * Card 58670 "" (4 parts)
+    * Part 58670:1 "left"
+      on mouseUp
+      go to card id 45136
+      end mouseUp
+    * Part 58670:2 ""
+      on mouseUp
+      PlayQT "WA Lapping Mov", , loop, 100
+      go to card id 44826
+      end mouseUp
+    * Part 58670:3 "right"
+      on mouseUp
+      go to card id 45136
+      end mouseUp
+    * Part 58670:4 ""
+      on mouseUp
+      PlayQT "WA Lapping Mov", , loop, 100
+      go to card id 59030
+      end mouseUp
+  * Card 59030 "" (3 parts)
+    * Part 59030:1 "right"
+      on mouseUp
+      go to card id 44746
+      end mouseUp
+    * Part 59030:2 "left"
+      on mouseUp
+      go to card id 44826
+      end mouseUp
+    * Part 59030:3 ""
+      on mouseUp
+      -- global SE_CameraID,SE_Headings,SE_TunnelLight,SE_Tower
+      --  global SE_MicSwitch,SE_MazeKey
+      -- if SE_CameraID is empty then
+      --  put 1 into SE_CameraID
+      --   put "off" into SE_TunnelLight
+      --   put "closed" into SE_Tower
+      --   put 0.00 & return & 0.00 & return & 0.00 & return & 0.00 & return & 0.00 into SE_headings
+      --   put "00000" into SE_MicSwitch
+      --  put return into r
+      --   put "171,90" & r & "197,90" & r & "224,90" & r & "251,90" & r & "278,90" into SE_MazeKey
+      --  end if
+      PlayQT "WA Lapping Mov", , loop, 200
+      go to card id 25246
+      play "DR SpaceShip Up"
+      end mouseUp
+  * Card 17143 "" (4 parts)
+    * Part 17143:1 ""
+      on mouseUp
+      PlayQT "EV StoneForest No Water Mov", , loop, 50
+      go to card id 17415
+      end mouseUp
+    * Part 17143:2 "left"
+      on mouseUp
+      go to card id 21389
+      end mouseUp
+    * Part 17143:3 "right"
+      on mouseUp
+      go to card id 21389
+      end mouseUp
+    * Part 17143:4 "qsto1"
+      on mouseUp
+      PlayQT "EV StoneForest No Water Mov", , loop, 50
+      go to card id 17415
+      end mouseUp
+  * Card 21389 "" (6 parts)
+    * Part 21389:1 ""
+      on mouseUp
+      PlayQT "WA Lapping Mov", , loop, 200
+      go to card id 16515
+      end mouseUp
+    * Part 21389:3 "right"
+      on mouseUp
+      go to card id 17143
+      end mouseUp
+    * Part 21389:4 "left"
+      on mouseUp
+      go to card id 17143
+      end mouseUp
+    * Part 21389:5 ""
+      on mouseUp
+      PlayQT "WA Lapping Mov", , loop, 200
+      go to card id 12227
+      end mouseUp
+    * Part 21389:2 ""
+      on mouseUp
+      PlayQT "GR Broken Clock Mov", , loop, 50,,,,,true
+      go to card id 15605
+      end mouseUp
+    * Part 21389:6 "qpat3"
+      on mouseUp
+      go card
+      end mouseUp
+  * Card 17415 "qsto1" (4 parts)
+
+    on opencard
+    playqt "EV StoneForest No Water Mov","","loop","50"
+    pass opencard
+    end opencard
+
+    * Part 17415:1 ""
+      on mouseUp
+      go to card id 17718
+      end mouseUp
+    * Part 17415:2 "left"
+      on mouseUp
+      go to card id 21177
+      end mouseUp
+    * Part 17415:3 "right"
+      on mouseUp
+      go to card id 21177
+      end mouseUp
+    * Part 17415:5 "qsto"
+      on mouseUp
+      go card
+      end mouseUp
+  * Card 21177 "" (4 parts)
+    * Part 21177:1 "right"
+      on mouseUp
+      go to card id 17415
+      PlayQT "EV StoneForest No Water Mov", , loop, 50
+      end mouseUp
+    * Part 21177:2 ""
+      on mouseUp
+      PlayQT "WA Lapping Mov", , loop, 100
+      go to card id 21389
+      end mouseUp
+    * Part 21177:3 "left"
+      on mouseUp
+      go to card id 17415
+      PlayQT "EV StoneForest No Water Mov", , loop, 50
+      end mouseUp
+    * Part 21177:4 "qpat3"
+      on mouseUp
+      PlayQT "WA Lapping Mov", , loop, 100
+      go to card id 21389
+      end mouseUp
+  * Card 17718 "" (3 parts)
+    * Part 17718:1 ""
+      on mouseUp
+      PlayQT "EV StoneForest Mov", , loop, 100,,,,,true
+      go to card id 18023
+      end mouseUp
+    * Part 17718:2 "left"
+      on mouseUp
+      go to card id 21177
+      end mouseUp
+    * Part 17718:3 "right"
+      on mouseUp
+      go to card id 17415
+      end mouseUp
+  * Card 20978 "qsto2" (1 parts)
+
+    on opencard
+    playqt "EV StoneForest No Water Mov","","loop","50"
+    pass opencard
+    end opencard
+
+    * Part 20978:1 ""
+      on mouseUp
+      go to card id 21177
+      end mouseUp
+  * Card 20484 "" (2 parts)
+    * Part 20484:1 ""
+      on mouseUp
+      PlayQT "EV StoneForest No Water Mov", , loop, 60
+      go to card id 20978
+      end mouseUp
+    * Part 20484:2 "left"
+      on mouseUp
+      go to card id 18023
+      end mouseUp
+  * Card 18023 "" (3 parts)
+    * Part 18023:1 ""
+      on mouseUp
+      go to card id 18304
+      end mouseUp
+    * Part 18023:2 "right"
+      on mouseUp
+      go to card id 20415
+      end mouseUp
+    * Part 18023:3 "qsto"
+      on mouseUp
+      go to card id 18304
+      end mouseUp
+  * Card 20415 "" (3 parts)
+    * Part 20415:1 ""
+      on mouseUp
+      go to card id 20484
+      end mouseUp
+    * Part 20415:2 "left"
+      on mouseUp
+      go to card id 18023
+      end mouseUp
+    * Part 20415:3 "qsto2"
+      on mouseUp
+      go to card id 20484
+      end mouseUp
+  * Card 20027 "" (5 parts)
+    * Part 20027:1 ""
+      on mouseUp
+      go to card id 20415
+      end mouseUp
+    * Part 20027:2 "left"
+      on mouseUp
+      go to card id 18304
+      end mouseUp
+    * Part 20027:3 "right"
+      on mouseUp
+      go to card id 18304
+      end mouseUp
+    * Part 20027:7 "qsto2 left"
+      on mouseUp
+      go to card id 18304
+      end mouseUp
+    * Part 20027:8 "qsto2"
+      on mouseUp
+      go card
+      end mouseUp
+  * Card 18304 "" (4 parts)
+    * Part 18304:1 ""
+      on mouseUp
+      PlayQT "EV StoneForest Mov", , loop, 250,,,,,true
+      go to card id 18512
+      end mouseUp
+    * Part 18304:2 "right"
+      on mouseUp
+      go to card id 20027
+      end mouseUp
+    * Part 18304:3 "left"
+      on mouseUp
+      go to card id 20027
+      end mouseUp
+    * Part 18304:4 "qsto"
+      on mouseUp
+      PlayQT "EV StoneForest Mov", , loop, 250,,,,,true
+      go to card id 18512
+      end mouseUp
+  * Card 19922 "" (1 parts)
+    * Part 19922:1 ""
+      on mouseUp
+      go to card id 20027
+      end mouseUp
+  * Card 18512 "" (4 parts)
+    * Part 18512:1 ""
+      on mouseUp
+      go to card id 18744
+      end mouseUp
+    * Part 18512:2 "right"
+      on mouseUp
+      go to card id 19630
+      end mouseUp
+    * Part 18512:3 "left"
+      on mouseUp
+      go to card id 19630
+      end mouseUp
+    * Part 18512:4 "qsto"
+      on mouseUp
+      go to card id 18744
+      end mouseUp
+  * Card 19630 "" (5 parts)
+    * Part 19630:1 ""
+      on mouseUp
+      PlayQT "EV StoneForest Mov", , loop, 100,,,,,true
+      go to card id 20027
+      end mouseUp
+    * Part 19630:2 "left"
+      on mouseUp
+      go to card id 18512
+      end mouseUp
+    * Part 19630:3 "right"
+      on mouseUp
+      go to card id 18512
+      end mouseUp
+    * Part 19630:4 "qsto2 left"
+      on mouseUp
+      go to card id 18512
+      end mouseUp
+    * Part 19630:5 "qsto2"
+      on mouseUp
+      PlayQT "EV StoneForest Mov", , loop, 100,,,,,true
+      go to card id 20027
+      end mouseUp
+  * Card 18744 "" (3 parts)
+
+    on openCard
+    global pictAdd,ALL_Page,MY_RedBook
+    if item 1 to 2 of ALL_Page is "2,S"  or char 2 of MY_RedBook = 1 then
+    put field "pict name" & " (noPage)|" & the rect ¬
+    of card button Marker into pictAdd
+    end if
+    pass openCard
+    end openCard
+
+    * Part 18744:3 "marker"
+    * Part 18744:1 ""
+      on mouseUp
+      go to card id 19168
+      end mouseUp
+    * Part 18744:2 "right"
+      on mouseUp
+      go to card id 19395
+      end mouseUp
+  * Card 19395 "" (3 parts)
+    * Part 19395:1 "left"
+      on mouseUp
+      go to card id 18744
+      end mouseUp
+    * Part 19395:2 ""
+      on mouseUp
+      go to card id 19630
+      end mouseUp
+    * Part 19395:3 "qsto2"
+      on mouseUp
+      go to card id 19630
+      end mouseUp
+  * Card 19168 "qsto" (6 parts)
+
+    on openCard
+    global pictAdd,SE_MicSwitch,ALL_Page,MY_RedBook
+    if char 4 of SE_MicSwitch is 1 then
+    put field "pict name" & " (on)|" & the rect ¬
+    of card button Marker & return into pictAdd
+    end if
+    if item 1 to 2 of ALL_Page is "2,S"  or char 2 of MY_RedBook = 1 then
+    put field "pict name" & " (noPage)|" & the rect ¬
+    of card button Marker2 after pictAdd
+    end if
+    playqt "EV StoneForest Mov","","loop","250","","","","",true
+    pass openCard
+    end openCard
+
+    * Part 19168:2 ""
+    * Part 19168:6 "marker"
+    * Part 19168:1 "left"
+      on mouseUp
+      go to card id 18744
+      end mouseUp
+    * Part 19168:3 "right"
+      on mouseUp
+      go to card id 19395
+      end mouseUp
+    * Part 19168:4 ""
+      on mouseDown
+      global SE_MicSwitch
+      if char 4 of SE_MicSwitch is 1 then
+      put 0 into char 4 of SE_MicSwitch
+      play stop
+      play "SW PushButton Out"
+      xCIcon3 "279,211",1003
+      HTAddPict "StoneForest MicStand (Off)",the rect of card button "marker","srccopy"
+      else
+      put 1 into char 4 of SE_MicSwitch
+      play stop
+      play "SW PushButton Out"
+      xCIcon3 "279,211",1013
+      HTAddPict "StoneForest MicStand (On)",the rect of card button "marker","srccopy"
+      end if
+      end mouseDown
+    * Part 19168:5 "marker2"
+      on MouseDown
+      global MY_RedBook,ALL_Page
+      if char 2 of MY_RedBook is "0" then
+      if char 1 to 3 of ALL_Page is not "2,S" then
+      if All_Page is not empty then dropPage
+      put "2,S,0" into ALL_Page
+      htlock true
+      opencard
+      else
+      put empty into ALL_Page
+      UpdateCursor
+      opencard
+      end if
+      end if
+      dropState
+      end MouseDown
+  * Card 27502 "qtun2" (4 parts)
+
+    on opencard
+    playqt "AR Howling Mov","","loop","200","","","","",true
+    pass opencard
+    end opencard
+
+    * Part 27502:1 "right"
+      on mouseUp
+      go to card id 24823
+      end mouseUp
+    * Part 27502:2 "left"
+      on mouseUp
+      go to card id 24823
+      end mouseUp
+    * Part 27502:3 "down"
+      on mouseUp
+      PlayQT "AR Howling Mov", , loop, 100,,,,,true
+      go to card id 38973
+      end mouseUp
+    * Part 27502:4 "qpas1 down"
+      on mouseUp
+      PlayQT "AR Howling Mov", , loop, 100,,,,,true
+      go to card id 38973
+      end mouseUp
+  * Card 24823 "" (4 parts)
+    * Part 24823:1 ""
+      on mouseUp
+      PlayQT "AR Lite Wind Mov",, loop, 75
+      go to card id 24883
+      end mouseUp
+    * Part 24823:2 "right"
+      on mouseUp
+      go to card id 27502
+      end mouseUp
+    * Part 24823:3 "left"
+      on mouseUp
+      go to card id 27502
+      end mouseUp
+    * Part 24823:4 "qtow"
+      on mouseUp
+      go card
+      end mouseUp
+  * Card 27241 "" (2 parts)
+    * Part 27241:2 ""
+      on mouseUp
+      PlayQT "AR Lite Wind Mov",, loop, 75
+      go to card id 38066
+      end mouseUp
+    * Part 27241:1 ""
+      on mouseUp
+      go to card id 27502
+      end mouseUp
+  * Card 24883 "" (4 parts)
+    * Part 24883:1 ""
+      on mouseUp
+      PlayQT "AR Lite Wind Mov",, loop, 120
+      go to card id 25583
+      end mouseUp
+    * Part 24883:2 "right"
+      on mouseUp
+      go to card id 38066
+      end mouseUp
+    * Part 24883:3 "left"
+      on mouseUp
+      go to card id 27241
+      end mouseUp
+    * Part 24883:5 "qtow"
+      on mouseUp
+      PlayQT "AR Lite Wind Mov",, loop, 120
+      go to card id 25583
+      end mouseUp
+  * Card 38066 "" (3 parts)
+    * Part 38066:1 ""
+      on mouseUp
+      PlayQT "AR Howling Mov", , loop, 200,,,,,true
+      go to card id 27241
+      end mouseUp
+    * Part 38066:2 "left"
+      on mouseUp
+      go to card id 24883
+      end mouseUp
+    * Part 38066:3 "qtun2"
+      on mouseUp
+      PlayQT "AR Howling Mov", , loop, 200,,,,,true
+      go to card id 27241
+      end mouseUp
+  * Card 27015 "" (4 parts)
+    * Part 27015:1 ""
+      on mouseUp
+      PlayQT "AR Lite Wind Mov",, loop, 75
+      go to card id 38066
+      end mouseUp
+    * Part 27015:2 "right"
+      on mouseUp
+      go to card id 25583
+      end mouseUp
+    * Part 27015:3 "left"
+      on mouseUp
+      go to card id 25583
+      end mouseUp
+    * Part 27015:4 "qtun2"
+      on mouseUp
+      PlayQT "AR Lite Wind Mov",, loop, 75
+      go to card id 38066
+      end mouseUp
+  * Card 25583 "" (5 parts)
+
+    on openCard
+    global pictAdd,SE_Tower
+    if SE_Tower is "open" then
+    put field "pict name" & " (open)|" & the rect ¬
+    of card button Marker into pictAdd
+    end if
+    pass openCard
+    end openCard
+
+    * Part 25583:1 ""
+      on mouseUp
+      PlayQT "AR Lite Wind Mov",, loop, 150
+      go to card id 25845
+      end mouseUp
+    * Part 25583:2 "right"
+      on mouseUp
+      go to card id 27015
+      end mouseUp
+    * Part 25583:3 "left"
+      on mouseUp
+      go to card id 27015
+      end mouseUp
+    * Part 25583:4 "marker"
+    * Part 25583:5 "qtow"
+      on mouseUp
+      go card
+      end mouseUp
+  * Card 26749 "" (4 parts)
+    * Part 26749:1 ""
+      on mouseUp
+      PlayQT "AR Lite Wind Mov",, loop, 120
+      go to card id 27015
+      end mouseUp
+    * Part 26749:2 "right"
+      on mouseUp
+      go to card id 25845
+      end mouseUp
+    * Part 26749:3 "left"
+      on mouseUp
+      go to card id 25845
+      end mouseUp
+    * Part 26749:4 "qtun2"
+      on mouseUp
+      PlayQT "AR Lite Wind Mov",, loop, 120
+      go to card id 27015
+      end mouseUp
+  * Card 25845 "" (4 parts)
+
+    on openCard
+    global pictAdd,SE_Tower
+    if SE_Tower is "open" then
+    put field "pict name" & " (open)|" & the rect ¬
+    of card button Marker into pictAdd
+    end if
+    pass openCard
+    end openCard
+
+    * Part 25845:5 "marker"
+    * Part 25845:1 ""
+      on mouseUp
+      global SE_Tower
+      if SE_Tower is "open" then
+      go to card id 25988
+      else
+      go to card id 40120
+      end if
+      end mouseUp
+    * Part 25845:3 "left"
+      on mouseUp
+      go to card id 26749
+      end mouseUp
+    * Part 25845:4 "right"
+      on mouseUp
+      go to card id 26749
+      end mouseUp
+  * Card 26411 "" (3 parts)
+    * Part 26411:1 ""
+      on mouseUp
+      go to card id 26749
+      end mouseUp
+    * Part 26411:2 "left"
+      on mouseUp
+      global SE_Tower
+      if SE_Tower is "open" then
+      go to card id 25988
+      else
+      go to card id 40120
+      end if
+      end mouseUp
+    * Part 26411:3 "right"
+      on mouseUp
+      global SE_Tower
+      if SE_Tower is "open" then
+      go to card id 25988
+      else
+      go to card id 40120
+      end if
+      end mouseUp
+  * Card 40120 "qtow" (3 parts)
+
+    on opencard
+    playqt "AR Lite Wind Mov","","loop","150"
+    pass opencard
+    end opencard
+
+    * Part 40120:1 ""
+      on mouseUp
+      global SE_Tower
+      play stop
+      put "open" into SE_Tower
+      dplay "DR Steel Open"
+      go to card id 25988
+      soundstop
+      end mouseUp
+    * Part 40120:2 "right"
+      on mouseUp
+      go to card id 26411
+      end mouseUp
+    * Part 40120:3 "left"
+      on mouseUp
+      go to card id 26411
+      end mouseUp
+  * Card 25988 "" (5 parts)
+
+    on openCard
+    soundstop
+    pass openCard
+    end openCard
+
+    * Part 25988:1 ""
+      on mouseUp
+      htlock "bw"
+      go to card id 26154
+      end mouseUp
+    * Part 25988:2 "right"
+      on mouseUp
+      global SE_Tower
+      put "closed" into SE_Tower
+      go to card id 26411
+      play stop
+      play "DR Steel Close"
+      PlayQT "AR Lite Wind Mov",, loop, 150
+      end mouseUp
+    * Part 25988:3 "left"
+      on mouseUp
+      global SE_Tower
+      put "closed" into SE_Tower
+      go to card id 26411
+      play stop
+      play "DR Steel Close"
+      PlayQT "AR Lite Wind Mov",, loop, 150
+      end mouseUp
+    * Part 25988:5 ""
+      on mouseUp
+      global SE_Tower
+      put "closed" into SE_Tower
+      go to card id 40120
+      play stop
+      play "DR Steel Close"
+      PlayQT "AR Lite Wind Mov",, loop, 150
+      end mouseUp
+    * Part 25988:6 ""
+      on mouseUp
+      global SE_Tower
+      put "closed" into SE_Tower
+      htlock true
+      dplay "DR Steel Close"
+      go to card id 40120
+      PlayQT "AR Lite Wind Mov",, loop, 150
+      end mouseUp
+  * Card 26154 "" (18 parts)
+
+    on mousewithin
+    deCurse "override",hand,"color","nodelay"
+    deCurse "lock"
+    end mousewithin
+    
+    on idle
+    global SE_CameraID,SE_Headings,theScroll,SE_MicSwitch
+    if there is not a window "towerScroll" then
+    picture "TowerScroll",resource,rect,false,4
+    --put the result
+    set the rect of window towerScroll to the rect of card button "pict"
+    show window towerScroll
+    camera SE_CameraID
+    --set numberFormat to "000.0"
+    --moveIt 0,line SE_CameraID of card field "offsets"
+    end if
+    put "NS White Noise" into theSound
+    get item SE_CameraID of "153.4,130.3,55.6,15.0,212.2"
+    put card field heading into theHead
+    put "WA Running Far,FR Caldron,GR Broken Clock,EV StoneForest,AR Howling" into SoundList
+    put "WA Pouring/White,FR Caldron/White,GR Broken Clock/White,EV StoneForest/White,AR Howling/White" into SoundNoise
+    if theHead = it then
+    if char SE_CameraID of SE_MicSwitch = 1 then
+    if the sound is not in SoundList then play stop
+    put item SE_CameraID of SoundList into theSound
+    end if
+    else
+    if char SE_CameraID of SE_MicSwitch = 1 then
+    if theHead > it - 5 and theHead < it then
+    if the sound is not in SoundNoise then play stop
+    put item SE_CameraID of SoundNoise into theSound
+    xCIcon3 the loc of card button mr,4002
+    else
+    if theHead < it + 5 and theHead > it then
+    if the sound is not in SoundNoise then play stop
+    put item SE_CameraID of SoundNoise into theSound
+    xCIcon3 the loc of card button ml,4001
+    end if
+    end if
+    end if
+    end if
+    if random(20) > 19 then
+    set numberFormat to "000.0"
+    put line SE_CameraID of card field "offsets" into offset
+    moveIt 0, offset + 171
+    put line SE_CameraID of SE_Headings into theScroll
+    moveIt 0, offset
+    end if
+    if the sound is "done" or the sound is not theSound then
+    play stop
+    play theSound
+    end if
+    wait 2
+    set the visible of card button cover to not the visible of card button cover
+    end idle
+    
+    
+    on openCard
+    global theScroll,SE_CameraID,SE_Headings
+    --set the visible of card button block to not the visible of card button block
+    --xCIcon3 the loc of card button ("c" & SE_CameraID),3000+SE_CameraID
+    get line SE_CameraID of SE_Headings
+    put it into theScroll
+    pass openCard
+    end openCard
+    
+    on closeCard
+    global theScroll
+    if there is a window towerScroll then close window towerScroll
+    put empty into theScroll
+    htlock "nobw"
+    pass closeCard
+    end closeCard
+    
+    on camera which
+    global theScroll,SE_CameraID,SE_Headings
+    put which into SE_CameraID
+    
+    set numberFormat to "0"
+    set the visible of card button block to not the visible of card button block
+    xCIcon3 the loc of card button ("c" & which),3000+which
+    --set the hilite of card button ("c" & which) to true
+    --repeat with x = 1 to 5
+    --if x ≠ which then set the hilite of card button ("c" & x) to false
+    --end repeat
+    
+    set numberFormat to "000.0"
+    put line which of card field "offsets" into offset
+    moveIt 0, offset + 171
+    moveIt random(3000),random(33) + 171
+    moveIt 0, offset + 171
+    put line which of SE_Headings into theScroll
+    moveIt 0, offset
+    moveIt 0, offset + 171
+    put line which of SE_Headings into theScroll
+    moveIt 0, offset
+    moveIt 0, offset + 171
+    put line which of SE_Headings into theScroll
+    moveIt 0, offset
+    end camera
+    
+    on scrollTower delta
+    global theScroll,SE_CameraID,SE_Headings
+    put line SE_CameraID of card field "offsets" into offset
+    set numberFormat to "000.0"
+    put 0 into theRate
+    add delta to theRate
+    put false into upFlag
+    if there is a window towerScroll then
+    repeat until theRate = 0
+    moveIt theRate,offset
+    if the mouse is up then
+    subtract delta from theRate
+    put true into UpFlag
+    else
+    if upFlag is true then
+    get the mouseLoc
+    if it is within the rect of the target then
+    put false into upFlag
+    else
+    put theScroll into line SE_CameraID of SE_Headings
+    click at it
+    exit scrollTower
+    end if
+    else
+    if abs(theRate) < 20 then add delta to theRate
+    end if
+    end if
+    end repeat
+    end if
+    put theScroll into line SE_CameraID of SE_Headings
+    end scrollTower
+    
+    on moveIt theRate,offset
+    global theScroll
+    put (theScroll + theRate) mod 1800 into theScroll
+    put theScroll / 5 into card field "heading"
+    if random(50) > 45 then set the scroll of window towerScroll to trunc(theScroll) & "," & offset + 171
+    set the scroll of window towerScroll to trunc(theScroll) & "," & offset
+    end moveIt
+    
+    
+    
+    ------------
+    
+    
+    on scrollTower delta
+    global theScroll,SE_CameraID,SE_Headings
+    put line SE_CameraID of card field "offsets" into offset
+    set numberFormat to "000.0"
+    put 0 into theRate
+    add delta to theRate
+    if there is a window towerScroll then
+    repeat until the mouse is up
+    moveIt theRate,offset
+    add delta to theRate
+    if theRate > 20 then put 20 into theRate
+    if theRate < -20 then put -20 into theRate
+    end repeat
+    repeat until theRate = 0
+    if the mouse is down and the mouseLoc is within the rect of card button rght then
+    scrollTower .5
+    exit repeat
+    end if
+    moveIt theRate,offset
+    subtract delta from theRate
+    end repeat
+    end if
+    put theScroll into line SE_CameraID of SE_Headings
+    end scrollTower
+
+    * Part 26154:1 ""
+      on mouseUp
+      play stop
+      go to card id 25988
+      end mouseUp
+    * Part 26154:2 ""
+    * Part 26154:22 "cover"
+    * Part 26154:19 "mr"
+    * Part 26154:21 "ml"
+    * Part 26154:18 "block2"
+    * Part 26154:17 "block"
+    * Part 26154:3 "rght"
+      on mousedown
+      play stop
+      xCIcon3 the loc of me,3008
+      scrollTower .5
+      hide me
+      show me
+      end mousedown
+    * Part 26154:4 "pict"
+    * Part 26154:5 "heading"
+    * Part 26154:6 "lft"
+      on mousedown
+      play stop
+      xCIcon3 the loc of me,3007
+      scrollTower -.5
+      hide me
+      show me
+      end mousedown
+    * Part 26154:7 "c1"
+      on mouseDown
+      play stop
+      play "SW PushButton In"
+      play "NS White Noise"
+      camera 1
+      play stop
+      end mouseDown
+    * Part 26154:8 "c2"
+      on mouseDown
+      play stop
+      play "SW PushButton In"
+      play "NS White Noise"
+      camera 2
+      play stop
+      end mouseDown
+    * Part 26154:9 "c3"
+      on mouseDown
+      play stop
+      play "SW PushButton In"
+      play "NS White Noise"
+      camera 3
+      play stop
+      end mouseDown
+    * Part 26154:10 "c4"
+      on mouseDown
+      play stop
+      play "SW PushButton In"
+      play "NS White Noise"
+      camera 4
+      play stop
+      end mouseDown
+    * Part 26154:11 "c5"
+      on mouseDown
+      play stop
+      play "SW PushButton In"
+      play "NS White Noise"
+      camera 5
+      play stop
+      end mouseDown
+    * Part 26154:13 ""
+      on mouseDown
+      play stop
+      --play "SW PushButton In"
+      global theScroll,SE_CameraID,SE_Headings,SE_MicSwitch
+      hc
+      set cursor to none
+      put "4,1,5,2,3" into theCam
+      set the visible of card button block to not the visible of card button block
+      xCIcon3 the loc of me,3006
+      put theScroll into ScrollTemp
+      set numberFormat to "000.0"
+      --repeat until the mouse is up
+      repeat with x = 1 to 5
+      set the visible of card button block to not the visible of card button block
+      play "SW PushButton In"
+      xCIcon3 the loc of me,3006
+      put line (item x of theCam) of SE_Headings into theScroll
+      put line (item x of theCam) of card field "offsets" into offset
+      
+      
+      put "NS White Noise" into theSound
+      get item (item x of theCam) of "153.4,130.3,55.6,15.0,212.2"
+      put theScroll / 5 into theHead
+      play stop
+      if theHead = it then
+      if char (item x of theCam) of SE_MicSwitch = 1 then
+      put item (item x of theCam) of "WA Running Far,FR Caldron,GR Broken Clock,EV StoneForest,AR Howling" into theSound
+      end if
+      else
+      if char (item x of theCam) of SE_MicSwitch = 1 then
+      if (theHead > it - 5 and theHead < it) or (theHead < it + 5 and theHead > it) then
+      put item (item x of theCam) of "WA Pouring/White,FR Caldron/White,GR Broken Clock/White,EV StoneForest/White,AR Howling/White" into theSound
+      end if
+      end if
+      end if
+      if the sound is "done" then play theSound
+      put the ticks into startTime
+      repeat until the ticks > startTime + 120
+      moveIt 0, offset + 171
+      if the sound is "done" then exit repeat
+      moveIt 0, offset
+      end repeat
+      play stop
+      
+      end repeat
+      --moveIt random(3000),random(33) + 171
+      --end repeat
+      put scrollTemp into theScroll
+      --set the visible of card button block2 to not the visible of card button block2
+      put line SE_CameraID of card field "offsets" into offset
+      moveIt 0, offset + 171
+      moveIt random(3000),random(33) + 171
+      moveIt 0, offset + 171
+      put line SE_CameraID of SE_Headings into theScroll
+      moveIt 0,offset
+      moveIt 0, offset + 171
+      put line SE_CameraID of SE_Headings into theScroll
+      moveIt 0,offset
+      moveIt 0, offset + 171
+      put line SE_CameraID of SE_Headings into theScroll
+      moveIt 0,offset
+      set the visible of card button block to not the visible of card button block
+      set numberFormat to "0"
+      xCIcon3 the loc of card button ("c" & SE_CameraID),3000+SE_CameraID
+      ww  -- added (1.0b8)
+      deCurse "override",hand,"color","nodelay"
+      deCurse "lock"
+      wait until the mouseclick
+      set the visible of card button block2 to not the visible of card button block2
+      click at the clickloc
+      end mouseDown
+    * Part 26154:15 "offsets"
+  * Card 23256 "" (3 parts)
+    * Part 23256:1 "right"
+      on mouseUp
+      go to card id 21856
+      end mouseUp
+    * Part 23256:2 "left"
+      on mouseUp
+      go to card id 21856
+      end mouseUp
+    * Part 23256:3 ""
+      on mouseUp
+      PlayQT "AR Lite Wind Mov",, loop, 200
+      go to card id 14046
+      end mouseUp
+  * Card 21856 "qtun" (5 parts)
+
+    on opencard
+    playqt "AR Lite Wind Mov","","loop","200"
+    pass opencard
+    end opencard
+
+    * Part 21856:2 ""
+      on mouseUp
+      go to card id 22626
+      end mouseUp
+    * Part 21856:3 "right"
+      on mouseUp
+      go to card id 23256
+      end mouseUp
+    * Part 21856:4 "left"
+      on mouseUp
+      go to card id 23256
+      end mouseUp
+    * Part 21856:1 ""
+      on mouseUp
+      go to card id 22095
+      end mouseUp
+    * Part 21856:5 "qpas"
+      on mouseUp
+      go to card id 22095
+      end mouseUp
+  * Card 22938 "" (4 parts)
+    * Part 22938:2 "left"
+      on mouseUp
+      go to card id 22626
+      end mouseUp
+    * Part 22938:3 "right"
+      on mouseUp
+      go to card id 22626
+      end mouseUp
+    * Part 22938:4 ""
+      on mouseUp
+      go to card id 23256
+      end mouseUp
+    * Part 22938:1 ""
+      on mouseUp
+      go to card id 22095
+      end mouseUp
+  * Card 22626 "" (4 parts)
+
+    on openCard
+    global pictAdd,SE_MicSwitch
+    if char 5 of SE_MicSwitch is 1 then
+    put field "pict name" & " (on)|" & the rect ¬
+    of card button Marker into pictAdd
+    end if
+    pass openCard
+    end openCard
+
+    * Part 22626:5 "marker"
+    * Part 22626:1 "right"
+      on mouseUp
+      go to card id 22938
+      end mouseUp
+    * Part 22626:3 "left"
+      on mouseUp
+      go to card id 22938
+      end mouseUp
+    * Part 22626:4 ""
+      on mouseDown
+      global SE_MicSwitch
+      if char 5 of SE_MicSwitch is 1 then
+      put 0 into char 5 of SE_MicSwitch
+      play stop
+      play "SW PushButton Out"
+      xCIcon3 "272,221",1004
+      HTAddPict "TunnelEnter 2-Forward (Off)",the rect of card button "marker","srccopy"
+      else
+      put 1 into char 5 of SE_MicSwitch
+      play stop
+      play "SW PushButton Out"
+      xCIcon3 "272,221",1014
+      HTAddPict "TunnelEnter 2-Forward (On)",the rect of card button "marker","srccopy"
+      end if
+      end mouseDown
+  * Card 22095 "qtun1" (5 parts)
+
+    on opencard
+    PlayQT "AR Howling Mov", , loop, 200,,,,,true
+    pass opencard
+    end opencard
+
+    * Part 22095:1 ""
+      on mouseUp
+      go to card id 22626
+      end mouseUp
+    * Part 22095:2 "right"
+      on mouseUp
+      go to card id 23256
+      end mouseUp
+    * Part 22095:3 "left"
+      on mouseUp
+      go to card id 23256
+      end mouseUp
+    * Part 22095:4 "Down"
+      on mouseUp
+      go to card id 5193
+      PlayQT "AR Howling Mov", , loop, 100,,,,,true
+      end mouseUp
+    * Part 22095:6 "qpas Down"
+      on mouseUp
+      go to card id 5193
+      PlayQT "AR Howling Mov", , loop, 100,,,,,true
+      end mouseUp
+  * Card 39483 "" (2 parts)
+    * Part 39483:2 ""
+      on mouseUp
+      go to card id 38973
+      end mouseUp
+    * Part 39483:1 "down"
+      on mouseUp
+      go to card id 28273
+      end mouseUp
+  * Card 28569 "" (2 parts)
+    * Part 28569:1 ""
+      on mouseUp
+      go to card id 5193
+      end mouseUp
+    * Part 28569:2 "down"
+      on mouseUp
+      go to card id 23452
+      end mouseUp
+  * Card 17194 "" (5 parts)
+
+    on openCard
+    global SE_TunnelLight
+    if last word of field "pict name" = "(dark)" then delete last word of field "pict name"
+    if SE_TunnelLight is not "on" then put " (dark)" after field "pict name"
+    pass openCard
+    end openCard
+
+    * Part 17194:1 ""
+      on mouseUp
+      go to card id 22429
+      end mouseUp
+    * Part 17194:2 "right"
+      on mouseUp
+      go to card id 23452
+      end mouseUp
+    * Part 17194:4 "left"
+      on mouseUp
+      go to card id 23452
+      end mouseUp
+    * Part 17194:5 "none"
+      on mouseDown
+      global SE_TunnelLight
+      if SE_TunnelLight is "on" then
+      put "off" into SE_TunnelLight
+      else
+      put "on" into SE_TunnelLight
+      end if
+      openCard
+      go card
+      play stop
+      play "SW Marker"
+      end mouseDown
+    * Part 17194:6 "qpas1"
+      on mouseUp
+      go to card id 22429
+      end mouseUp
+  * Card 23452 "qpas" (5 parts)
+
+    on openCard
+    global SE_TunnelLight
+    if last word of field "pict name" = "(dark)" then
+    delete last word of field "pict name"
+    end if
+    if SE_TunnelLight is not "on" then
+    put " (dark)" after field "pict name"
+    end if
+    PlayQT "AR Howling Mov", , loop, 50,,,,,true
+    pass openCard
+    end openCard
+
+    * Part 23452:1 "up"
+      on mouseUp
+      PlayQT "AR Howling Mov", , loop, 75,,,,,true
+      go to card id 7202
+      end mouseUp
+    * Part 23452:2 "left"
+      on mouseUp
+      go to card id 17194
+      end mouseUp
+    * Part 23452:4 "right"
+      on mouseUp
+      go to card id 17194
+      end mouseUp
+    * Part 23452:6 "none"
+      on mouseDown
+      global SE_TunnelLight
+      if SE_TunnelLight is "on" then
+      put "off" into SE_TunnelLight
+      else
+      put "on" into SE_TunnelLight
+      end if
+      openCard
+      go card
+      play "SW Marker"
+      end mouseDown
+    * Part 23452:7 "qtun1 up"
+      on mouseUp
+      PlayQT "AR Howling Mov", , loop, 75,,,,,true
+      go to card id 7202
+      end mouseUp
+  * Card 22429 "" (4 parts)
+
+    on openCard
+    global SE_TunnelLight
+    if last word of field "pict name" = "(dark)" then delete last word of field "pict name"
+    if SE_TunnelLight is not "on" then put " (dark)" after field "pict name"
+    pass openCard
+    end openCard
+
+    * Part 22429:1 ""
+      on mouseUp
+      go to card id 27672
+      end mouseUp
+    * Part 22429:2 "right"
+      on mouseUp
+      go to card id 23578
+      end mouseUp
+    * Part 22429:3 "left"
+      on mouseUp
+      go to card id 23578
+      end mouseUp
+    * Part 22429:5 "qpas1"
+      on mouseUp
+      go to card id 27672
+      end mouseUp
+  * Card 23578 "" (3 parts)
+
+    on openCard
+    global SE_TunnelLight
+    if last word of field "pict name" = "(dark)" then delete last word of field "pict name"
+    if SE_TunnelLight is not "on" then put " (dark)" after field "pict name"
+    pass openCard
+    end openCard
+
+    * Part 23578:1 ""
+      on mouseUp
+      go to card id 23452
+      end mouseUp
+    * Part 23578:2 "right"
+      on mouseUp
+      go to card id 22429
+      end mouseUp
+    * Part 23578:3 "left"
+      on mouseUp
+      go to card id 22429
+      end mouseUp
+  * Card 27672 "" (4 parts)
+
+    on openCard
+    global SE_TunnelLight
+    if last word of field "pict name" = "(dark)" then delete last word of field "pict name"
+    if SE_TunnelLight is not "on" then put " (dark)" after field "pict name"
+    pass openCard
+    end openCard
+
+    * Part 27672:1 ""
+      on mouseUp
+      go to card id 28076
+      end mouseUp
+    * Part 27672:2 "right"
+      on mouseUp
+      go to card id 23981
+      end mouseUp
+    * Part 27672:3 "left"
+      on mouseUp
+      go to card id 23981
+      end mouseUp
+    * Part 27672:5 "qpas1"
+      on mouseUp
+      go to card id 28076
+      end mouseUp
+  * Card 23981 "" (4 parts)
+
+    on openCard
+    global SE_TunnelLight
+    if last word of field "pict name" = "(dark)" then delete last word of field "pict name"
+    if SE_TunnelLight is not "on" then put " (dark)" after field "pict name"
+    pass openCard
+    end openCard
+
+    * Part 23981:1 ""
+      on mouseUp
+      go to card id 23578
+      end mouseUp
+    * Part 23981:2 "right"
+      on mouseUp
+      go to card id 27672
+      end mouseUp
+    * Part 23981:3 "left"
+      on mouseUp
+      go to card id 27672
+      end mouseUp
+    * Part 23981:4 "qpas"
+      on mouseUp
+      go to card id 23578
+      end mouseUp
+  * Card 28076 "" (2 parts)
+
+    on openCard
+    global SE_TunnelLight
+    if last word of field "pict name" = "(dark)" then delete last word of field "pict name"
+    if SE_TunnelLight is not "on" then put " (dark)" after field "pict name"
+    pass openCard
+    end openCard
+
+    * Part 28076:1 ""
+      on mouseUp
+      go to card id 28273
+      end mouseUp
+    * Part 28076:3 "left"
+      on mouseUp
+      go to card id 24125
+      end mouseUp
+  * Card 24125 "" (4 parts)
+
+    on openCard
+    global SE_TunnelLight
+    if last word of field "pict name" = "(dark)" then delete last word of field "pict name"
+    if SE_TunnelLight is not "on" then put " (dark)" after field "pict name"
+    pass openCard
+    end openCard
+
+    * Part 24125:1 ""
+      on mouseUp
+      go to card id 23981
+      end mouseUp
+    * Part 24125:2 "right"
+      on mouseUp
+      go to card id 28076
+      end mouseUp
+    * Part 24125:4 "left"
+      on mouseUp
+      go to card id 28076
+      end mouseUp
+    * Part 24125:5 "qpas"
+      on mouseUp
+      go to card id 23981
+      end mouseUp
+  * Card 28273 "qpas1" (5 parts)
+
+    on openCard
+    global SE_TunnelLight
+    if last word of field "pict name" = "(dark)" then delete last word of field "pict name"
+    if SE_TunnelLight is not "on" then put " (dark)" after field "pict name"
+    PlayQT "AR Howling Mov", , loop, 50,,,,,true
+    pass openCard
+    end openCard
+
+    * Part 28273:1 "up"
+      on mouseUp
+      PlayQT "AR Howling Mov", , loop, 75,,,,,true
+      go to card id 38883
+      end mouseUp
+    * Part 28273:2 "right"
+      on mouseUp
+      go to card id 38470
+      end mouseUp
+    * Part 28273:3 "left"
+      on mouseUp
+      go to card id 38470
+      end mouseUp
+    * Part 28273:4 "none"
+      on mouseDown
+      global SE_TunnelLight
+      if SE_TunnelLight is "on" then
+      put "off" into SE_TunnelLight
+      else
+      put "on" into SE_TunnelLight
+      end if
+      openCard
+      go card
+      play stop
+      play "SW Marker"
+      end mouseDown
+    * Part 28273:6 "qtun2 up"
+      on mouseUp
+      PlayQT "AR Howling Mov", , loop, 75,,,,,true
+      go to card id 38883
+      end mouseUp
+  * Card 38470 "" (5 parts)
+
+    on openCard
+    global SE_TunnelLight
+    if last word of field "pict name" = "(dark)" then delete last word of field "pict name"
+    if SE_TunnelLight is not "on" then put " (dark)" after field "pict name"
+    pass openCard
+    end openCard
+
+    * Part 38470:1 "right"
+      on mouseUp
+      go to card id 28273
+      end mouseUp
+    * Part 38470:2 "left"
+      on mouseUp
+      go to card id 28273
+      end mouseUp
+    * Part 38470:3 ""
+      on mouseUp
+      go to card id 24125
+      end mouseUp
+    * Part 38470:4 "none"
+      on mouseDown
+      global SE_TunnelLight
+      if SE_TunnelLight is "on" then
+      put "off" into SE_TunnelLight
+      else
+      put "on" into SE_TunnelLight
+      end if
+      openCard
+      go card
+      play stop
+      play "SW Marker"
+      end mouseDown
+    * Part 38470:5 "qpas"
+      on mouseUp
+      go to card id 24125
+      end mouseUp
+  * Card 5193 "" (4 parts)
+    * Part 5193:1 "up"
+      on mouseUp
+      PlayQT "AR Howling Mov", , loop, 200,,,,,true
+      go to card id 22095
+      end mouseUp
+    * Part 5193:2 "down"
+      on mouseUp
+      PlayQT "AR Howling Mov", , loop, 75,,,,,true
+      go to card id 7202
+      end mouseUp
+    * Part 5193:4 "qtun1 up"
+      on mouseUp
+      PlayQT "AR Howling Mov", , loop, 200,,,,,true
+      go to card id 22095
+      end mouseUp
+    * Part 5193:5 "qpas down"
+      on mouseUp
+      PlayQT "AR Howling Mov", , loop, 75,,,,,true
+      go to card id 7202
+      end mouseUp
+  * Card 38973 "" (4 parts)
+    * Part 38973:1 "down"
+      on mouseUp
+      go to card id 38883
+      end mouseUp
+    * Part 38973:2 "up"
+      on mouseUp
+      PlayQT "AR Howling Mov", , loop, 200,,,,,true
+      go to card id 27502
+      end mouseUp
+    * Part 38973:3 "qpas1 down"
+      on mouseUp
+      go to card id 38883
+      end mouseUp
+    * Part 38973:4 "qtun2 up"
+      on mouseUp
+      PlayQT "AR Howling Mov", , loop, 200,,,,,true
+      go to card id 27502
+      end mouseUp
+  * Card 7202 "" (4 parts)
+    * Part 7202:1 "up"
+      on mouseUp
+      PlayQT "AR Howling Mov", , loop, 100,,,,,true
+      go to card id 5193
+      end mouseUp
+    * Part 7202:2 "down"
+      on mouseUp
+      go to card id 23452
+      PlayQT "AR Howling Mov", , loop, 50,,,,,true
+      end mouseUp
+    * Part 7202:3 "qtun1 up"
+      on mouseUp
+      PlayQT "AR Howling Mov", , loop, 100,,,,,true
+      go to card id 5193
+      end mouseUp
+    * Part 7202:4 "qpas down"
+      on mouseUp
+      go to card id 23452
+      PlayQT "AR Howling Mov", , loop, 50,,,,,true
+      end mouseUp
+  * Card 38883 "" (3 parts)
+    * Part 38883:1 "down"
+      on mouseUp
+      PlayQT "AR Howling Mov", , loop, 50,,,,,true
+      go to card id 28273
+      end mouseUp
+    * Part 38883:2 "up"
+      on mouseUp
+      PlayQT "AR Howling Mov", , loop, 100,,,,,true
+      go to card id 38973
+      end mouseUp
+    * Part 38883:3 "qtun2 up"
+      on mouseUp
+      PlayQT "AR Howling Mov", , loop, 100,,,,,true
+      go to card id 38973
+      end mouseUp
+  * Card 62027 "" (0 parts)
+  * Background 2635 "" (6 parts)
+    * Part 2635:8 ""
+      on mouseUp
+      
+      end mouseUp
+    * Part 2635:4 "erase"
+    * Part 2635:1 "pict name"
+      on mouseUp
+      answer file "Which PICT file?" of type PICT
+      if it ≠ empty then
+      set itemDelimiter to ":"
+      get the last item of it
+      put it into me
+      --put it
+      --put it into WhichPict
+      put it into WhichPict
+      else
+      put empty into WhichPict
+      end if
+      openCard
+      go to this card
+      end mouseUp
+    * Part 2635:5 "b"
+      on mouseDown
+      put the icon of me into theIcon
+      set the icon of me to 0
+      put the mouseloc into old
+      repeat until the mouse is up
+      get the mouseloc
+      set the loc of me to old
+      xCIcon3 it,100
+      put it into old
+      end repeat
+      set the loc of me to old
+      --set the icon of me to theIcon
+      end mouseDown
+    * Part 2635:7 "card ID"
+    * Part 2635:9 "globals"

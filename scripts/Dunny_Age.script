@@ -1,0 +1,727 @@
+Stack (30 cards, 1 backgrounds)
+
+  on closeCard
+  global startTime
+  set cursor to none
+  put the ticks into startTime
+  HTLock "on"
+  end closeCard
+  
+  on AtrusIdle
+  if there is a window "AtrusmooV" then send idle to window "AtrusmooV"
+  end AtrusIdle
+  
+  on openCard
+  global pictAdd,startTime,DU_End,DU_Atrus,DU_AtrusSpecs
+  AtrusIdle
+  soundIdle
+  HTChangePict bg fld "pict name","srccopy"
+  get the result
+  if it is not empty then
+  soundstop
+  xmemory(1)
+  HTChangePict bg fld "pict name","srccopy"
+  end if
+  soundIdle
+  AtrusIdle
+  if pictAdd is not empty then
+  set itemdelimiter to "|"
+  repeat with x = 1 to the number of lines in pictAdd
+  if line x of pictadd is not empty then
+  HTAddPict item 1 of line x of pictAdd,item 2 of line x of pictAdd,"srccopy"
+  end if
+  soundIdle
+  AtrusIdle
+  end repeat
+  set itemdelimiter to ","
+  put empty into pictAdd
+  end if
+  if there is a window "AtrusMoov" then
+  hide window "AtrusMoov"
+  set the rate of window "AtrusMooV" to "0"
+  set the mute of window "AtrusMooV" to true
+  end if
+  if DU_Atrus is not empty then
+  if there is a window "AtrusMoov" then
+  set the windowRect of window "AtrusMoov" to the rect of card button "moovmarker"
+  set the movie of window "AtrusMoov" to DU_Atrus
+  soundIdle
+  AtrusIdle
+  end if
+  end if
+  AtrusIdle
+  soundIdle
+  HTLock "forceFalse"
+  AtrusIdle
+  soundIdle
+  if DU_Atrus is not empty then
+  if there is a window "AtrusMoov" then
+  if DU_AtrusSpecs is not empty then
+  set the startTime of window "AtrusMooV" to item 1 of DU_AtrusSpecs
+  set the currTime of window "AtrusMooV" to item 2 of DU_AtrusSpecs
+  set the endTime of window "AtrusMooV" to item 3 of DU_AtrusSpecs
+  set the loop of window "AtrusMooV" to item 4 of DU_AtrusSpecs
+  if item 5 of DU_AtrusSpecs is not empty then
+  set the callBackMsg of window "AtrusMooV" to "Loop " & item 5 of DU_AtrusSpecs
+  set the callBackTime of window "AtrusMooV" to item 5 of DU_AtrusSpecs
+  end if
+  put empty into DU_AtrusSpecs
+  else
+  set the loop of window "AtrusMooV" to true
+  end if
+  set the rate of window "AtrusMooV" to "1"
+  show window "AtrusMoov"
+  get the short id of this card
+  if it is 4840 or (it is 9757 and DU_End is empty) then
+  set the mute of window "AtrusMooV" to false
+  set the audioLevel of window "AtrusMooV" to "255"
+  end if
+  end if
+  put empty into DU_Atrus
+  end if
+  hide msg
+  wait while the mouseclick
+  updateCursor ML
+  pass openCard
+  end openCard
+  
+  on loop when
+  set the startTime of window "AtrusMooV" to when
+  set the loop of window "AtrusMooV" to true
+  set the callBackmsg of window "AtrusMooV" to empty
+  end loop
+  
+  on openStack
+  global All_CurrStack,S_SCREENPOS,documents,ALL_Page,DU_End
+  -- The documents paths are for MooVs - always on the CD
+  --
+  put "Myst:Myst Graphics:Dunny:" into documents
+  --
+  SetScreen
+  if there is not a window "frame" then BlackFrame
+  xMemory(1)
+  HTUDefPal 8001
+  HyperTint "later","delay","iRes5","noTEopt"
+  htlock novbl
+  htlock nobw
+  htlock nocolormap
+  start using stack "DURes1"
+  DeCurse "install"
+  deCurse "override","hand","color","nodelay"
+  put "Dunny Age" into All_CurrStack
+  if ALL_Page is "atrus" or DU_End is "win" then playQT "MU DunnyWin Mov",,,180
+  else playQT "MU DunnyLose MoV",,,180
+  end openStack
+  
+  on closeStack
+  htlock true
+  DeCurse "remove"
+  closemoovs
+  HTRemove
+  stop using stack "DURes1"
+  end closeStack
+  
+  on closemoovs
+  repeat with x = (the number of lines in the windows) down to 1
+  if line x of the windows contains "moov" then
+  hide window (line x of the windows)
+  close window (line x of the windows)
+  else if line x of the windows contains "mov" then
+  hide window (line x of the windows)
+  close window (line x of the windows)
+  end if
+  end repeat
+  end closemoovs
+  
+  on Atrus
+  put "AtrusMiddle.MooV" into theMovieName
+  if there is not a window "AtrusMoov" then
+  Movie TheMovieName,"borderless",the topleft of card button mooVMarker,"invisible","Floating"
+  end if
+  if there is a window TheMovieName then
+  set the TimeFormat of window theMovieName to "MovieTime"
+  set the dontErase of window TheMovieName to true
+  set the movieCursorID of window theMovieName to 128
+  set the audioLevel of window TheMovieName to "0"
+  set the mute of window TheMovieName to true
+  set the badge of window TheMovieName to false
+  set the controllerVisible of window TheMovieName to false
+  set the useCustomClut of window theMovieName to false
+  set the closeOnFinish of window TheMovieName to false
+  set the loop of window TheMovieName to true
+  set the seeAllFrames of window TheMovieName to false
+  set the startTime of window TheMovieName to "0"
+  --set the endTime of window TheMovieName to "2,240"
+  --set the callBackMsg of window theMovieName to "Done"
+  set the passMovieClick of window theMovieName to false
+  set the rate of window TheMovieName to "1.0"
+  set the windowName of window TheMovieName to "AtrusMoov"
+  end if
+  end Atrus
+  \0me to "AtrusMoov"
+  en
+
+  * Card 32302 "" (3 parts)
+    * Part 32302:1 "left"
+      on mouseUp
+      go to card id 6532
+      end mouseUp
+    * Part 32302:2 "right"
+      on mouseUp
+      go to card id 9417
+      end mouseUp
+    * Part 32302:5 ""
+  * Card 4569 "" (0 parts)
+  * Card 9417 "" (3 parts)
+    * Part 9417:1 "left"
+      on mouseUp
+      go to card id 32302
+      end mouseUp
+    * Part 9417:2 "right"
+      on mouseUp
+      go to card id 2943
+      end mouseUp
+    * Part 9417:3 ""
+      on mouseUp
+      go to card id 9674
+      end mouseUp
+  * Card 9674 "" (3 parts)
+    * Part 9674:1 "left"
+      on mouseUp
+      go to card id 5874
+      end mouseUp
+    * Part 9674:2 "right"
+      on mouseUp
+      go to card id 10020
+      end mouseUp
+    * Part 9674:3 ""
+      on mouseUp
+      go to card id 8424
+      go to card id 8487
+      end mouseUp
+  * Card 10020 "" (4 parts)
+
+    on Opencard
+    global DU_Atrus,DU_End
+    if DU_End is "gone" then
+    put "Middle-father Gone" into field "pict name"
+    else
+    put "Middle-father" into field "pict name"
+    put "AtrusMiddle.MooV" into DU_Atrus
+    end if
+    pass opencard
+    end opencard
+    
+    on mouseDownInMovie
+    click at the mouseLoc
+    end mouseDownInMovie
+
+    * Part 10020:4 "moovMarker"
+    * Part 10020:1 "left"
+      on mouseUp
+      go to card id 9674
+      end mouseUp
+    * Part 10020:2 "right"
+      on mouseUp
+      go to card id 6377
+      end mouseUp
+    * Part 10020:3 ""
+      on mouseUp
+      go to card id 9757
+      end mouseUp
+  * Card 9757 "" (3 parts)
+
+    on Opencard
+    global DU_Atrus,DU_End
+    fadeout
+    if DU_End is "gone" then
+    put "Father-Out Gone" into field "pict name"
+    else
+    if DU_End is empty then
+    put "Father-Out Talk" into field "pict name"
+    put "AtrusMiddleClose2.MooV" into DU_Atrus
+    else
+    put "Father-Out" into field "pict name"
+    put "AtrusMiddleClose.MooV" into DU_Atrus
+    end if
+    end if
+    pass opencard
+    end opencard
+    
+    on mouseDownInMovie
+    click at the mouseLoc
+    end mouseDownInMovie
+
+    * Part 9757:2 "mooVmarker"
+    * Part 9757:3 ""
+      on mouseUp
+      go to card id 10020
+      end mouseUp
+    * Part 9757:1 ""
+      on mouseUp
+      go to card id 4840
+      end mouseUp
+  * Card 2943 "" (4 parts)
+
+    on Opencard
+    global DU_Atrus,DU_End
+    if DU_End is "gone" then
+    put "RockFall-Left Gone" into field "pict name"
+    else
+    put "RockFall-Left" into field "pict name"
+    put "AtrusFromRocks.MooV" into DU_Atrus
+    end if
+    pass opencard
+    end opencard
+    
+    on mouseDownInMovie
+    click at the mouseLoc
+    end mouseDownInMovie
+
+    * Part 2943:4 "mooVMarker"
+    * Part 2943:1 "left"
+      on mouseUp
+      go to card id 9417
+      end mouseUp
+    * Part 2943:2 ""
+      on mouseUp
+      go to card id 9757
+      end mouseUp
+    * Part 2943:3 "right"
+      on mouseUp
+      go to card id 6532
+      end mouseUp
+  * Card 2203 "Black" (0 parts)
+  * Card 5200 "" (3 parts)
+    * Part 5200:1 "right"
+      on mouseUp
+      go to card id 4840
+      end mouseUp
+    * Part 5200:2 "left"
+      on mouseUp
+      go to card id 5119
+      end mouseUp
+    * Part 5200:3 ""
+      on mouseUp
+      go to card id 8929
+      end mouseUp
+  * Card 6532 "Restart" (3 parts)
+
+    on openCard
+    Atrus
+    pass openCard
+    end openCard
+
+    * Part 6532:1 "left"
+      on mouseUp
+      go to card id 2943
+      end mouseUp
+    * Part 6532:2 "right"
+      on mouseUp
+      go to card id 32302
+      end mouseUp
+    * Part 6532:3 "mooVMarker"
+  * Card 11283 "" (1 parts)
+    * Part 11283:1 ""
+      on mouseUp
+      vd
+      pop card
+      end mouseUp
+  * Card 5119 "" (3 parts)
+    * Part 5119:1 "right"
+      on mouseUp
+      go to card id 5200
+      end mouseUp
+    * Part 5119:2 "left"
+      on mouseUp
+      go to card id 5474
+      end mouseUp
+    * Part 5119:3 ""
+      on mouseUp
+      go to card id 5874
+      end mouseUp
+  * Card 5874 "" (3 parts)
+    * Part 5874:1 "right"
+      on mouseUp
+      go to card id 9674
+      end mouseUp
+    * Part 5874:2 "left"
+      on mouseUp
+      go to card id 6377
+      end mouseUp
+    * Part 5874:3 ""
+      on mouseUp
+      go to card id 6997
+      go to card id 7365
+      end mouseUp
+  * Card 6997 "" (1 parts)
+    * Part 6997:1 ""
+      on mouseUp
+      go to card id 7365
+      end mouseUp
+  * Card 7365 "" (3 parts)
+    * Part 7365:1 "right"
+      on mouseUp
+      go to card id 7604
+      end mouseUp
+    * Part 7365:2 "left"
+      on mouseUp
+      go to card id 7754
+      end mouseUp
+    * Part 7365:4 ""
+      on mouseUp
+      push card
+      go to card id 11283
+      end mouseUp
+  * Card 7754 "" (3 parts)
+    * Part 7754:1 "right"
+      on mouseUp
+      go to card id 7365
+      end mouseUp
+    * Part 7754:2 "left"
+      on mouseUp
+      go to card id 5943
+      end mouseUp
+    * Part 7754:3 ""
+      on mouseUp
+      go to card id 6532
+      end mouseUp
+  * Card 5943 "" (4 parts)
+
+    on Opencard
+    global DU_Atrus,DU_End
+    if DU_End is "gone" then
+    put "Far-in Gone" into field "pict name"
+    else
+    put "Far-in" into field "pict name"
+    put "AtrusMiddleFar.MooV" into DU_Atrus
+    end if
+    pass opencard
+    end opencard
+    
+    on mouseDownInMovie
+    click at the mouseLoc
+    end mouseDownInMovie
+
+    * Part 5943:4 "mooVMarker"
+    * Part 5943:1 "right"
+      on mouseUp
+      go to card id 7754
+      end mouseUp
+    * Part 5943:2 "left"
+      on mouseUp
+      go to card id 7604
+      end mouseUp
+    * Part 5943:3 ""
+      on mouseUp
+      go to card id 10020
+      end mouseUp
+  * Card 8059 "" (0 parts)
+  * Card 7604 "" (3 parts)
+    * Part 7604:1 "left"
+      on mouseUp
+      go to card id 7365
+      end mouseUp
+    * Part 7604:2 ""
+      on mouseUp
+      go to card id 9088
+      end mouseUp
+    * Part 7604:3 "right"
+      on mouseUp
+      go to card id 5943
+      end mouseUp
+  * Card 6377 "" (3 parts)
+    * Part 6377:1 "right"
+      on mouseUp
+      go to card id 5874
+      end mouseUp
+    * Part 6377:2 "left"
+      on mouseUp
+      go to card id 10020
+      end mouseUp
+    * Part 6377:3 ""
+      on mouseUp
+      go to card id 6532
+      end mouseUp
+  * Card 8424 "" (1 parts)
+    * Part 8424:1 ""
+      on mouseUp
+      go to card id 8487
+      end mouseUp
+  * Card 10375 "" (3 parts)
+    * Part 10375:1 "left"
+      on mouseUp
+      go to card id 9088
+      end mouseUp
+    * Part 10375:3 "right"
+      on mouseUp
+      go to card id 8929
+      end mouseUp
+    * Part 10375:4 ""
+      on mouseUp
+      go to card id 6377
+      end mouseUp
+  * Card 8487 "" (3 parts)
+    * Part 8487:1 "left"
+      on mouseUp
+      go to card id 8929
+      end mouseUp
+    * Part 8487:2 "right"
+      on mouseUp
+      go to card id 9088
+      end mouseUp
+    * Part 8487:3 ""
+      on mouseUp
+      push card
+      go to card id 11283
+      end mouseUp
+  * Card 9088 "" (4 parts)
+
+    on Opencard
+    global DU_Atrus,DU_End
+    if DU_End is "gone" then
+    put "Other-Right Gone" into field "pict name"
+    else
+    put "Other-Right" into field "pict name"
+    put "AtrusFromLeft.MooV" into DU_Atrus
+    end if
+    pass opencard
+    end opencard
+    
+    on mouseDownInMovie
+    click at the mouseLoc
+    end mouseDownInMovie
+
+    * Part 9088:4 "mooVMarker"
+    * Part 9088:1 "left"
+      on mouseUp
+      go to card id 8487
+      end mouseUp
+    * Part 9088:2 ""
+      on mouseUp
+      fadeout
+      go to card id 4840
+      end mouseUp
+    * Part 9088:3 "right"
+      on mouseUp
+      go to card id 10375
+      end mouseUp
+  * Card 8929 "" (3 parts)
+    * Part 8929:1 "right"
+      on mouseUp
+      go to card id 8487
+      end mouseUp
+    * Part 8929:2 ""
+      on mouseUp
+      go to card id 7754
+      end mouseUp
+    * Part 8929:3 "left"
+      on mouseUp
+      go to card id 10375
+      end mouseUp
+  * Card 4840 "" (5 parts)
+
+    on dropPage
+    
+    end dropPage
+    
+    on Opencard
+    global DU_Atrus,DU_AtrusSpecs,ALL_Page,DU_End,MY_RedBook,MY_BlueBook
+    Global AtrusTime
+    put "Father-Out 2" into field "pict name"
+    if DU_End is "gone" then
+    if AtrusTime is empty then put (the ticks + 2600) into AtrusTime
+    if the ticks ≥ (AtrusTime + 3800) then
+    put "Atrus2.MooV" into DU_Atrus
+    put "0,0,99084,false,73095" into DU_AtrusSpecs
+    put "win" into DU_End
+    put "111111" into MY_RedBook
+    put "111111" into MY_BlueBook
+    end if
+    put "Father-Out 2 Gone" into field "pict name"
+    else
+    if DU_End is "wait" then
+    put "Atrus1 Page.MooV" into DU_Atrus
+    put "7388,7388,14700,true" into DU_AtrusSpecs
+    put "Father-Out 2 WaitPage" into field "pict name"
+    else
+    if DU_End is "win" or DU_End is "lose" then
+    put "AtrusWrite.MooV" into DU_Atrus
+    put "0,0,29675,true" into DU_AtrusSpecs
+    put "Father-Out 2 Write" into field "pict name"
+    else
+    if ALL_Page is not "Atrus" then
+    put "Atrus1 NoPage.MooV" into DU_Atrus
+    put "0,0,46925,false,30656" into DU_AtrusSpecs
+    put "lose" into DU_End
+    put "Father-Out 2 NoPage" into field "pict name"
+    else
+    put "Atrus1 Page.MooV" into DU_Atrus
+    put "0,0,14700,false,7388" into DU_AtrusSpecs
+    put "wait" into DU_End
+    end if
+    end if
+    end if
+    end if
+    pass opencard
+    end opencard
+    
+    on mouseDownInMovie whichMooV
+    global ALL_Page,DU_End,AtrusTime
+    if the mouseLoc is within the rect of card button MystBook then
+    if DU_End is "win" or DU_End is "lose" then go to card id 10805
+    end if
+    if the mouseLoc is within the rect of card button "hand" ¬
+    and the movie of window whichMooV is "Myst:Myst Graphics:Dunny:Atrus1 Page.MooV" then
+    if ALL_Page is "Atrus" then
+    if the currTime of window whichMooV > "6801" then
+    set the startTime of window whichMooV to "14813"
+    set the currTime of window whichMooV to "14813"
+    set the endTime of window whichMooV to the duration of window whichMooV
+    set the rate of window whichMooV to "1.0"
+    set the loop of window whichMooV to false
+    AtrusIdle
+    put empty into ALL_Page
+    updateCursor ML
+    put "gone" into DU_End
+    HTChangePict "Father-Out 2 Gone","srccopy"
+    AtrusIdle
+    put the ticks into AtrusTime
+    end if
+    end if
+    else
+    click at the mouseLoc
+    end if
+    end mouseDownInMovie
+    
+    on closeCard
+    pass closeCard
+    end closeCard
+    
+    on idle
+    global AtrusTime,DU_End
+    If DU_End is "gone" then
+    AtrusIdle
+    if the ticks ≥ (AtrusTime + 3800) then
+    htlock true
+    opencard
+    end if
+    end if
+    pass idle
+    end idle
+
+    * Part 4840:2 "left"
+      on mouseUp
+      htlock true
+      go to card id 5200
+      end mouseUp
+    * Part 4840:3 "right"
+      on mouseUp
+      go to card id 5474
+      end mouseUp
+    * Part 4840:7 "mooVMarker"
+    * Part 4840:8 "MystBook"
+    * Part 4840:9 "hand"
+  * Card 10805 "" (2 parts)
+    * Part 10805:2 ""
+      on mouseUp
+      go to card id 4840
+      end mouseUp
+    * Part 10805:1 ""
+      on mouseUp
+      go to card id 11088
+      end mouseUp
+  * Card 11088 "" (3 parts)
+
+    on mouseDownInMovie
+    global DU_End
+    if DU_End is "win" then
+    set cursor to none
+    --deCurse "override",2003,"color","nodelay"
+    htlock true
+    put "MystLib.MooV" into TheMovieName --∆
+    if there is a window TheMovieName then
+    hide window TheMovieName
+    close window TheMovieName
+    end if
+    fadeout
+    play "transport"
+    go to card "black"
+    set cursor to none
+    htlock true
+    lock screen
+    go to card "black" of stack "Myst"
+    set cursor to none
+    vd
+    push card id 46439 of stack "Myst"
+    wait until the sound is "done"
+    play "transport"
+    go to card id 44018 of stack "Myst"
+    end if
+    end mouseDownInMovie
+    
+    on idle
+    global DU_End
+    if DU_End is "win" and there is not a window "MystLib.MooV" then flyby
+    end idle
+    
+    on closeCard
+    put "MystLib.MooV" into TheMovieName --∆
+    if there is a window TheMovieName then
+    hide window TheMovieName
+    close window TheMovieName
+    end if
+    pass closeCard
+    end closeCard
+    
+    on FlyBy
+    put "MystLib.MooV" into TheMovieName --∆
+    if there is not a window TheMovieName then
+    Movie TheMovieName,"borderless",the topleft of card button marker,"invisible","Floating"
+    end if
+    if there is a window TheMovieName then
+    set the dontErase of window TheMovieName to true
+    set the movieCursorID of window theMovieName to 128
+    set the audioLevel of window TheMovieName to "0"
+    set the mute of window TheMovieName to false
+    set the badge of window TheMovieName to false
+    set the controllerVisible of window TheMovieName to false
+    set the closeOnFinish of window TheMovieName to false
+    set the loop of window TheMovieName to true
+    set the seeAllFrames of window TheMovieName to false
+    set the startTime of window TheMovieName to "0"
+    --set the endTime of window TheMovieName to "1,140"
+    --set the callBackMsg of window theMovieName to "Done"
+    set the passMovieClick of window theMovieName to false
+    set the rate of window TheMovieName to "1.0"
+    show window TheMovieName
+    end if
+    end FlyBy
+
+    * Part 11088:3 ""
+      on mouseUp
+      htlock true
+      go to card id 4840
+      end mouseUp
+    * Part 11088:1 ""
+    * Part 11088:2 "marker"
+      on mouseUp
+      send MouseDownInMovie to card
+      end mouseUp
+  * Card 5474 "" (3 parts)
+    * Part 5474:1 "left"
+      on mouseUp
+      go to card id 4840
+      end mouseUp
+    * Part 5474:2 "right"
+      on mouseUp
+      go to card id 5119
+      end mouseUp
+    * Part 5474:3 ""
+      on mouseUp
+      go to card id 6532
+      end mouseUp
+  * Card 6720 "" (0 parts)
+  * Background 2647 "" (2 parts)
+    * Part 2647:7 ""
+    * Part 2647:1 "pict name"

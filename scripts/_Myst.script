@@ -1,0 +1,1283 @@
+Stack (7 cards, 1 backgrounds)
+
+  
+  ------------------------------------------------------------------------
+  --
+  --                              Myst®
+  --
+  --        Myst and Cyan® are registered trademarks of Cyan, Inc.
+  --           All graphic images (including icons & cursors),
+  --            Scripting, sounds, music, QuickTime™ movies
+  --        are Copyright © 1992,93 by Cyan Inc. All Rights Reserved
+  --
+  --            The HyperTint collection of XCMD's and XFCN's
+  --             are Copyright © 1992,93 by Symplex Systems.
+  --              All Rights Reserved. Used with permission.
+  --
+  --    Any use of the above items without the written permission of
+  --       Cyan, Inc. is a violation of federal copyright law.
+  --
+  --                            Cyan, Inc.
+  --                          P.O. Box 28096
+  --                      Spokane, WA  99228-8096
+  --
+  --
+  ------------------------------------------------------------------------
+  
+  on myst
+  edit script of stack " Myst"
+  end myst
+  
+  on quitIt
+  global origVol,quick,OrigScreenDepth
+  mystmenu
+  hide menubar
+  if the short name of this stack is not " Myst" then
+  answer "Do you want to save this game before quitting?" with "Cancel" or "Don't Save" or "Save"
+  if it is "Cancel" then exit quitIt
+  if it is "Save" then SaveIt
+  end if
+  put false into quick
+  closemoovs
+  go to card "black"
+  credits
+  xSetSoundVol(origVol)
+  if OrigScreenDepth ≠ empty then SetMode c,OrigScreenDepth  -- added (1.0b8)
+  doMenu "Quit HyperCard"
+  exit to HyperCard
+  end quitIt
+  
+  on credits
+  global Quick,ALL_CurrStack,documents,DU_End
+  htlock "nobw"
+  put false into Quick
+  soundstop
+  put return & "Myst:Myst Graphics:Myst:" after documents
+  -- start using stack "Myst"
+  closemoovs
+  go card "black" in stack "Myst"
+  htlock forcefalse
+  xMemory(1)
+  if DU_End is "win" then put "MU QuitGame Mov" into theMovieName
+  else put "MU QuitGame2 Mov" into theMovieName
+  playQT theMovieName,,loop,210,,,,,true
+  htlock "nobw"
+  HTChangePict "black","srccopy"
+  HTAddPict "Quitter",the rect of card button "quitter","srccopy"
+  set cursor to hand
+  deCurse "override",hand,"color","nodelay"
+  htlock forcefalse
+  repeat with x = 1 to 6
+  soundIdle
+  htlock true
+  ww
+  HTVisual "pan up",,the rect of card button creditMarker,2,8
+  HTAddPict ("Credits" & x),the rect of card button creditMarker,"srccopy"
+  if x > 1 then
+  get the ticks
+  repeat until the ticks > it + 1000
+  if the commandkey is down then exit credits  -- added (1.0b8)
+  if the mouseclick then
+  if the clickloc is within the rect of card button quitter then exit credits
+  else exit repeat
+  end if
+  soundIdle
+  end repeat
+  end if
+  soundIdle
+  set cursor to busy
+  htlock forcefalse
+  deCurse "override",hand,"color","nodelay"
+  soundIdle
+  end repeat
+  repeat
+  soundIdle
+  if the mouseclick then
+  if the clickloc is within the rect of card button quitter then
+  soundstop
+  exit credits
+  end if
+  end if
+  end repeat
+  end credits
+  
+  on closemoovs
+  repeat with x = (the number of lines in the windows) down to 1
+  if line x of the windows contains "moov" then close window (line x of the windows)
+  else if line x of the windows contains "mov" then close window (line x of the windows)
+  end repeat
+  end closemoovs
+  
+  on stackInit
+  global MY_Match,ALL_CurrStack,start_Game,playsounds,S_SCREENPOS,documents,origVol
+  -- The documents paths are for MooVS - always on the CD
+  --
+  put "Myst:Myst Graphics:Myst:" into documents
+  --
+  SetScreen
+  bt --sets blind typing to true, remove after development
+  BlackFrame
+  mystMenu
+  xMemory(1)
+  -- Intro Palette
+  HTuDefPal 9002
+  HTstart
+  if the result is not empty then put the result
+  htlock novbl
+  htlock bw
+  htlock nocolormap
+  start using stack "INRes1"
+  DeCurse "install"
+  deCurse "override","hand","color","nodelay"
+  put "out" into MY_Match
+  htchangePict "black", "srccopy"
+  htlock nobw
+  put xGetSoundVol() into origVol
+  end stackInit
+  
+  on SetScreen
+  global S_SCREENPOS
+  if S_SCREENPOS is not empty then set the loc of the card window to S_SCREENPOS
+  set the width of the card window to 544
+  set the height of the card window to 332
+  hide window "scroll"
+  end SetScreen
+  
+  on HTstart
+  --HyperTint "later","delay","maxDepth8","iRes5","NoTEOpt"
+  HyperTint "later","delay","iRes5","NoTEOpt"
+  end HTstart
+  
+  on mouseStillDown
+  send idle
+  soundidle
+  end mouseStillDown
+  
+  --------------------- Copied from ALLRES -------------------------
+  
+  on vd
+  global Trans
+  if Trans is 1 then HTVisual "tdfBlend7",,,0
+  else if Trans is 2 then HTVisual "tdfBlend5",,,0
+  else if Trans is 3 then HTVisual "tdfBlend2",,,0
+  end vd
+  
+  on vs how
+  global Trans
+  if Trans is "1" then
+  get "scroll" && how
+  HTVisual it,,,0,64
+  else
+  if Trans is "2" then
+  get "pan" && how
+  HTVisual it,,,0,32
+  else
+  if Trans is "3" then
+  get "pan" && how
+  HTVisual it,,,1,32
+  end if
+  end if
+  end if
+  end vs
+  
+  on mouseWithin
+  updateCursor MW
+  end mouseWithin
+  
+  on Transition which
+  global Trans
+  put which into Trans
+  hide menubar
+  end Transition
+  
+  on quiet
+  global playsounds,LastSound
+  if playsounds is "true" then
+  soundstop
+  put "false" into playsounds
+  else
+  put "true" into playsounds
+  do ("playQT " & LastSound )
+  end if
+  hide menubar
+  end quiet
+  
+  on ToggleQuick
+  global Quick
+  if Quick is "true" then
+  put "false" into Quick
+  else put "true" into Quick
+  hide menubar
+  end ToggleQuick
+  
+  on arrowKey
+  if variant() ≥ 2.1 then
+  pass arrowkey
+  else
+  beep
+  hide menubar
+  end if
+  end arrowKey
+  
+  on hc
+  set the cursor to none
+  deCurse "override",9000,"color","nodelay"
+  end hc
+  
+  on dplay sound -- delayedPlay
+  global HCSounds
+  put sound & return after HCSounds
+  end dplay
+  
+  on commandKeyDown which
+  global All_CurrStack,quick
+  if which is " " then
+  MystMenu
+  pass commandKeyDown
+  else
+  if which is "Q" then
+  quitIt
+  -----------------------------TAKE OUT------------------------------
+  else if which is "M" then
+  if variant() ≥ 2.1 then
+  reset menubar
+  show menubar
+  exit commandKeyDown
+  end if
+  -----------------------------TAKE OUT----------------------------
+  
+  else
+  --if the shiftkey is down then
+  pass commandKeyDown
+  --else
+  --  beep
+  --  hide menubar
+  -- end if
+  end if
+  end if
+  mystMenu
+  end commandKeyDown
+  
+  on keydown which
+  if variant() < 2.1 then
+  if chartoNum(which) is not 27 and chartoNum(which) is not 96 then pass keydown
+  wait 0
+  else
+  pass keydown
+  end if
+  end keydown
+  
+  on DropPage
+  global All_page
+  if ALL_page is not empty then
+  play "PutPage"
+  if item 2 of ALL_Page is "A" then Drop BluePage
+  else if item 2 of ALL_Page is "S" then Drop RedPage
+  else Drop AtrusPage
+  put empty into All_page
+  htlock true
+  opencard
+  hide menubar
+  end if
+  end DropPage
+  
+  on Drop which
+  ------------- PUT THE BG IN THE BUFFER ---------------------
+  htlock bw
+  htlock nobw
+  put field "pict name" into thePict
+  get the mouseLoc
+  put min(524,max(15,item 1 of it)) into item 1 of it
+  put min(309,max(14,item 2 of it)) into item 2 of it
+  put it into origMouse
+  put it & comma & it into theLoc
+  subtract 15 from item 1 of theLoc
+  subtract 14 from item 2 of theLoc
+  add 20 to item 3 of theLoc
+  add 24 to item 4 of theLoc
+  put "0,0,35,38" into theClip
+  htsavePict theLoc,"clipboard","srccopy","backdrop"
+  htaddPict empty,theClip,"srccopy","clipboard","toTempBuf1"
+  --- put a dummy cursor on the screen ---
+  htaddPict which,theLoc,"transparent","srcRect",theClip
+  deCurse "override",9000,"color","nodelay"
+  repeat with y = 0 to 7
+  repeat with x = 0 to 5
+  if y = 0 and x = 0 then next repeat
+  put y * 38 into s24
+  put x * 35 into s13
+  put s13 & comma & s24 & comma & s13 + 35 & comma & s24 + 38 into theClip
+  htaddPict "TempBuf1",theClip,"srccopy","srcRect","0,0,35,38","toTempBuf1"
+  end repeat
+  end repeat
+  ------------- PUT THE ANIMATION OVER IT ---------------------
+  htaddPict which,"0,0,210,304","transparent","toTempBuf1"
+  ------------- PUT IT TO THE SCREEN ---------------------
+  repeat with y = 0 to 7
+  repeat with x = 0 to 5
+  put y * 38 into s24
+  put x * 35 into s13
+  put s13 & comma & s24 & comma & s13 + 35 & comma & s24 + 38 into theClip
+  HTTB1TS theLoc,theClip,"novbl"
+  end repeat
+  end repeat
+  --htchangePict field "pict name","srccopy"
+  moveCursor item 1 of origMouse,item 2 of origMouse
+  end Drop
+  
+  On UpdateCursor which
+  global ALL_Page,ST_Key,MY_Match,ALL_Cursor,Quick,All_CurrStack
+  global MY_Qlist,ME_Qlist,SE_Qlist,ST_Qlist,CH_Qlist,DU_Qlist
+  if word 2 of the abbreviated name of the target is "button" then
+  get the short name of the target
+  do ("put " & char 1 to 2 of All_currStack & "_Qlist contains (word 1 of it & comma) into test")
+  if Quick is true and char 1 of it is "q"  and test then
+  get 1002
+  else
+  if char 1 of it is "q" then get word 2 of it
+  if which is MW and (it is "Left" or it is "Right" or it is "down") then get it
+  else
+  if ST_Key is true then get 5001
+  else
+  if MY_Match is not "out" then
+  if MY_Match is "new" then get 4000
+  else get 4001
+  else if item 1 of ALL_Page > 0 then
+  if item 2 of ALL_Page is "A" then get 2002
+  else if item 2 of ALL_Page is "S" then get 2001
+  else get 2000
+  else
+  get "hand"
+  end if
+  end if
+  end if
+  end if
+  else
+  get 9000
+  end if
+  if it ≠ ALL_Cursor then
+  deCurse "override",it,"color","nodelay"
+  end if
+  end UpdateCursor
+  
+  on deCurse
+  global ALL_Cursor
+  put param(2) into ALL_Cursor
+  pass deCurse
+  end deCurse
+  
+  on ww
+  wait while the mouseclick
+  end ww
+  
+  on go
+  global Quick,All_CurrStack,MY_Qlist,ME_Qlist,ST_Qlist,CH_Qlist,SE_Qlist,DU_Qlist,TheQlist
+  set cursor to none
+  get the short name of this card
+  do ("put " & char 1 to 2 of All_currStack & "_Qlist contains (word 1 of it & comma) into test")
+  if it contains "q" and test is false then
+  do ("put it & comma after " & char 1 to 2 of All_currStack & "_Qlist")
+  end if
+  get the short name of the target
+  do ("put " & char 1 to 2 of All_currStack & "_Qlist contains (word 1 of it & comma) into test")
+  if Quick is true and char 1 of it is "q" and test then
+  do ("go to card" && word 1 of it)
+  exit to hypercard
+  else
+  if char 1 of it is "q" then get word 2 of it
+  if it is "right" then vs left
+  else if it is "left" then vs right
+  else if it is "up" then vs down
+  else if it is "down" then vs up
+  else if it is not "none" then vd
+  pass go
+  end if
+  end go
+  
+  on MystMenu
+  global Trans,playsounds,ALL_Page,Quick
+  
+  lock screen
+  if menuItem 1 of menu File is not "New Game" then
+  if there is a menu File then delete menu File
+  create menu File
+  put "New Game" after menu File with menuMsg NewIt
+  set the cmdChar of menuitem 1 of menu File to N
+  put "Restore Game…" after menu File with menuMsg restoreIt
+  set the cmdChar of menuitem 2 of menu File to R
+  put "Save Game" after menu File with menuMsg "saveIt"
+  set the cmdChar of menuitem 3 of menu File to S
+  put "Save As…" after menu File with menuMsg "saveAs"
+  put "-" after menu File
+  put "Quit Myst" after menu File with menuMsg QuitIt
+  set the cmdChar of menuitem 6 of menu File to Q
+  if there is a menu Edit then delete menu Edit
+  if there is a menu Go then delete menu Go
+  if there is a menu Tools then delete menu Tools
+  if there is a menu Objects then delete menu Objects
+  if there is a menu Font then delete menu Font
+  if there is a menu Style then delete menu Style
+  if there is a menu Apple then put "About Myst…" into menuItem 1 of menu Apple with menuMsg about
+  
+  if there is a menu Options then delete menu Options
+  create menu Options
+  put "Fastest Transitions" after menu Options with menuMsg transition 0
+  set the cmdChar of menuitem 1 of menu Options to 1
+  put "Fast Transitions" after menu Options with menuMsg transition 1
+  set the cmdChar of menuitem 2 of menu Options to 2
+  put "Good Transitions" after menu Options with menuMsg transition 2
+  set the cmdChar of menuitem 3 of menu Options to 3
+  put "Best Transitions" after menu Options with menuMsg transition 3
+  set the cmdChar of menuitem 4 of menu Options to 4
+  put "-" after menu Options
+  put "Environment Sound" after menu Options with menuMsg quiet
+  set the cmdChar of menuitem 6 of menu Options to E
+  put "Zip Mode" after menu Options with menuMsg "ToggleQuick"
+  set the cmdChar of menuitem 7 of menu Options to Z
+  put "-" after menu Options
+  put "Drop Page" after menu Options with menuMsg DropPage
+  set the cmdChar of menuitem 9 of menu Options to D
+  
+  if there is a menu "Volume" then delete menu "Volume"
+  create menu "Volume"
+  put "Louder" after menu "Volume" with menuMsg "theVol 1"
+  set the cmdChar of menuitem 1 of menu "Volume" to "]"
+  put "Quieter" after menu "Volume" with menuMsg "theVol -1"
+  set the cmdChar of menuitem 2 of menu "Volume" to "["
+  put "-" after menu "Volume"
+  
+  put "••••••••" after menu "Volume" with menuMsg "xSetSoundVol(7)"
+  put "•••••••" after menu "Volume" with menuMsg "xSetSoundVol(6)"
+  put "••••••" after menu "Volume" with menuMsg "xSetSoundVol(5)"
+  put "•••••" after menu "Volume" with menuMsg "xSetSoundVol(4)"
+  put "••••" after menu "Volume" with menuMsg "xSetSoundVol(3)"
+  put "•••" after menu "Volume" with menuMsg "xSetSoundVol(2)"
+  put "••" after menu "Volume" with menuMsg "xSetSoundVol(1)"
+  put "•" after menu "Volume" with menuMsg "xSetSoundVol(0)"
+  set the cmdChar of menuitem 11 of menu "Volume" to "0"
+  end if
+  if playsounds is "true" then set the checkMark of menuItem 6 of menu Options to true
+  else set the checkMark of menuItem 6 of menu Options to false
+  if Trans is 0 then set the checkMark of menuItem 1 of menu Options to true
+  else set the checkMark of menuItem 1 of menu Options to false
+  if Trans is 1 then set the checkMark of menuItem 2 of menu Options to true
+  else set the checkMark of menuItem 2 of menu Options to false
+  if Trans is 2 then set the checkMark of menuItem 3 of menu Options to true
+  else set the checkMark of menuItem 3 of menu Options to false
+  if Trans is 3 then set the checkMark of menuItem 4 of menu Options to true
+  else set the checkMark of menuItem 4 of menu Options to false
+  if ALL_Page is empty then disable menuItem 9 of menu Options
+  else enable menuItem 9 of menu Options
+  if Quick is true then
+  set the checkMark of menuItem 7 of menu Options to true
+  else
+  set the checkMark of menuItem 7 of menu Options to false
+  end if
+  if the short name of this stack is " Myst" then
+  disable menuItem 3 of menu File
+  disable menuItem 4 of menu File
+  else
+  enable menuItem 3 of menu File
+  enable menuItem 4 of menu File
+  end if
+  repeat with x = 4 to 11
+  set the checkmark of menuitem (x) of menu "volume" to false
+  end repeat
+  set the checkmark of menuitem (11 - xGetSoundVol()) of menu "volume" to true
+  unlock screen
+  --show menubar
+  end MystMenu
+  
+  on xSetSoundVol what
+  get xGetSoundVol()
+  set the checkmark of menuitem (11 - it) of menu "volume" to false
+  set the checkmark of menuitem (11 - what) of menu "volume" to true
+  hide menubar
+  pass xSetSoundVol
+  end xSetSoundVol
+  
+  on theVol how
+  get xGetSoundVol()
+  get min(7,max(0,it + how))
+  hide menubar
+  xSetSoundVol(it)
+  end theVol
+  
+  on dropState
+  global ALL_Page
+  if menuItem 1 of menu File is "New Game" then
+  if ALL_Page is empty then disable menuItem 9 of menu Options
+  else enable menuItem 9 of menu Options
+  end if
+  end dropState
+  
+  on about
+  get the rect of the card window
+  put (item 1 of it) + 78 into h
+  put (item 2 of it) + 42 into v
+  xAbout 16001,v,h
+  hide menubar
+  end about
+  
+  ----------------------------------------------------------------------
+  
+  
+  
+  --  PlayQT <theSoundName/stop>,<fadeIn/fadeOut/fadeBoth/splice>,<loop/noloop>,<volume>,<startTime>,<currTime>,<endTime>,<ForcePlay>
+  
+  on playQT theSoundName, TransMode, Moebius, Volume, loopTime,  sndCurr, sndStart, sndEnd , forcePlay
+  global soundlist,SoundMooV,playSounds,LastSound
+  if theSoundName is empty then put SoundMooV into theSoundName
+  put quote & "," & quote into q
+  put quote & theSoundName & q & TransMode & q & Moebius & q & Volume & q & loopTime & q & sndCurr & q & sndStart & q & sndEnd & quote & "," & forcePlay into LastSound
+  if theSoundName is empty then exit playQT
+  if playSounds is "true" or forcePlay is "true" then
+  if theSoundName ≠ SoundMooV then set cursor to blank -- added if...then (1.0b8)
+  --update soundList
+  if soundList is not empty then
+  put the number of items in soundlist into itemNum
+  repeat with x = itemNum down to 1
+  put line x of soundList into sName
+  if there is not a window sName then delete line x of soundList
+  end repeat
+  end if
+  
+  -- Load the name of the movie window into TheMovieName
+  -- and set up parameter defaults
+  
+  put theSoundName into TheMovieName
+  put 0 into rc
+  if TransMode is empty then put "splice" into TransMode
+  if Moebius is empty then put "noloop" into Moebius
+  if Volume is empty then put 256 into Volume
+  
+  if there is a window TheMovieName then
+  if TransMode is "FadeIn" then
+  put the audiolevel of window TheMovieName into theLev
+  repeat
+  send movieIdle to window TheMovieName
+  if theLev < Volume then add 1 to theLev
+  else if theLev > Volume then subtract 1 from theLev
+  else exit repeat
+  set the audioLevel of window TheMovieName to theLev
+  end repeat
+  end if
+  set the audioLevel of window TheMovieName to Volume
+  if Moebius = "loop" then
+  set the closeOnFinish of window TheMovieName to false
+  set the loop of window TheMovieName to true
+  else
+  set the closeOnFinish of window TheMovieName to true
+  set the loop of window TheMovieName to false
+  end if
+  else
+  
+  if TheMovieName is "stop"  then
+  soundStop
+  
+  else if TransMode is "splice" then
+  if there is not a window TheMovieName then
+  preLoadQT TheMovieName, Moebius, Volume, loopTime,  sndCurr, sndStart, sndEnd
+  soundstop
+  else
+  
+  set the movie of window SoundMoov to theMovieName
+  set the windowName of window SoundMoov to theMovieName
+  if there is a window TheMovieName then
+  set the audioLevel of window TheMovieName to Volume
+  if loopTime is not empty then
+  set callBackTime of window TheMovieName to loopTime
+  put "set the StartTime of window " & quote & TheMovieName & quote &" to " & quote & loopTime & quote into CBMessage
+  set the callBackMsg of window TheMovieName to CBMessage
+  end if
+  if sndStart is not empty then set the StartTime of window TheMovieName to sndStart
+  if sndCurr is not empty then set the CurrTime of window TheMovieName to sndCurr
+  if sndEnd is not empty then set the EndTime of window TheMovieName to sndEnd
+  if Moebius = "loop" then
+  set the closeOnFinish of window TheMovieName to false
+  set the loop of window TheMovieName to true
+  else
+  set the closeOnFinish of window TheMovieName to true
+  set the loop of window TheMovieName to false
+  end if
+  end if
+  end if
+  
+  set the rate of window theMovieName to "1"
+  put TheMovieName & return after soundList
+  
+  else if TransMode is  "fadeOut" then
+  preLoadQT TheMovieName, Moebius, Volume, loopTime,  sndCurr, sndStart, sndEnd
+  fadeOut TheMovieName
+  set the rate of window theMovieName to "1"
+  put TheMovieName & return after soundList
+  
+  else if TransMode is "fadeIn" then
+  preLoadQT TheMovieName, Moebius, Volume, loopTime,  sndCurr, sndStart, sndEnd
+  soundstop
+  put  TheMovieName & return after soundList
+  set the rate of window theMovieName to "1"
+  fadeIn theMovieName, volume
+  
+  else if TransMode is "fadeBoth" then
+  preLoadQT TheMovieName, Moebius, Volume, loopTime,  sndCurr, sndStart, sndEnd
+  fadeOut TheMovieName
+  put the result into rc
+  put  TheMovieName & return after soundList
+  set the rate of window theMovieName to "1"
+  -- if the sound is different then fadein
+  if rc = 0 then
+  fadein TheMovieName, volume
+  end if
+  end if
+  end if
+  --set cursor to hand --removed (1.0b8)
+  if soundList is not empty then
+  put line 1 of soundlist into SoundMooV
+  end if
+  else
+  soundstop
+  put empty into SoundMooV
+  end if
+  end playQT
+  
+  on  preLoadQT TheMovieName, Moebius, Volume, loopTime,  sndCurr, sndStart, sndEnd
+  global soundList
+  if there is not a window TheMovieName then
+  Movie TheMovieName,"borderLess","Card","invisible","floating"
+  if the result is not empty then answer the result
+  end if
+  if there is a window TheMovieName then
+  set the audioLevel of window TheMovieName to Volume
+  set the mute of window TheMovieName to false
+  set the badge of window TheMovieName to false
+  set the controllerVisible of window TheMovieName to false
+  if loopTime is not empty then
+  set callBackTime of window TheMovieName to loopTime
+  put "set the StartTime of window " & quote & TheMovieName & quote &" to " & quote & loopTime & quote into CBMessage
+  set the callBackMsg of window TheMovieName to CBMessage
+  end if
+  if sndStart is not empty then set the StartTime of window TheMovieName to sndStart
+  if sndCurr is not empty then set the CurrTime of window TheMovieName to sndCurr
+  if sndEnd is not empty then set the EndTime of window TheMovieName to sndEnd
+  if Moebius = "loop" then
+  set the closeOnFinish of window TheMovieName to false
+  set the loop of window TheMovieName to true
+  else
+  set the closeOnFinish of window TheMovieName to true
+  set the loop of window TheMovieName to false
+  end if
+  set the seeAllFrames of window TheMovieName to false
+  set the rate of window TheMovieName to "0"
+  end if
+  end preLoadQT
+  
+  on fadeOut theName
+  global soundList
+  put 0 into rc      -- reset rc
+  if soundList is not empty then
+  put the number of items in soundlist into itemNum
+  repeat with x = itemNum down to 1
+  put line x of soundList into sName
+  if there is not a window sName then delete line x of soundList
+  end repeat
+  end if
+  if soundList is not empty then
+  put the number of items in soundlist into itemNum
+  put the ticks into startTime
+  put the audiolevel of window line 1 of soundList into oldvol
+  repeat while vol > 0
+  repeat with x = itemNum down to 1
+  put line x of soundList into sName
+  if sName = theName then
+  put 1 into rc
+  send movieIdle to window sName
+  else if there is a window sName then set the audioLevel of window sName to vol
+  end repeat
+  put  (oldvol - (the ticks - startTime) * 4) into vol
+  end repeat
+  end if
+  if theName is "pause" then
+  soundpause
+  else
+  soundStop
+  end if
+  return rc
+  end fadeOut
+  
+  on soundStop
+  global soundList
+  repeat while soundList is not empty
+  put the last line of soundList into sName
+  if there is a window sName then close window sName
+  delete last line of soundList
+  end repeat
+  end soundStop
+  
+  on soundPause
+  global soundList
+  repeat with x = 1 to the number of lines in soundList
+  put line x of soundList into sName
+  if there is a window sName then set the rate of window sName to "0.0"
+  end repeat
+  end soundPause
+  
+  on soundStart
+  global soundList
+  repeat with x = 1 to the number of lines in soundList
+  put line x of soundList into sName
+  if there is a window sName then set the rate of window sName to "1.0"
+  end repeat
+  end soundStart
+  
+  on fadeIn sName, volume
+  global soundList
+  put the ticks into startTime
+  put 0 into vol
+  repeat while vol < volume
+  if there is a window sName then set the audioLevel of window sName to vol
+  put  (the ticks - startTime) * 4 into vol
+  end repeat
+  if vol ≠ volume then set the audiolevel of window sName to volume
+  end fadeIn
+  
+  function QTSound
+  global soundList
+  --update soundList
+  if soundList is not empty then
+  put the number of items in soundlist into itemNum
+  repeat with x = itemNum down to 1
+  put line x of soundList into sName
+  if there is not a window sName then delete line x of soundList
+  end repeat
+  end if
+  return soundList
+  end QTSound
+  
+  on soundIdle
+  global SoundMoov
+  if SoundMoov is not empty then
+  if there is a window SoundMoov then send movieidle to window SoundMoov
+  end if
+  end soundIdle
+  
+  on SoundTime loopTime, sndCurr, sndStart, sndEnd
+  global SoundMoov
+  if there is a window SoundMoov then
+  
+  if loopTime is not empty then
+  if there is a window SoundMoov then set callBackTime of window SoundMoov to empty
+  if there is a window SoundMoov then set the callBackMsg of window SoundMoov to empty
+  end if
+  
+  if sndStart is not empty then
+  if there is a window SoundMoov then set the starttime of window SoundMoov to sndstart
+  end if
+  
+  if sndEnd is not empty then
+  if sndEnd is "end" then put the duration of window SoundMoov into sndEnd
+  if there is a window SoundMoov then set the endTime of window SoundMoov to sndEnd
+  end if
+  
+  if sndCurr is not empty then
+  if there is a window SoundMoov then set the currtime of window SoundMoov to sndCurr
+  if there is a window SoundMoov then set the rate of window SoundMoov to "1.0"
+  end if
+  
+  if loopTime is not empty then
+  put "set the StartTime of window " & quote & SoundMoov & quote &" to " & quote & loopTime & quote into CBMessage
+  if there is a window SoundMoov then set the callBackMsg of window SoundMoov to CBMessage
+  if there is a window SoundMoov then set callBackTime of window SoundMoov to loopTime
+  end if
+  
+  end if
+  end SoundTime
+
+  * Card 2953 "" (0 parts)
+
+    on idle
+    global RestoreData
+    --
+    -- We're gonna do this on Idle so that if they have double clicked on
+    -- game to restore, it will execute the script in that restore game
+    -- and never get to this idle. Thus taking them to the correct age
+    -- instead of the intro stuff.
+    --
+    if RestoreData is empty then
+    NewGame
+    FullIntro
+    else
+    RestoreGame
+    end if
+    end idle
+
+  * Card 3656 "black" (2 parts)
+    * Part 3656:1 "marker"
+    * Part 3656:3 "marker2"
+  * Card 2269 "bookDown" (1 parts)
+    * Part 2269:2 "book"
+  * Card 2517 "bookClosed" (0 parts)
+  * Card 4616 "bookopen" (0 parts)
+  * Card 4981 "finalBookOpen" (1 parts)
+
+    on openCard
+    global ALL_CurrStack,Start_Game,MY_RedBook,MY_BlueBook,DU_End
+    if Start_Game is "new" then
+    put "finalBookOpen" into field "pict name"
+    else
+    if char 6 of MY_RedBook = "1" and DU_End ≠ "win" then put "finalBookOpen trapped" into field "pict name"
+    if char 6 of MY_BlueBook = "1" and DU_End ≠ "win" then put "finalBookOpen trapped" into field "pict name"
+    put "finalBookOpen " & ALL_CurrStack into field "pict name"
+    htRemove
+    HTuDefPal 9001
+    HTstart
+    if the result is not empty then put the result
+    htlock novbl
+    htlock nobw
+    end if
+    htlock true
+    vd
+    playqt "Intro Wind Mov","fadein","loop","255"
+    pass openCard
+    end openCard
+    \0\0\0\0\0\0\0\0\0\0ard
+
+    * Part 4981:2 "marker2"
+      on mouseWithin
+      deCurse "override",2003,"color","nodelay"
+      end mouseWithin
+      
+      on mouseUp
+      hide menubar
+      set cursor to none
+      global ALL_CurrStack,start_Game,MY_RedBook,MY_BlueBook,DU_End
+      vd
+      play "transport"
+      fadeout
+      go to card "Black"
+      do ("go to card Black in stack " & ALL_CurrStack)
+      mystmenu
+      set cursor to none
+      htlock true
+      if char 6 of MY_RedBook = "1" and DU_End ≠ "win" then go card id 80371
+      else if char 6 of MY_BlueBook = "1" and DU_End ≠ "win" then go card id 81655
+      else
+      wait until the sound is "done"
+      play "transport"
+      if start_Game is "new" then go to card "dock"
+      else
+      if ALL_CurrStack is "Myst" then push card id 46439
+      go to card "reStart"
+      end if
+      end if
+      ww
+      end mouseUp
+  * Card 3968 "defaults" (1 parts)
+    * Part 3968:1 "defaults"
+  * Background 2740 "" (2 parts)
+
+    on startup
+    global stacks,documents,stacksinuse
+    Paths
+    stackInit
+    Environment
+    end startup
+    
+    on openCard
+    if bg field "pict name" is not empty then
+    htchangePict field "pict name","srccopy"
+    HTLock "forceFalse"
+    end if
+    pass openCard
+    end openCard
+    
+    on closeCard
+    HTLock "on"
+    pass closeCard
+    end closeCard
+    
+    on Paths
+    global stacks,documents
+    set the userlevel to 5
+    
+    if the cantmodify of this stack is true then
+    -- they're playing direct from the CD-ROM (or some other locked volume), don't let 'em
+    answer "You have to start Myst from your hard disk. Drag “Myst” and “Myst Files” to your hard disk and try again. (Check instructions for more info.)" with "Quit"
+    set lockmessages to true
+    doMenu "Quit HyperCard"
+    exit to HyperCard
+    end if
+    
+    put the long name of this stack into SPpath
+    delete first word of SPPath
+    delete char 1 of SPpath
+    delete last char of SPpath
+    set the itemDelimiter to ":"
+    Delete last item of SPpath
+    put ":" after SPpath
+    set the itemDelimiter to ","
+    --
+    -- We gotta have the following in the stacks path...
+    -- (The order is important so we can search the HD first for the required stuff.)
+    --
+    put SPpath & return & ¬                          -- Myst on HD (to find Myst stack again)
+    SPpath & "Myst Files:" & return & ¬              -- Myst Files folder on HD
+    "Myst:" & return & ¬                             -- Myst on CD (to find Myst stack again)
+    "Myst:Myst Graphics:" & return & ¬               -- Myst Graphics folder on CD
+    "Myst:Myst Files:" & return before stacks        -- Myst Files folder on CD
+    --
+    if there is not a stack "ALLRes" then
+    Answer "Can't find required resources. Please make sure the Myst CD-ROM is ready and start Myst again." with "Quit"
+    doMenu "Quit Hypercard"
+    exit to Hypercard
+    end if
+    start using stack "ALLRes"
+    end Paths
+    
+    on Environment
+    -- STARTUP PROCEDURES --
+    global stacks,documents,S_SCREENPOS,start_Game,ALL_CurrStack
+    global ST_GenTime,ST_DadLight,ST_SonLight,MY_RedBook,MY_BlueBook
+    global CH_Elevator1,DU_End,Machine_Speed,OrigScreenDepth
+    --
+    set the itemDelimiter to ","
+    set the loc of window scroll to "-200,-200"
+    if the screenrect = the rect of card window then
+    hide menubar
+    else
+    hide menubar
+    -- Center the screen
+    put the screenrect into theScreen
+    get the loc of the card window
+    put (item 3 of theScreen - 544) div 2 into item 1 of it
+    put (item 4 of theScreen - 332) div 2 into item 2 of it
+    set the loc of the card window to it
+    put it into S_SCREENPOS
+    end if
+    --
+    hide message
+    --
+    -- Don't know why do try taking the next line out 4/21
+    --go to this card
+    lock screen
+    --
+    set cursor to busy
+    --
+    if the systemVersion < 7.01 then             -- CHECK SYSTEM VERSION --
+    beep 3
+    answer "Myst requires System 7.01 or higher. You must install a newer System before you can play Myst." with "Quit"
+    set lockmessages to true
+    doMenu "Quit HyperCard"
+    exit to HyperCard
+    end if
+    --
+    set cursor to busy
+    --
+    if xVirtual() = 1 then                       -- CHECK FOR VIRTUAL MEMORY --
+    beep 3
+    answer "Myst will not work properly with Virtual Memory on. You must turn off Virtual Memory (use the Memory control panel) before you can play Myst." with "Quit"
+    set lockmessages to true
+    doMenu "Quit HyperCard"
+    exit to HyperCard
+    end if
+    --                                            -- CHECK COLOR DEPTH --
+    set cursor to busy
+    --
+    get xDepth()
+    if it ≠ 8 then
+    put it into temp
+    beep 1
+    answer "Your Macintosh should be set to 256 colors. Do you want to change your monitor to 256 colors?" with "Continue" or "Quit" or "OK"
+    if it is "Quit" then
+    set lockmessages to true
+    doMenu "Quit HyperCard"
+    exit to HyperCard
+    end if
+    if it is "OK" then
+    lock screen
+    htlock true
+    htremove
+    put temp into OrigScreenDepth  -- added (1.0b8)
+    SetMode c,8
+    if the Result ≠ empty then
+    answer the Result
+    else
+    HTStart
+    htlock nobw
+    htlock novbl
+    end if
+    end if
+    end if
+    --
+    set cursor to busy
+    --
+    get the heapspace
+    -- with HC in 2 meg the heap starts at about 1,350,000
+    if it < 1300000 then                            -- CHECK HEAP SPACE --
+    beep 3
+    answer "You do not have enough memory available to play Myst. You must have at least 2500K of memory available." with "Quit"
+    set lockmessages to true
+    doMenu "Quit HyperCard"
+    exit to HyperCard
+    end if
+    --                                         -- CHECK MACHINE SPEED
+    put the ticks into startTicks
+    repeat with i=1 to 50
+    put i into tempCounter
+    end repeat
+    repeat with i=1 to 50
+    put i into tempCounter
+    end repeat
+    repeat with i=1 to 50
+    put i into tempCounter
+    end repeat
+    put the ticks into endTicks
+    get round((endTicks-startTicks)/3)
+    put it into machine_speed
+    --
+    set cursor to busy
+    --
+    set lockmessages to false
+    unlock screen
+    --
+    set cursor to busy
+    wait while the mouseClick
+    end Environment
+    
+    on closeStack
+    -- closing the stack, get rid of the HyperTint stuff
+    DeCurse "remove"
+    HTRemove
+    stop using stack "INRes1"
+    start using stack " Myst"
+    end closeStack
+    
+    on FullIntro
+    global endIntro
+    put empty into endIntro
+    set cursor to none
+    go card black
+    htlock nobw
+    playBrøderbund
+    if endIntro is true then exit FullIntro
+    playLogo
+    if endIntro is true then exit FullIntro
+    playIntro
+    if endIntro is true then exit FullIntro
+    playQT "Intro Wind Mov",fadein,"loop",255
+    PlayIntro2
+    set cursor to hand
+    repeat
+    if the mouseClick then
+    if the clickLoc is within the rect of card button book then exit repeat
+    end if
+    soundIdle
+    end repeat
+    soundstop
+    MidMovie
+    Finish
+    end FullIntro
+    
+    on Finish
+    go to card "FinalBookOpen"
+    playqt "Intro Wind Mov",fadein,"loop",255
+    mystMenu
+    show Menubar
+    end Finish
+    
+    on mouseDownInMovie theMovieName
+    close window theMovieName
+    exit to HyperCard
+    end mousedownInMovie
+    
+    on PlayBrøderbund
+    global endIntro
+    put "Brøderbund Moov" into TheMovieName --∆
+    if there is not a window TheMovieName then
+    Movie TheMovieName,"borderless",the topleft of card button marker2,"invisible","Floating"
+    if the result is not empty then
+    answer "You must install QuickTime (1.6 or later) to play Myst." & return & "Please review the installation instructions for more information."with "Quit"
+    domenu "quit hypercard"
+    exit to hypercard
+    end if
+    end if
+    if there is a window TheMovieName then
+    set the timeFormat of window TheMovieName to "MovieTime"
+    set the dontErase of window TheMovieName to true
+    set the fastIdle of window theMovieName to true
+    set the movieCursorID of window theMovieName to 128
+    set the audioLevel of window TheMovieName to "220"
+    set the mute of window TheMovieName to false
+    set the badge of window TheMovieName to false
+    set the controllerVisible of window TheMovieName to false
+    set the closeOnFinish of window TheMovieName to false
+    set the loop of window TheMovieName to false
+    set the seeAllFrames of window TheMovieName to false
+    set the startTime of window TheMovieName to "0"
+    --set the endTime of window TheMovieName to "1,140"
+    --set the callBackTime of window theMovieName to 30000
+    --set the callBackMsg of window theMovieName to "doneLogo"
+    set the passMovieClick of window theMovieName to false
+    show window theMovieName
+    set the rate of window theMovieName to 1
+    repeat until the rate of window theMovieName = 0
+    send movieIdle to window theMovieName
+    if the mouseclick then
+    put true into endIntro
+    htlock true
+    if there is a window theMovieName then close window theMovieName
+    Finish
+    exit PlayBrøderbund
+    end if
+    end repeat
+    htlock true
+    close window theMovieName
+    end if
+    end PlayBrøderbund
+    
+    on PlayLogo
+    global endIntro
+    put "Cyan Logo.Moov" into TheMovieName --∆
+    if there is not a window TheMovieName then
+    Movie TheMovieName,"borderless",the topleft of card button marker,"invisible","Floating"
+    end if
+    if there is a window TheMovieName then
+    set the timeFormat of window TheMovieName to "MovieTime"
+    set the dontErase of window TheMovieName to true
+    set the fastIdle of window theMovieName to true
+    set the movieCursorID of window theMovieName to 128
+    set the audioLevel of window TheMovieName to "220"
+    set the mute of window TheMovieName to false
+    set the badge of window TheMovieName to false
+    set the controllerVisible of window TheMovieName to false
+    set the closeOnFinish of window TheMovieName to false
+    set the loop of window TheMovieName to false
+    set the seeAllFrames of window TheMovieName to false
+    set the startTime of window TheMovieName to "0"
+    --set the endTime of window TheMovieName to "1,140"
+    --set the callBackTime of window theMovieName to 30000
+    --set the callBackMsg of window theMovieName to "doneLogo"
+    set the passMovieClick of window theMovieName to false
+    show window theMovieName
+    set the rate of window theMovieName to 1
+    repeat until the rate of window theMovieName = 0
+    send movieIdle to window theMovieName
+    if the mouseclick then
+    put true into endIntro
+    htlock true
+    if there is a window theMovieName then close window theMovieName
+    Finish
+    exit PlayLogo
+    end if
+    end repeat
+    htlock true
+    close window theMovieName
+    end if
+    end PlayLogo
+    
+    on PlayIntro
+    global endIntro
+    put "Intro.MooV" into TheMovieName --∆
+    if there is not a window TheMovieName then
+    Movie TheMovieName,"borderless",the topleft of this card,"invisible","Floating"
+    end if
+    if there is a window TheMovieName then
+    set the timeFormat of window TheMovieName to "MovieTime"
+    set the dontErase of window TheMovieName to true
+    set the movieCursorID of window theMovieName to 128
+    set the fastIdle of window theMovieName to true
+    set the audioLevel of window TheMovieName to "220"
+    set the mute of window TheMovieName to false
+    set the badge of window TheMovieName to false
+    set the controllerVisible of window TheMovieName to false
+    set the closeOnFinish of window TheMovieName to false
+    set the loop of window TheMovieName to false
+    set the seeAllFrames of window TheMovieName to false
+    set the startTime of window TheMovieName to "0"
+    --set the endTime of window TheMovieName to "1,140"
+    --set the callBackTime of window theMovieName to 30000
+    --set the callBackMsg of window theMovieName to "HideMovie"
+    set the passMovieClick of window theMovieName to false
+    show window theMovieName
+    set the rate of window theMovieName to 1
+    --go next
+    repeat until the rate of window theMovieName = 0
+    send movieIdle to window theMovieName
+    if the mouseclick then
+    put true into endIntro
+    htlock true
+    if there is a window theMovieName then close window theMovieName
+    Finish
+    exit PlayIntro
+    end if
+    end repeat
+    go to card BookDown
+    htlock true
+    close window theMovieName
+    end if
+    end PlayIntro
+    
+    on MidMovie
+    put "Intro2.MooV" into theMovieName
+    set cursor to none
+    htlock true
+    HTVisual "tdfBlend7",,,0
+    go to card BookClosed
+    set the rate of window theMovieName to "1.0"
+    send movieIdle to window theMovieName
+    repeat while the currTime of window theMovieName ≤ 2900
+    send movieidle to window theMovieName
+    if the mouseclick then
+    exit repeat
+    end if
+    end repeat
+    send movieIdle to window theMovieName
+    set cursor to none
+    HTVisual "tdfBlend7",,,0
+    send movieIdle to window theMovieName
+    go card BookOpen
+    send movieIdle to window theMovieName
+    show window theMovieName
+    send movieIdle to window theMovieName
+    repeat until the rate of window theMovieName is 0
+    send movieIdle to window theMovieName
+    if the mouseclick then
+    put true into endIntro
+    set rate of window theMovieName to 0
+    go card FinalBookOpen
+    close window theMovieName
+    Finish
+    exit MidMovie
+    end if
+    end repeat
+    go card FinalBookOpen
+    close window theMovieName
+    end MidMovie
+    
+    on PlayIntro2
+    put "Intro2.MooV" into TheMovieName --∆
+    if there is not a window TheMovieName then
+    Movie TheMovieName,"borderless","312,71","invisible","Floating"
+    end if
+    if there is a window TheMovieName then
+    set the timeFormat of window TheMovieName to "MovieTime"
+    set the dontErase of window TheMovieName to true
+    set the movieCursorID of window theMovieName to 128
+    set the audioLevel of window TheMovieName to "220"
+    set the mute of window TheMovieName to false
+    set the badge of window TheMovieName to false
+    set the controllerVisible of window TheMovieName to false
+    set the closeOnFinish of window TheMovieName to false
+    set the loop of window TheMovieName to false
+    set the seeAllFrames of window TheMovieName to false
+    set the startTime of window TheMovieName to "0"
+    --set the endTime of window TheMovieName to "1,140"
+    --set the callBackTime of window theMovieName to 3000
+    --set the callBackMsg of window theMovieName to "EndMovie"
+    set the passMovieClick of window theMovieName to false
+    set the rate of window theMovieName to "0.0"
+    end if
+    end PlayIntro2
+
+    * Part 2740:1 "pict name"
+    * Part 2740:3 ""
