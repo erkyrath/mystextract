@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 
 """stakread.py: Minimal HyperCard stack parser
+- by Andrew Plotkin
+- http://github.com/erkyrath/mystextract
 
 This extracts the card and HyperTalk data from a HyperCard stack.
 It is *not* complete; I am only interested in the HyperText text, so
