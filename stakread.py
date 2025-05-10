@@ -65,6 +65,9 @@ class Stack:
         return '<Stack: %d cards, %d backgrounds>' % (len(self.cards), len(self.backgrounds),)
 
     def finalize(self):
+        """We call this after loading everything. Set up handy maps
+        and check for errors.
+        """
         for card in self.cards:
             self.cardmap[card.id] = card
         for bkgd in self.backgrounds:
@@ -105,6 +108,8 @@ class Stack:
             bkgd.dump(outfl)
         
 class BlockList:
+    """BlockList: a block list block (the LIST type).
+    """
     def __init__(self, numpages, pagesize, numcards, cardrefsize):
         self.numpages = numpages
         self.pagesize = pagesize
@@ -113,6 +118,8 @@ class BlockList:
         self.pagerefs = []
 
 class Card:
+    """Card: represents one card in a stack.
+    """
     def __init__(self, id, pageblockid, background, numparts, numpartconts):
         self.id = id
         self.pageblockid = pageblockid
@@ -145,6 +152,8 @@ class Card:
             part.dump(self.id, outfl)
 
 class Background:
+    """Background: a background block.
+    """
     def __init__(self, id, numparts, numpartconts):
         self.id = id
         self.numparts = numparts
@@ -175,6 +184,9 @@ class Background:
             part.dump(self.id, outfl)
 
 class CardPart:
+    """CardPart: one element of a Card or Background. Buttons are the most
+    familiar CardPart.
+    """
     def __init__(self, id, name, rect):
         self.id = id
         self.name = name
@@ -190,6 +202,8 @@ class CardPart:
             print_script(self.script, outfl, indent=6)
 
 class Size:
+    """Size: a (width, height) pair.
+    """
     def __init__(self, width, height):
         self.width = width
         self.height = height
@@ -198,6 +212,8 @@ class Size:
         return '<Size width=%d height=%d>' % (self.width, self.height,)
     
 class Rect:
+    """Rect: a (top, left, bottom, right) tuple.
+    """
     def __init__(self, top, left, bottom, right):
         self.top = top
         self.left = left
@@ -367,6 +383,7 @@ def parse_background(block, bid):
     return bkgd
 
 def parse_partstuff(card, block, pos):
+    # Parse the data which is included in both Cards and Backgrounds.
     for ix in range(card.numparts):
         partsize = getshort(block, pos+0)
         partid = getshort(block, pos+2)
