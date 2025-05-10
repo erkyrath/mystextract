@@ -228,16 +228,9 @@ def getsize(dat, pos):
     return Size(width, height)
 
 def endnulls(script):
-    pos = 0
-    while pos < len(script) and script[pos] == 0:
-        pos += 1
-    if pos > 0:
-        script = script[ pos : ]
-    pos = len(script)-1
-    while pos > 0 and script[pos] == 0:
-        pos -= 1
-    if pos < len(script)-1:
-        script = script[ : pos+1 ]
+    pos = script.find(0)
+    if pos >= 0:
+        script = script[ : pos ]
     return script
 
 def decode_script(script):
@@ -246,7 +239,6 @@ def decode_script(script):
         return None
     script = script.decode('mac_roman')
     script = script.replace('\r', '\n')
-    script = script.replace('\0', '\\0')
     return script
 
 def print_script(script, outfl, indent=0):
