@@ -127,24 +127,6 @@ Stack (183 cards, 1 backgrounds)
   set the audioLevel of window theSoundName to thevolume
   end if
   end buzzer
-  
-  \0olume
-  end if
-  end buzzer
-  
-  \0 the passMovieClick of window TheSoundName to false
-  set the rate of window TheSoundName to "1.0"
-  end if
-  set the audioLevel of window theSoundName to thevolume
-  end if
-  end buzzer
-  
-  \0
-  \0nd buzzer
-  
-  \0dioLevel of window theSoundName to thevolume
-  end if
-  end buzzer
 
   * Card 3004 "restart" (6 parts)
 

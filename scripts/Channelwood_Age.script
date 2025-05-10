@@ -184,12 +184,6 @@ Stack (376 cards, 1 backgrounds)
   set the windowName of window TheMovieName to "windMoov"
   end if
   end windmill
-  
-  \0e
-  set the rate of window TheMovieName to "1.0"
-  set the windowName of window TheMovieName to "windMoov"
-  end if
-  end windmill
 
   * Card 21064 "" (7 parts)
 

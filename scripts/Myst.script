@@ -233,36 +233,6 @@ Stack (330 cards, 1 backgrounds)
   end if
   pass idle
   end idle
-  
-  \0
-  end if
-  end if
-  pass idle
-  end idle
-  
-  \0
-  \0lay"
-  wait 30
-  end if
-  end if
-  end if
-  pass idle
-  end idle
-  
-  \0t 30
-  end if
-  end if
-  end if
-  pass idle
-  end idle
-  
-  \0"nodelay"
-  wait 30
-  end if
-  end if
-  end if
-  pass idle
-  end id
 
   * Card 21776 "" (3 parts)
     * Part 21776:1 ""

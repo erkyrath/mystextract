@@ -162,13 +162,6 @@ Stack (223 cards, 1 backgrounds)
   --show window TheMovieName
   end if
   end movieFountain
-  \0MovieName
-  end if
-  end movieFountain
-  \0
-  \0ieFountain
-  \0ame to "0.0"
-  --show window T
 
   * Card 45136 "Restart" (2 parts)
 

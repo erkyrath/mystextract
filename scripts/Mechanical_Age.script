@@ -104,13 +104,6 @@ Stack (213 cards, 1 backgrounds)
   set the seeAllFrames of window TheMovieName to false
   set the passMovieClick of window theMovieName to false
   set the timeFormat of window theMovieName to movieTime
-  end OpenElevator\0eName to movieTime
-  end OpenElevator\0
-  set the seeAllFrames of window TheMovieName to false
-  set the passMovieClick of window theMovieName to false
-  set the timeFormat of window theMovieName to movieTime
-  end OpenElevator\0false
-  set the timeFormat of window theMovieName to movieTime
   end OpenElevator
 
   * Card 32302 "qach4" (3 parts)

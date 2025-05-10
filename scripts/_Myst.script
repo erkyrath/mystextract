@@ -840,7 +840,6 @@ Stack (7 cards, 1 backgrounds)
     playqt "Intro Wind Mov","fadein","loop","255"
     pass openCard
     end openCard
-    \0\0\0\0\0\0\0\0\0\0ard
 
     * Part 4981:2 "marker2"
       on mouseWithin

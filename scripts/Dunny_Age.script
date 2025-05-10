@@ -158,8 +158,6 @@ Stack (30 cards, 1 backgrounds)
   set the windowName of window TheMovieName to "AtrusMoov"
   end if
   end Atrus
-  \0me to "AtrusMoov"
-  en
 
   * Card 32302 "" (3 parts)
     * Part 32302:1 "left"
