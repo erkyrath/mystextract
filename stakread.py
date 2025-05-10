@@ -10,6 +10,9 @@ The HyperCard format is described here:
   https://hypercard.org/hypercard_file_format_pierre/
   https://github.com/PierreLorenzi/HyperCardPreview/blob/master/StackFormat.md
 
+A much more complete HyperCard stack extractor is here:
+  https://github.com/uliwitness/stackimport
+
 This script is in the public domain.
 """
 
@@ -276,7 +279,6 @@ def parse(filename):
             bkgd = parse_background(block, bid)
             stack.backgrounds.append(bkgd)
         else:
-            #print('%s %d:' % (btype, bid,))
             pass
         pos += bsize
 

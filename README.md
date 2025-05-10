@@ -49,7 +49,6 @@ Anyhow, that's not what I did. I just wrote a Python script to parse the stack f
 
 Uli Kusterer's [stackimport][] tool is a much more complete Hypercard stack parser. It can extract images and (on the Mac filesystem) sounds as well. (C++, writes out XML data and PBM image files.)
 
-
 (If I'd known about stackimport, I wouldn't have written my Python script! But I somehow missed it, even though I looked at Uli's Github page. Whoops. Well, I had fun.)
 
 Pierre Lorenzi's [HyperCardPreview][] is a Mac GUI tool for browsing Hypercard stacks. However, I had trouble running it on current MacOS. It launches, but the Open File dialog won't recognize Hypercard files. (I think it's looking for classic Mac file type info, which hfsutils doesn't give you.)
