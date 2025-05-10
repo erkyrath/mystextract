@@ -56,6 +56,6 @@ Pierre Lorenzi's [HyperCardPreview][] is a Mac GUI tool for browsing Hypercard s
 [stackimport]: https://github.com/uliwitness/stackimport
 [HyperCardPreview]: https://github.com/PierreLorenzi/HyperCardPreview/
 
-Guillaume Lethuillier's [DeMystify][] uses stackimport to extract the node connrection data from Myst and display it as a graph.
+Guillaume Lethuillier's [DeMystify][] uses stackimport to extract the node connection data from Myst and display it as a graph.
 
 [DeMystify]: https://github.com/glthr/DeMystify
