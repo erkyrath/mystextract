@@ -6,6 +6,21 @@ This extracts the card and HyperTalk data from a HyperCard stack.
 It is *not* complete; I am only interested in the HyperText text, so
 that's all I did.
 
+Usage:
+  stakread.py [ -o OUTFILE ] hypercard.stak
+
+If -o is given, this writes a human-readable overview of the stack and
+its cards and scripts to the given file. (Or stdout if you do "-o -".)
+
+Without -o, this just parses the stack and exits. You could use this to
+inspect the stack at the Python prompt:
+
+  python3 -i stakread.py hypercard.stak
+  >>> stack
+  <Stack: 30 cards, 1 backgrounds>
+  >>> print(len(stack.script))
+  4587
+
 The HyperCard format is described here:
   https://hypercard.org/hypercard_file_format_pierre/
   https://github.com/PierreLorenzi/HyperCardPreview/blob/master/StackFormat.md
@@ -29,6 +44,8 @@ popt.add_option('-o', '--output',
 
 
 class Stack:
+    """Stack: represents an entire HyperCard stack.
+    """
     def __init__(self, format, numbackgrounds, numcards, createversion, modversion, cardrect, pixsize, script=None):
         self.format = format
         self.numbackgrounds = numbackgrounds
@@ -56,6 +73,9 @@ class Stack:
         self.consistency()
 
     def consistency(self):
+        """Consistency check. This shouldn't show any errors; if it does,
+        I made a mistake somewhere.
+        """
         if not self.list:
             print('ERROR: no LIST block')
             return
@@ -69,6 +89,8 @@ class Stack:
             card.consistency()
 
     def dump(self, outfl):
+        """Write the contents of the stack to outfl.
+        """
         outfl.write('Stack (%d cards, %d backgrounds)\n' % (len(self.cards), len(self.backgrounds),))
         
         if self.script:
@@ -184,6 +206,8 @@ class Rect:
 
     def __repr__(self):
         return '<Rect top=%d left=%d bottom=%d right=%d>' % (self.top, self.left, self.bottom, self.right,)
+
+# Utility functions to pull various types out of binary data.
     
 def getint(dat, pos):
     val = struct.unpack('>I', dat[ pos : pos+4 ])[0]
@@ -231,12 +255,17 @@ def getsize(dat, pos):
     return Size(width, height)
 
 def endnulls(script):
+    # If the data has a null byte, delete it and anything that follows.
     pos = script.find(0)
     if pos >= 0:
         script = script[ : pos ]
     return script
 
 def decode_script(script):
+    """Turn the binary script data into a Python string.
+    There may garbage at the end of the data block, after a null byte.
+    We trim this off. Then we decode the classic Mac character set.
+    """
     script = endnulls(script)
     if not len(script):
         return None
@@ -245,6 +274,8 @@ def decode_script(script):
     return script
 
 def print_script(script, outfl, indent=0):
+    """Print script text at the given indentation.
+    """
     if not script:
         return
     tab = ' '*indent
@@ -255,12 +286,15 @@ def print_script(script, outfl, indent=0):
         outfl.write('\n')
 
 def parse(filename):
+    """Parse a Hypercard stack file. Return a Stack object.
+    """
     with open(filename, 'rb') as fl:
         dat = fl.read()
         
     stack = None
     pos = 0
-    
+
+    # Iterate through the stack's blocks.
     while pos < len(dat):
         bsize = getint(dat, pos+0)
         btype = dat[ pos+4 : pos+8 ].decode()
@@ -284,6 +318,8 @@ def parse(filename):
 
     stack.finalize()
     return stack
+
+# Parsers for the important block types.
 
 def parse_stak(block, bid):
     format = getint(block, 0x10)
@@ -372,7 +408,7 @@ def parse_partstuff(card, block, pos):
     return pos
 
 if not args:
-    print('usage: stakread.py hypercard.stak')
+    print('usage: stakread.py [ -o OUTFILE ] hypercard.stak')
     sys.exit()
     
 for filename in args:
