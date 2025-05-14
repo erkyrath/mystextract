@@ -12,8 +12,8 @@ The [scripts](./scripts/) directory contains the script dumps, one for each Hype
 - `Myst.script`: The scripts covering the main island.
 - `Channelwood_Age.script`, `Mechanical_Age.script`, `Selenitic_Age.script`, `Stoneship_Age.script`: The scripts covering the four main puzzle Ages.
 - `Dunny_Age.script`: The script covering the end-game Age. (The spelling was changed to "D'ni" in _Riven_ and later games, but in 1993 it was "Dunny".)
-- `ALLRes.script`: Not sure what this is, actually.
-- `CHRes1.script`, etc: Stub stacks. These contain no script data.
+- `ALLRes.script`: Scripts having to do with saving and loading game state. The `ALLRes` file also contained sound resources, image resources, and HyperCard extensions; these resources are not included here.
+- `CHRes1.script`, etc: Resource stacks (sounds and images). These contain no script data. Again, the resources are not included here.
 - `Template.script`: Presumably a template used in development.
 
 Note that in the original [Mac disk image][iso], the `_Myst` stack was at the root level. The five Age stacks were in a folder `Myst Files` which was meant to be copied to the player's hard drive. `ALLRes` and the rest of the stacks were in a folder `Myst Graphics` which remained on the CD-ROM. I have flattened this hierarchy for your browsing convenience.
